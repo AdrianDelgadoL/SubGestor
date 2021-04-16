@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const PORT = 4000;
+const helloRoutes = require('./routes/hello.route');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -14,6 +15,11 @@ const connection = mongoose.connection;
 connection.once('open', function() {
     console.log("MongoDB database connection established successfully");
 })
+
+/***********
+** Routes **
+************/
+app.use('/hello', helloRoutes);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
