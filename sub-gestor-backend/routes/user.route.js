@@ -12,10 +12,10 @@ const bcrypt = require('bcryptjs')
 
 
 //User register
-router.post('/', (req, res) => {
-    const {email, password} = req.body;
-    if( !email || !password) return res.status(400).json({ msg: 'Please enter all fields' });
-
+router.post('/create', (req, res) => {
+    const {email, password, conf_pwd} = req.body;
+    if( !email || !password || !conf_pwd) return res.status(400).json({ msg: 'Please enter all fields' });
+    if(password != conf_pwd) return res.status(400).json( { msg: "Passwords don't match" })
 
     User.findOne({ email })
         .then(user => {
