@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const PORT = 4000;
@@ -9,11 +8,10 @@ const userRoutes = require('./routes/user.route');
 
 const config = require('config');
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 const db = config.get('mongoURI');
 
-// TODO: Pasarlo a fichero de configuracion para no tenerlo aqui puesto
 // Nos conectamos al servidor de mongoDB.
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 const connection = mongoose.connection;
