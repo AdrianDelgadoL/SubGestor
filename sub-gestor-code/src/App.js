@@ -29,14 +29,12 @@ class App extends Component {
   
   render() {
     return (
-      <div className="navbar">
         <Router>
             <Navbar />
             <br/>
             <Route path="/signIn" exact component={signIn} />
             <Route path="/signUp" exact component={signUp} />
         </Router>
-      </div>
     );
   }
 }
