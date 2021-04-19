@@ -13,6 +13,7 @@ app.use(express.json());
 const db = config.get('mongoURI');
 
 // Nos conectamos al servidor de mongoDB.
+mongoose.set('useCreateIndex', true);
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 const connection = mongoose.connection;
 

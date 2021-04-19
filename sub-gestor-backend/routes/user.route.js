@@ -1,7 +1,7 @@
 const express = require ('express');
 const router = express.Router();
 const User = require('../models/user.model');
-
+const bcrypt = require('bcryptjs')
 //POST /user/create (registro) X
 // POST /user/login (login) X
 // DELETE /user (eliminar cuenta usuario)
@@ -10,9 +10,11 @@ const User = require('../models/user.model');
 // POST /google-sign-in (login con google)
 // POST /user/verify (petición donde se verifica el email)
 
+
+//User register
 router.post('/', (req, res) => {
     const {email, password} = req.body;
-    if( !name || !password) return res.status(400).json({ msg: 'Please enter all fields' });
+    if( !email || !password) return res.status(400).json({ msg: 'Please enter all fields' });
 
 
     User.findOne({ email })
@@ -21,10 +23,28 @@ router.post('/', (req, res) => {
 
             const newUser = new User({
                 email,
-                password
+                passwd_hash: password
+            });
+
+            //Salting and hashing the password
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(newUser.passwd_hash, salt, (err, hash) => {
+                    if(err) throw err;
+                    newUser.passwd_hash = hash;
+                    newUser.save()
+                        .then(user => {
+                            res.json({
+                                user: {
+                                    email: user.email,
+                                    id: user.id,
+
+                                }
+                            });
+                        });
+                })
             })
         })
-})
+});
 
 
 
