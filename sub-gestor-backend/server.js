@@ -5,6 +5,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const PORT = 4000;
 const helloRoutes = require('./routes/hello.route');
+const userRoutes = require('./routes/user.route');
+
 const config = require('config');
 app.use(cors());
 app.use(bodyParser.json());
@@ -26,6 +28,7 @@ connection.once('open', () => {
 // Para cada fichero de routes, tenemos que importarlo (tal y como se hace arriba) y asociarlo a una ruta. En este caso utilizamos
 // el router de hello asociandolo a la ruta /hello
 app.use('/hello', helloRoutes);
+app.use('/user', userRoutes);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
