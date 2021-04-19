@@ -1,5 +1,15 @@
 import React, { Component } from "react";
 import axios from 'axios';
+// npm install react-bootstrap bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+// npm install react-router-dom
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+
+// Import de los componentes utilizados
+import Navbar from "./components/navbar.component";
+import signUp from "./components/signUp.component";
+import signIn from "./components/signIn.component";
+
 
 class App extends Component {
   constructor(props) {
@@ -19,12 +29,14 @@ class App extends Component {
   
   render() {
     return (
-      
-        <div className="container">
-          <h2>MERN-Stack Hello App</h2>
-          <p> { this.state.hello }</p>
-        </div>
-      
+      <div className="navbar">
+        <Router>
+            <Navbar />
+            <br/>
+            <Route path="/signIn" exact component={signIn} />
+            <Route path="/signUp" exact component={signUp} />
+        </Router>
+      </div>
     );
   }
 }
