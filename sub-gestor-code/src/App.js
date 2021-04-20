@@ -31,7 +31,6 @@ class App extends Component {
     return (
         <Router>
             <Navbar />
-            <br/>
             <Route path="/signIn" exact component={signIn} />
             <Route path="/signUp" exact component={signUp} />
         </Router>
