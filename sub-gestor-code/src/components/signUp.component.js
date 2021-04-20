@@ -73,7 +73,7 @@ export default class signUp extends Component{
         break;
       case "password":
         formErrors.password =
-          value.length < 6 ? "6 caràcters com a mínim" : "";
+          value.length < 6 ? "6 caràcters com a mínim, un número i una majúsucla" : "";
         break;
       default:
         break;
@@ -113,6 +113,7 @@ export default class signUp extends Component{
                                 name="password"
                                 required
                                 onChange={this.handleChange}
+                                pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z].{6,})"
                             />
                             {formErrors.password.length > 0 && (
                                 <span className="errorMessage">{formErrors.password}</span>
