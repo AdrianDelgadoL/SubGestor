@@ -5,8 +5,14 @@ import './register.css'
 // Form cogido de este código
 //  https://github.com/MyNameIsURL/react-form-validation-tutorial/blob/master/src/App.js
 
+// Para comprobar el mail
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);
+
+// Para comprobar la contraseña
+const passwordRegex = RegExp(
+  "^(((?=.*[a-z])(?=.*[A-Z])))(?=.{8,})"
 );
 
 const formValid = ({ formErrors, ...rest }) => {
@@ -72,8 +78,9 @@ export default class signUp extends Component{
           : "adreça email incorrecte";
         break;
       case "password":
-        formErrors.password =
-          value.length < 6 ? "6 caràcters com a mínim, un número i una majúsucla" : "";
+        formErrors.password = passwordRegex.test(value)
+         ? ""
+         : "la contrasenya ha de contenir una majúscula i 8 o més caràcters"
         break;
       default:
         break;
