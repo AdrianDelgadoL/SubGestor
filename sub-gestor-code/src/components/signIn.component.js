@@ -127,7 +127,7 @@ export default class signIn extends Component{
                             )}
                         </div>
                         <div className="createAccount">
-                            <button type="submit">Crea compte</button>
+                            <button type="submit">Inicia sessió</button>
                             <small>Encara no tens un compte?</small> 
                             <Link to ="/signup" className="nav-link">Registra't</Link>
                         </div>
