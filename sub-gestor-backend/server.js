@@ -29,7 +29,7 @@ connection.once('open', () => {
 // el router de hello asociandolo a la ruta /hello
 app.use('/hello', helloRoutes);
 app.use('/user', userRoutes);
-app.use('/subscrption', subsRoutes);
+app.use('/subscription', subsRoutes);
 
 
 app.listen(PORT, function() {

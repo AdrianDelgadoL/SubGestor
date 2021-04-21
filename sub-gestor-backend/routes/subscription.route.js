@@ -1,7 +1,6 @@
 const express = require ('express');
 const router = express.Router();
 const Subscription = require('../models/subscription.model');
-const User = require('../models/user.model');
 const auth = require('../middleware/auth.middleware');
 
 /*
@@ -19,27 +18,23 @@ GET /subscription/templates/:id (Obtener la información de una plantilla)
 
 router.get('/', auth, (req, res) => {
     //search the user in the DB to get their subscriptions
-    const id = req.body;
-    User.findOne({id})
-        .then(user => {
-            if (!user) return res.status(400).json( { msg: "user not found" } );
-            const subsId = user.current_suscriptions;
-            for(const sub in subsId)
-                Subscription.findOne({sub})
-                    .then( subscription => {
-                        if(subscription) {
-                            res.json(subscription);
-                        }
-                    });
-        });
+    const {id} = req.body;
+    Subscription.find({user_id: id})
+        .then(subscriptions => {
+            if(subscriptions.length > 0 ) return res.status(200).send(subscriptions);
+            console.log(subscriptions)
+            return res.status(400).json( {msg: "subscriptions not found"});
+        })
 });
 
 router.get('/:id', auth, (req, res) => {
-    const id = req.body;
-    Subscription.findOne({id})
+    const id = req.params.id;
+    Subscription.findById(id)
         .then(subscription => {
             if(subscription) {
                 res.json(subscription);
             }
         });
 });
+
+module.exports = router;

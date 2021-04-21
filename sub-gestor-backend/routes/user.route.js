@@ -83,46 +83,46 @@ router.post('/login', (req, res) => {
             return res.status(400).json ( {msg: 'Invalid email format, please repeat'})
         }
         // busca l'usuari a la BD a través del mail
-        User.findOne({'email': userEmail}).then(
-            user => {
+        User.findOne({'email': userEmail})
+            .then(user => {
                 // comprova si l'usuari existeix a la BD
                 if (!user) {
                     return res.status(400).json({msg: 'No such user with this email, repeat it please'});
-                } else {
-                    // fem hash a la contrasenya introduida
-                    bcrypt.genSalt(10, (err, saltHash) => {
-                        bcrypt.hash(userPassword, saltHash, (err, hashedPassword) => {
-                            if(err) {
-                                throw err;
-                            } else {
-                                // comparem els hash de les contrasenyes
-                                bcrypt.compare(userPassword, user.passwd_hash, function(err, result) {
-                                    if(err) {
-                                        throw err;
-                                    } else if(!result) {
-                                        return res.status(400).json( { msg: 'The password does not fit with this email, repeat it please' });
-                                    } else {
-                                        // correct authentication = generate token
-                                        jwt.sign(
-                                            { id: user.id },
-                                            config.get('jwtSecret'),
-                                            { expiresIn: 3600 },
-                                            (err, token) => {
-                                                if (err) throw err;
-                                                res.status(200).json({
-                                                    token,
-                                                    user: {
-                                                        email: user.email,
-                                                    }
-                                                });
-                                            }
-                                        )
-                                    }
-                                });
-                            }
-                        });
-                    });
                 }
+
+                // fem hash a la contrasenya introduida
+                bcrypt.genSalt(10, (err, saltHash) => {
+                    bcrypt.hash(userPassword, saltHash, (err, hashedPassword) => {
+                        if(err) throw err;
+
+                        // comparem els hash de les contrasenyes
+                        bcrypt.compare(userPassword, user.passwd_hash, function(err, result) {
+                            if(err) throw err;
+
+                            if(!result) {
+                                return res.status(400).json( { msg: 'The password does not fit with this email, repeat it please' });
+                            }
+                            // correct authentication = generate token
+                            jwt.sign(
+                                { id: user.id },
+                                config.get('jwtSecret'),
+                                { expiresIn: 3600 },
+                                (err, token) => {
+                                    if (err) throw err;
+                                    res.status(200).json({
+                                        token,
+                                        user: {
+                                            email: user.email,
+                                        }
+                                    });
+                                }
+                            )
+
+                        });
+
+                    });
+                });
+
             }
         );
     }

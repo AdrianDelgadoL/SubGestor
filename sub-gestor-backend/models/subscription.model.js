@@ -35,8 +35,11 @@ const subscriptionsSchema = new Schema({
     },
     description: String,
     img_src: String,
-    tags: [String]
-
+    tags: [String],
+    user_id: {
+        type: String,
+        required: true
+    }
 });
 
 function getPrice(num){
