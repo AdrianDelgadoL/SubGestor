@@ -1,4 +1,4 @@
-import Title from 'antd/lib/skeleton/Title';
+//import Title from 'antd/lib/skeleton/Title';
 import React, { Component } from 'react'
 
 export default class Accordion extends Component{
