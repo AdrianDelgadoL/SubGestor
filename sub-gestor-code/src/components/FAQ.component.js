@@ -6,16 +6,21 @@ export default class FAQ extends Component{
     state={
         data:[
             {
-                pregunta:"pregunta1",
-                respuesta:"descargate abc de efeffe"
+                pregunta:"¿Por qué no puedo añadir suscripciones nada más entrar a la página?",
+                respuesta:"Para poder añadir suscripciones, el usuario debe estar logeado y préviamente registdo en el sistema"
             },
             {
-                pregunta:"pregunta2",
-                respuesta:"estudia"
+                pregunta:"¿Cómo cancelo una suscripción?",
+                respuesta:"Para cancelar una suscripción basta con seleccionar la suscripción que se desee cancelar "+
+                "y seguidamente clickar en en cancelar, y la página le redireccionará a la web oficial del servicio "+
+                "para proceder a su cancelación."
             },
             {
-                pregunta:"pregunta3",
-                respuesta:"bla bla bla"
+                pregunta:"¿Para que sirven las plantillas predefinidas y como funcionan?",
+                respuesta:"Las plantillas predefinidas son plantillas que sirven para facilitar al usuario la tarea de creación de suscripciones."+
+                "Dichas plantillas ofrecen al usuario la capacidad de no tener que rellenar datos."+
+                "Para utilizar una de estas plantillas es suficiente con seleccionar la que desees en el momento"+
+                "de añadir una suscripción."
             }
 
         ]
