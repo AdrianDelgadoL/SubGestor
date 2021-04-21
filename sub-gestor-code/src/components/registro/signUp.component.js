@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
-import './registro/register.css'
+import './register.css'
 
 // Form cogido de este código
 //  https://github.com/MyNameIsURL/react-form-validation-tutorial/blob/master/src/App.js
@@ -33,7 +33,7 @@ const formValid = ({ formErrors, ...rest }) => {
 };
 
 
-export default class signIn extends Component{
+export default class signUp extends Component{
     constructor(props) {
         super(props);
 
@@ -95,7 +95,7 @@ export default class signIn extends Component{
         return (
             <div className="wrapper">
                 <div className="form-wrapper">
-                    <h1>Inici de sessió</h1>
+                    <h1>Registre</h1>
                     <form onSubmit={this.handleSubmit} noValidate>
                         <div className="email">
                             <label htmlFor="email">Email: </label>
@@ -126,10 +126,20 @@ export default class signIn extends Component{
                                 <span className="errorMessage">{formErrors.password}</span>
                             )}
                         </div>
+                        <div className="pswrepeat">
+                            <label htmlFor="pswrepeat">Repeteix la contrasenya: </label>
+                            <input 
+                                type="password"
+                                className=""
+                                placeholder="Repeteix la contrasenya"
+                                required
+                                onChange={this.handleChange}
+                            />
+                        </div>
                         <div className="createAccount">
-                            <button type="submit">Inicia sessió</button>
-                            <small>Encara no tens un compte?</small> 
-                            <Link to ="/signup" className="nav-link">Registra't</Link>
+                            <button type="submit">Crea compte</button>
+                            <small>Ja tens un compte?</small> 
+                            <Link to ="/signin" className="nav-link">Inicia sessió</Link>
                         </div>
                     </form>
                 </div>

@@ -7,8 +7,9 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 // Import de los componentes utilizados
 import Navbar from "./components/navbar.component";
-import signUp from "./components/signUp.component";
+import signUp from "./components/registro/signUp.component";
 import signIn from "./components/signIn.component";
+import FAQ from "./components/FAQ.component";
 
 
 class App extends Component {
@@ -16,7 +17,7 @@ class App extends Component {
     super(props);
     this.state = {hello: ""};
   }
-
+  
   componentDidMount() {
       axios.get('http://localhost:4000/hello/')
           .then(response => {
@@ -29,14 +30,12 @@ class App extends Component {
   
   render() {
     return (
-      <div className="navbar">
         <Router>
             <Navbar />
-            <br/>
             <Route path="/signIn" exact component={signIn} />
             <Route path="/signUp" exact component={signUp} />
+            <Route path="/FAQ" exact component={FAQ} />
         </Router>
-      </div>
     );
   }
 }
