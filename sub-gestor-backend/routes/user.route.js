@@ -2,6 +2,7 @@ const express = require ('express');
 const router = express.Router();
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken');
 //POST /user/create (registro) X
 // POST /user/login (login) X
 // DELETE /user (eliminar cuenta usuario)
@@ -10,6 +11,7 @@ const bcrypt = require('bcryptjs')
 // POST /google-sign-in (login con google)
 // POST /user/verify (petición donde se verifica el email)
 
+const emailValidator = require('email-validator');
 
 //User register
 router.post('/create', (req, res) => {
@@ -45,7 +47,60 @@ router.post('/create', (req, res) => {
             })
         })
 });
-
+// User Login
+router.post('/login', (req, res) => {
+        const {userEmail, userPassword} = req.body;
+        // comprova que hi hagi dades insertades
+        if (!userEmail || !userPassword) {
+            return res.status(400).json({msg: 'Please enter all the fields'});
+        } else if(!emailValidator.validate(userEmail)) {
+            return res.status(400).json ( {msg: 'Invalid email format, please repeat'})
+        }
+        // busca l'usuari a la BD a través del mail
+        User.findOne({'email': userEmail}).then(
+            user => {
+                // comprova si l'usuari existeix a la BD
+                if (!user) {
+                    return res.status(400).json({msg: 'No such user with this email, repeat it please'});
+                } else {
+                    // fem hash a la contrasenya introduida
+                    bcrypt.genSalt(10, (err, saltHash) => {
+                        bcrypt.hash(userPassword, saltHash, (err, hashedPassword) => {
+                            if(err) {
+                                throw err;
+                            } else {
+                                // comparem els hash de les contrasenyes
+                                bcrypt.compare(userPassword, user.passwd_hash, function(err, result) {
+                                    if(err) {
+                                        throw err;
+                                    } else if(!result) {
+                                        return res.status(400).json( { msg: 'The password does not fit with this email, repeat it please' });
+                                    } else {
+                                        // correct authentication = generate token
+                                        jwt.sign(
+                                            { id: user.id },
+                                            config.get('jwtSecret'),
+                                            { expiresIn: 3600 },
+                                            (err, token) => {
+                                                if (err) throw err;
+                                                res.status(200).json({
+                                                    token,
+                                                    user: {
+                                                        email: user.email,
+                                                    }
+                                                });
+                                            }
+                                        )
+                                    }
+                                });
+                            }
+                        });
+                    });
+                }
+            }
+        );
+    }
+);
 
 
 

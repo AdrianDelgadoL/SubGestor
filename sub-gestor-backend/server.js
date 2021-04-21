@@ -6,6 +6,7 @@ const PORT = 4000;
 const helloRoutes = require('./routes/hello.route');
 const userRoutes = require('./routes/user.route');
 
+
 const config = require('config');
 app.use(cors());
 app.use(express.json());
@@ -28,6 +29,7 @@ connection.once('open', () => {
 // el router de hello asociandolo a la ruta /hello
 app.use('/hello', helloRoutes);
 app.use('/user', userRoutes);
+
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
