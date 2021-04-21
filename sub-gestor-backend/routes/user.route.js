@@ -64,7 +64,11 @@ router.post('/create', (req, res) => {
             })
         })
 });
-// User Login
+/**
+ * /login: The path to access the endpoint for user sign in.
+ * req: Request received. Contains the information needed in the sign in (email and password).
+ * res: Response to the front-end.
+ */
 router.post('/login', (req, res) => {
         const {userEmail, userPassword} = req.body;
         // comprova que hi hagi dades insertades
