@@ -4,9 +4,10 @@ const User = require('../models/user.model');
 const bcrypt = require('bcryptjs')
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const emailValidator = require('email-validator');
 
 
-//POST /user/create (registro) X
+// POST /user/create (registro) X
 // POST /user/login (login) X
 // DELETE /user (eliminar cuenta usuario)
 // POST /change-pass (Solicitar cambio de contraseña, se enviará un mail al usuario)
@@ -14,7 +15,6 @@ const jwt = require('jsonwebtoken');
 // POST /google-sign-in (login con google)
 // POST /user/verify (petición donde se verifica el email)
 
-const emailValidator = require('email-validator');
 
 /**
  * /create: The path to access the endpoint for user sign up.
@@ -24,13 +24,17 @@ const emailValidator = require('email-validator');
 router.post('/create', (req, res) => {
 
     const {email, password, conf_pwd} = req.body;
+
+    //validation for password and email
     if( !email || !password || !conf_pwd) return res.status(400).json({ msg: 'Please enter all fields' });
     if(password != conf_pwd) return res.status(400).json( { msg: "Passwords don't match" })
+    if(!emailValidator.validate(email)) {
+        return res.status(400).json ( {msg: 'Invalid email format, please repeat'})
+    }
 
     User.findOne({ email })
         .then(user => {
             if(user) return res.status(400).json({ msg: 'User already exists' });
-
             const newUser = new User({
                 email,
                 passwd_hash: password
@@ -64,6 +68,7 @@ router.post('/create', (req, res) => {
             })
         })
 });
+
 /**
  * /login: The path to access the endpoint for user sign in.
  * req: Request received. Contains the information needed in the sign in (email and password).
