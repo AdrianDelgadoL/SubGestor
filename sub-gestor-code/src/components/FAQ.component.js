@@ -6,38 +6,33 @@ export default class FAQ extends Component{
     state={
         data:[
             {
-                title:"pregunta1",
-                texts:"descargate abc de efeffe"
+                pregunta:"pregunta1",
+                respuesta:"descargate abc de efeffe"
             },
             {
-                title:"pregunta2",
-                texts:"estudia"
+                pregunta:"pregunta2",
+                respuesta:"estudia"
             },
             {
-                title:"pregunta3",
-                texts:"bla bla bla"
+                pregunta:"pregunta3",
+                respuesta:"bla bla bla"
             }
 
         ]
     }
-
-
-
     render(){
-
         const {data}=this.state;
-        return(
-            <div className="accordion">
-
+        return( 
+            <div className="titulo">
+                <h2>Frequently Asked Question</h2>
+                <p className="intro">En este apartado se van a poner preguntas frecuentes que puedan ayudar a los usuarios</p>
+                <div className="accordion">
                 {data.map((item,index)=>{
-                    return <Accordion key={index} title={item.title} texts={item.texts}/>
+                    return <Accordion key={index} pregunta={item.pregunta} respuesta={item.respuesta}/>
                  })}
-               
+                </div> 
             </div>
 
             );
-
     }
-
-
 }

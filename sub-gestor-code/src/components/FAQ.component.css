@@ -23,7 +23,7 @@ body{
     
 }
 .tab{
-    background-color: orange;
+    background-color: rgb(255, 131, 15);
     padding: 10px;
     color:white;
     cursor:pointer;
@@ -34,7 +34,7 @@ body{
 }
 .tab:hover,
 .active{
-    background-color: blueviolet;
+    background-color: rgb(195, 35, 235);
 
 }
 .content{
@@ -44,7 +44,18 @@ body{
     overflow:hidden;
 
 }
-
+h2{
+    margin-bottom: 10px;
+    background-color:lightgreen;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-size:40px;
+}
+.intro{
+    margin: 35px;
+}
 
 .content p{
     padding: 10px;
