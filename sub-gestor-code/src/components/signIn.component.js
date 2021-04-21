@@ -126,7 +126,7 @@ export default class signIn extends Component{
                                 <span className="errorMessage">{formErrors.password}</span>
                             )}
                         </div>
-                        <div className="signIn">
+                        <div className="createAccount">
                             <button type="submit">Crea compte</button>
                             <small>Encara no tens un compte?</small> 
                             <Link to ="/signup" className="nav-link">Registra't</Link>
