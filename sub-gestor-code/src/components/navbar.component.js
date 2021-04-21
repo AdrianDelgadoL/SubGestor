@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default class Navbar extends Component {
+class Navbar extends Component {
 
     render() {
         return (
@@ -23,7 +23,7 @@ export default class Navbar extends Component {
                             <Link to ="/signUp" class="nav-link">Resgitra't</Link>
                         </li>
                         <li class="nav-item" id="FAQ">
-                            <Link to ="/FAQ" class="nav-link">FAQ</Link>
+                            <Link to ="/faq" class="nav-link">FAQ</Link>
                         </li>
                     </ul>
                 </div>
@@ -32,3 +32,5 @@ export default class Navbar extends Component {
         )
     }
 }
+
+export default Navbar;
