@@ -7,7 +7,7 @@ export default class FAQ extends Component{
         data:[
             {
                 pregunta:"¿Por qué no puedo añadir suscripciones nada más entrar a la página?",
-                respuesta:"Para poder añadir suscripciones, debes estar logeado y préviamente registdo en el sistema."
+                respuesta:"Para poder añadir suscripciones, debes estar logeado y préviamente registrado en el sistema."
             },
             {
                 pregunta:"¿Cómo cancelo una suscripción?",
@@ -19,7 +19,7 @@ export default class FAQ extends Component{
                 pregunta:"¿Para qué sirven las plantillas predefinidas y como funcionan?",
                 respuesta:"Las plantillas predefinidas son plantillas que sirven para facilitarte la tarea de creación de suscripciones."+
                 " Dichas plantillas ofrecen al usuario la capacidad de no tener que rellenar datos."+
-                "Para utilizar una de estas plantillas es suficiente con seleccionar la que desees en el momento"+
+                " Para utilizar una de estas plantillas es suficiente con seleccionar la que desees en el momento"+
                 "de añadir una suscripción."
             },
             {
