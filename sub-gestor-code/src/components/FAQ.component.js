@@ -7,24 +7,24 @@ export default class FAQ extends Component{
         data:[
             {
                 pregunta:"¿Por qué no puedo añadir suscripciones nada más entrar a la página?",
-                respuesta:"Para poder añadir suscripciones, el usuario debe estar logeado y préviamente registdo en el sistema."
+                respuesta:"Para poder añadir suscripciones, debes estar logeado y préviamente registdo en el sistema."
             },
             {
                 pregunta:"¿Cómo cancelo una suscripción?",
-                respuesta:"Para cancelar una suscripción basta con seleccionar la suscripción que se desee cancelar "+
-                "y seguidamente clickar en en cancelar, y la página le redireccionará a la web oficial del servicio "+
+                respuesta:"Para cancelar una suscripción basta con seleccionar la suscripción que se desees cancelar "+
+                "y seguidamente clickar en cancelar. La página te redireccionará a la web oficial del servicio "+
                 "para proceder a su cancelación."
             },
             {
                 pregunta:"¿Para qué sirven las plantillas predefinidas y como funcionan?",
-                respuesta:"Las plantillas predefinidas son plantillas que sirven para facilitar al usuario la tarea de creación de suscripciones."+
+                respuesta:"Las plantillas predefinidas son plantillas que sirven para facilitarte la tarea de creación de suscripciones."+
                 " Dichas plantillas ofrecen al usuario la capacidad de no tener que rellenar datos."+
                 "Para utilizar una de estas plantillas es suficiente con seleccionar la que desees en el momento"+
                 "de añadir una suscripción."
             },
             {
                 pregunta:"¿Cómo puedo saber cuanto he gastado en cada suscripción?",
-                respuesta:"En la pestaña estadísticas se pueden observar gráficas que indican el gasto mensual como el gasto"+
+                respuesta:"En la pestaña estadísticas puedes observar gráficas que indican el gasto mensual como el gasto"+
                           "de cada suscripción."
             },
             {
