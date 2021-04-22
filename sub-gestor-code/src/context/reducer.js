@@ -1,15 +1,14 @@
 let user = localStorage.getItem("currentUser")
-  ? JSON.parse(localStorage.getItem("currentUser")).user
+  ? JSON.parse(localStorage.getItem("currentUser"))
   : "";
-let token = localStorage.getItem("currentUser")
-  ? JSON.parse(localStorage.getItem("currentUser")).token
+let token = localStorage.getItem("token")
+  ? JSON.parse(localStorage.getItem("token"))
   : null;
 
 export const initialState = {
-  userDetails: "" || user,
+  user: "" || user,
   token: null || token,
   loading: false,
-  errorMessage: null
 };
 
 export const AuthReducer = (initialState, action) => {
@@ -20,6 +19,8 @@ export const AuthReducer = (initialState, action) => {
         loading: true
       };
     case "LOGIN_SUCCESS":
+      localStorage.setItem('currentUser', JSON.stringify(action.payload.user.email))
+      localStorage.setItem('token', JSON.stringify(action.payload.token))
       return {
         ...initialState,
         user: action.payload.user.email,
@@ -27,6 +28,7 @@ export const AuthReducer = (initialState, action) => {
         loading: false
       };
     case "LOGOUT":
+      localStorage.setItem('currentUser', null)
       return {
         ...initialState,
         user: "",
@@ -37,7 +39,8 @@ export const AuthReducer = (initialState, action) => {
       return {
         ...initialState,
         loading: false,
-        errorMessage: action.error
+        user: "",
+        token: null
       };
 
     default:

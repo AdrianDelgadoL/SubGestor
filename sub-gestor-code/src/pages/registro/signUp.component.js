@@ -41,12 +41,8 @@ const SignUp = () => {
       dispatch({ type: 'REQUEST_LOGIN' });
       axios.post('http://localhost:4000/user/create', {email, password, conf_pwd: repPassword})
           .then(response => {
-              if(response.status !== 200) {
-                
-              } else {
-                dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
-                localStorage.setItem('currentUser', JSON.stringify(response.data))
-              }
+            console.log(response.data)
+            dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
           })
           .catch(function (error){
             dispatch({ type: 'LOGIN_ERROR', error: error.response.data.msg });

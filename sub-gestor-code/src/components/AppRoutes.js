@@ -6,10 +6,9 @@ import { useAuthState } from '../context/context'
 const AppRoutes = ({ component: Component, path, isPrivate, ...rest }) => {
 
     const userDetails = useAuthState()
-    console.log(userDetails.token)
-    console.log(path)
-    console.log(isPrivate)
-    console.log(isPrivate && !Boolean(userDetails.token))
+
+    // TODO: llamar a API para comprovar si la autenticacion sigue siendo buena, en el caso que no se llama al reducer marcando logout
+
     return (
         <Route
             path={path}
