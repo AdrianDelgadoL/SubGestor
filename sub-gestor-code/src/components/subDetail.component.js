@@ -9,7 +9,7 @@ export default class subDetail extends Component {
             <div className="grid-container">
                 <div className="grid-container-header">
                     <div className="image">
-                        <img alt="imagen aleatoria" src="https://picsum.photos/700/400?random"></img>
+                        <img id="logo" alt="imagen aleatoria" src="https://picsum.photos/700/400?random"></img>
                     </div>
                     <div className="name">
                         <label for="name">Nom:</label><br />
