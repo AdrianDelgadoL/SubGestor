@@ -30,7 +30,7 @@ export default class FAQ extends Component{
             {
                 pregunta:"¿Puedo modificar el precio de una suscripción?",
                 respuesta:"Sí. Esto se puede hacer realizando click sobre una suscripción ya sea predefinida o creada "+
-                          "y allí se modifica el campo 'precio." 
+                          "y allí se modifica el campo precio." 
             },
             {
                 pregunta:"¿Puedo catalogar las suscripciones?",
@@ -46,13 +46,15 @@ export default class FAQ extends Component{
         return( 
             <div className="titulo">
                 <h2>Frequently Asked Question</h2>
-                <p className="intro">Si usted tiene alguna duda respecto al funcionamiento del sistema o de alguna de sus herrarmientas
-                puede que alguna de las siguientes preguntas resuelva su problema.
+                <p className="intro">Si tienes alguna duda respecto al funcionamiento del sistema o de alguna de sus herrarmientas
+                puede que alguna de las siguientes preguntas te ayude.
                 </p>
                 <div className="accordion">
-                {data.map((item,index)=>{
-                    return <Accordion key={index} pregunta={item.pregunta} respuesta={item.respuesta}/>
-                 })}
+                    <div className="accordion-container">
+                        {data.map((item,index)=>{
+                            return <Accordion key={index} pregunta={item.pregunta} respuesta={item.respuesta}/>
+                        })}
+                    </div>
                 </div> 
             </div>
 
