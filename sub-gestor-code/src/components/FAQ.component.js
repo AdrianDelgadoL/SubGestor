@@ -7,7 +7,7 @@ export default class FAQ extends Component{
         data:[
             {
                 pregunta:"¿Por qué no puedo añadir suscripciones nada más entrar a la página?",
-                respuesta:"Para poder añadir suscripciones, el usuario debe estar logeado y préviamente registdo en el sistema"
+                respuesta:"Para poder añadir suscripciones, el usuario debe estar logeado y préviamente registdo en el sistema."
             },
             {
                 pregunta:"¿Cómo cancelo una suscripción?",
@@ -16,11 +16,27 @@ export default class FAQ extends Component{
                 "para proceder a su cancelación."
             },
             {
-                pregunta:"¿Para que sirven las plantillas predefinidas y como funcionan?",
+                pregunta:"¿Para qué sirven las plantillas predefinidas y como funcionan?",
                 respuesta:"Las plantillas predefinidas son plantillas que sirven para facilitar al usuario la tarea de creación de suscripciones."+
-                "Dichas plantillas ofrecen al usuario la capacidad de no tener que rellenar datos."+
+                " Dichas plantillas ofrecen al usuario la capacidad de no tener que rellenar datos."+
                 "Para utilizar una de estas plantillas es suficiente con seleccionar la que desees en el momento"+
                 "de añadir una suscripción."
+            },
+            {
+                pregunta:"¿Cómo puedo saber cuanto he gastado en cada suscripción?",
+                respuesta:"En la pestaña estadísticas se pueden observar gráficas que indican el gasto mensual como el gasto"+
+                          "de cada suscripción."
+            },
+            {
+                pregunta:"¿Puedo modificar el precio de una suscripción?",
+                respuesta:"Sí. Esto se puede hacer realizando click sobre una suscripción ya sea predefinida o creada "+
+                          "y allí se modifica el campo 'precio." 
+            },
+            {
+                pregunta:"¿Puedo catalogar las suscripciones?",
+                respuesta:"Sí. Para ello existe el campo de 'tags' o etiquetas en el formulario de creación de suscripción. "+
+                          "Por ejemplo se le podría poner el tag: 'series' a Netflix para poder realizar una búsqueda más precisa"+
+                          "posteriormente."
             }
 
         ]
@@ -30,7 +46,9 @@ export default class FAQ extends Component{
         return( 
             <div className="titulo">
                 <h2>Frequently Asked Question</h2>
-                <p className="intro">En este apartado se van a poner preguntas frecuentes que puedan ayudar a los usuarios</p>
+                <p className="intro">Si usted tiene alguna duda respecto al funcionamiento del sistema o de alguna de sus herrarmientas
+                puede que alguna de las siguientes preguntas resuelva su problema.
+                </p>
                 <div className="accordion">
                 {data.map((item,index)=>{
                     return <Accordion key={index} pregunta={item.pregunta} respuesta={item.respuesta}/>

@@ -17,13 +17,13 @@ body{
 }
 
 .accordion{
-    width:900px;
+    width:1000px;
     box-shadow:1px 1px 4px 1px black;
     margin:0 auto;
     
 }
 .tab{
-    background-color: rgb(255, 131, 15);
+    background-color: teal;
     padding: 10px;
     color:white;
     cursor:pointer;
@@ -31,14 +31,16 @@ body{
     display:flex;
     align-items: center;
     border-bottom: 1px solid;
+    box-shadow:1px 1px 4px 1px black;
 }
 .tab:hover,
 .active{
-    background-color: rgb(195, 35, 235);
+    background-color: rgb(161, 235, 112);
+    color:black;
 
 }
 .content{
-    background-color: lightgoldenrodyellow;
+    background-color: lightblue;
     transition: all 0.5s ease-in-out;
     height: 0;
     overflow:hidden;
@@ -62,6 +64,13 @@ h2{
 
 }
 .showContent{
-    height: 70px;
-    overflow-y: scroll;
+    height:90px;
+    overflow-y: auto;
+}
+
+@media screen and (max-width: 1000px){
+    .accordion{
+        width:95%;
+    }
+    
 }
