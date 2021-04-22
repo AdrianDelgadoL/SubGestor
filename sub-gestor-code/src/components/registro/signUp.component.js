@@ -95,14 +95,14 @@ export default class signUp extends Component{
         return (
             <div className="wrapper">
                 <div className="form-wrapper">
-                    <h1>Registre</h1>
+                    <h1>Registro</h1>
                     <form onSubmit={this.handleSubmit} noValidate>
                         <div className="email">
                             <label htmlFor="email">Email: </label>
                             <input 
                                 type="email"
                                 className={formErrors.email.length > 0 ? "error" : null}
-                                placeholder="Entra el teu email"
+                                placeholder="Introduce tu email"
                                 name="email"
                                 required
                                 onChange={this.handleChange}
@@ -112,11 +112,11 @@ export default class signUp extends Component{
                             )}
                         </div>
                         <div className="password">
-                            <label htmlFor="password">Contrasenya: </label>
+                            <label htmlFor="password">Contraseña: </label>
                             <input
                                 type="password"
                                 className={formErrors.password.length > 0 ? "error" : null}
-                                placeholder="Entra la teva contrasenya"
+                                placeholder="Introduce tu contraseña"
                                 name="password"
                                 required
                                 onChange={this.handleChange}
@@ -127,19 +127,19 @@ export default class signUp extends Component{
                             )}
                         </div>
                         <div className="pswrepeat">
-                            <label htmlFor="pswrepeat">Repeteix la contrasenya: </label>
+                            <label htmlFor="pswrepeat">Repite la contraseña: </label>
                             <input 
                                 type="password"
                                 className=""
-                                placeholder="Repeteix la contrasenya"
+                                placeholder="Repite la contraseña"
                                 required
                                 onChange={this.handleChange}
                             />
                         </div>
                         <div className="createAccount">
-                            <button type="submit">Crea compte</button>
-                            <small>Ja tens un compte?</small> 
-                            <Link to ="/signin" className="nav-link">Inicia sessió</Link>
+                            <button type="submit">Crear cuenta</button>
+                            <small>Ya tienes una cuenta?</small> 
+                            <Link to ="/signin" className="nav-link">Inicia sesión</Link>
                         </div>
                     </form>
                 </div>
