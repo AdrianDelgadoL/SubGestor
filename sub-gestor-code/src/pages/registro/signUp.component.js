@@ -24,6 +24,12 @@ const SignUp = () => {
   const [emailError, setEmailError] = useState(''); 
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
+
+  //Cargamos el dispatch para poder usarlo después para avisar al reducer. Esto nos permite guardar el token y el usuario
+  //en el contexto creado en el fichero context. Para usarlo solo tenemos que llamar a dispatch() y pasarle un objeto JSON
+  //donde se indique el tipo de dispatch, es decir, la accion que esta ocurriendo y un payload si es necesario (de momento solo
+  //en el caso que la acción sea del tipo LOGIN_SUCCES). Este payload nos permite que el reducer obtenga la información necesaria.
+  //De momento solo guardamos el token y el email.
   const dispatch = useAuthDispatch()
 
   const formValid = () => {
@@ -40,14 +46,15 @@ const SignUp = () => {
     if (formValid()) {
       dispatch({ type: 'REQUEST_LOGIN' });
       axios.post('http://localhost:4000/user/create', {email, password, conf_pwd: repPassword})
-          .then(response => {
+          .then(response => { //El response devuelve un 2xx
             console.log(response.data)
             dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
           })
-          .catch(function (error){
+          .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
             dispatch({ type: 'LOGIN_ERROR', error: error.response.data.msg });
-            //TODO: vaciar el formulario
+            // Añadimos el error devuelto por back-end a nuestro formError para que se muestre en el formulario
             setFormError(error.response.data.msg);
+            // Vaciamos el formulario
             setEmail("")
             setPassword("")
             setRepPassword("")
