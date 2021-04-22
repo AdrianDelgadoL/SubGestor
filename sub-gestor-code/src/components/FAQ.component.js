@@ -46,7 +46,7 @@ export default class FAQ extends Component{
         return( 
             <div className="titulo">
                 <h2>Frequently Asked Question</h2>
-                <p className="intro">Si tienes alguna duda respecto al funcionamiento del sistema o de alguna de sus herrarmientas
+                <p className="intro">Si tienes alguna duda sobre funcionamiento de la aplicació o de alguna de sus herrarmientas
                 puede que alguna de las siguientes preguntas te ayude.
                 </p>
                 <div className="accordion">
