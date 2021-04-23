@@ -3,7 +3,7 @@
     display: grid;
     grid-template-areas: 
     'image name modButton delButton';
-    background-color: rosybrown;
+    background-color: #519e8a;
 }
 
 .image{
@@ -15,6 +15,14 @@
 #logo{
     max-width: 200;
     max-height: 200px;
+}
+
+#modifyButton{
+    background-color:lightgreen;
+}
+
+#deleteButton{
+    background-color:orangered;
 }
 
 .name{
@@ -41,6 +49,7 @@
     'price currency';
     border: 1px solid black;
     margin:5%;
+    text-align-last : center;
 }
 
 .datePayment{
@@ -61,16 +70,19 @@
 
 .grid-container-extra{
     grid-area: extra;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-areas:
+    'freeTrial hasEnd'
+    'dateEndTrial dateEnd';
     border: 1px solid black;
     margin:5%;
+    text-align-last:center;
 
 }
 
-/*
 .freeTrial{
     grid-area: freeTrial;
+    margin-top: 30px;
 }
 
 .dateEndTrial{
@@ -79,12 +91,13 @@
 
 .hasEnd{
     grid-area: hasEnd;
+    margin-top: 30px;
 }
 
 .dateEnd{
     grid-area: dateEnd;
 }
-*/
+
 .grid-container-information{
     grid-area: information;
     display: grid;
@@ -93,7 +106,7 @@
     'tags none descritpion';
     border: 1px solid black;
     margin:5%;
-
+    text-align-last : center;
 }
 
 .url{
@@ -120,6 +133,44 @@
     'information information information information information';
   grid-gap: 10px;
   padding: 10px;
-
 }
 
+@media only screen and (max-width: 1500px) {
+    .grid-container-header{
+        grid-template-areas: 
+        'image name modButton'
+        'image name delButton';
+    }
+
+    .image{
+        margin-left: 20%;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .grid-container{
+        grid-template-areas:
+        'header'
+        'price'
+        'extra'
+        'information';
+    }
+
+    .grid-container-header{
+        grid-template-areas: 
+        'image name'
+        'image modButton'
+        'image delButton';
+    }
+    .image{
+        margin-left: 10%;
+    }
+
+    .grid-container-information{
+        grid-template-areas:
+        'url'
+        'startDate'
+        'tags'
+        'description';
+    }
+  }

@@ -12,7 +12,6 @@ export default class subDetail extends Component {
                         <img id="logo" alt="imagen aleatoria" src="https://picsum.photos/700/400?random"></img>
                     </div>
                     <div className="name">
-                        <label for="name">Nom:</label><br />
                         <input type="text" id="name" defaultValue="Nom Subscripció"></input>
                     </div>
                     <div className="modifyButton">
