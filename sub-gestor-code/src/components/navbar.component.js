@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default class Navbar extends Component {
+class Navbar extends Component {
 
     render() {
         return (
@@ -23,7 +23,7 @@ export default class Navbar extends Component {
                             <Link to ="/signUp" class="nav-link">Regístrate</Link>
                         </li>
                         <li class="nav-item" id="FAQ">
-                            <Link to ="/FAQ" class="nav-link">FAQ</Link>
+                            <Link to ="/faq" class="nav-link">FAQ</Link>
                         </li>
                         {/* Este apartado del navegador solo es para poder ver el desarrollo de esta sección, quitar luego*/}
                         <li class="nav-item" id="detail">
@@ -37,3 +37,5 @@ export default class Navbar extends Component {
         )
     }
 }
+
+export default Navbar;

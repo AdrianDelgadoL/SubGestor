@@ -24,7 +24,7 @@ const emailValidator = require('email-validator');
 router.post('/create', (req, res) => {
 
     const {email, password, conf_pwd} = req.body;
-
+    console.log(req.body);
     //validation for password and email
     if( !email || !password || !conf_pwd) return res.status(400).json({ msg: 'Please enter all fields' });
     if(password != conf_pwd) return res.status(400).json( { msg: "Passwords don't match" })

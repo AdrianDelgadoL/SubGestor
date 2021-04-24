@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
-import './registro/register.css'
+import '../registro/register.css'
 
 // Form cogido de este código
 //  https://github.com/MyNameIsURL/react-form-validation-tutorial/blob/master/src/App.js
@@ -129,7 +129,7 @@ export default class signIn extends Component{
                         <div className="createAccount">
                             <button type="submit">Inicia sesión</button>
                             <small>Todavía no tienes cuenta?</small> 
-                            <Link to ="/signup" className="nav-link">Regístrate</Link>
+                            <Link to ="/signUp" className="nav-link">Regístrate</Link>
                         </div>
                     </form>
                 </div>
