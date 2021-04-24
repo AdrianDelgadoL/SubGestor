@@ -129,7 +129,7 @@ export default class signIn extends Component{
                         <div className="createAccount">
                             <button type="submit">Inicia sesión</button>
                             <small>Todavía no tienes cuenta?</small> 
-                            <Link to ="/signup" className="nav-link">Regístrate</Link>
+                            <Link to ="/signUp" className="nav-link">Regístrate</Link>
                         </div>
                     </form>
                 </div>

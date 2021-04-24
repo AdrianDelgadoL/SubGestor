@@ -151,7 +151,7 @@ const SignUp = () => {
                   <div className="createAccount">
                       <button onClick={handleSubmit} type="submit">Crea compte</button>
                       <small>Ja tens un compte?</small> 
-                      <Link to ="/signin" className="nav-link">Inicia sessió</Link>
+                      <Link to ="/signIn" className="nav-link">Inicia sessió</Link>
                   </div>
               </form>
           </div>
