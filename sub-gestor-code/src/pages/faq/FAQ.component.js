@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './FAQ.component.css'
 import Accordion from './acordion.js'
 export default class FAQ extends Component{
-
     state={
         data:[
             {
@@ -60,4 +59,6 @@ export default class FAQ extends Component{
 
             );
     }
+
+
 }
