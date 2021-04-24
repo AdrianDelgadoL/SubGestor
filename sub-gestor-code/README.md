@@ -7,6 +7,14 @@ En esta encontramos los componentes globales de la aplicación. Actualmente tene
 ## Carpeta config
 
 En esta encontramos la configuración básica de la aplicación. Actualmente solo se encuentra el fichero de rutas de la aplicación, donde se marca el componente, si es privado, y el path al cual hace referencia.
+Para definir una ruta lo hacemos de la siguiente forma:
+~~~
+{
+      isPrivate: <true/false>, //En el caso que sea true solo se podrà acceder si el usuario està loggeado
+      path:<link que se debe usar>,
+      component: <Componente que se tiene que cargar>
+},
+~~~
 
 ## Carpeta context
 
