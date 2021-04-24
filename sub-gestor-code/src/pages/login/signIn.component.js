@@ -17,10 +17,7 @@ const passwordRegex = RegExp(
   "^(((?=.*[a-z])(?=.*[A-Z])))(?=.{8,})"
 );
 
-
-
-
-const SignIn = () => { 
+const SignIn = (props) => { 
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState(''); 
   const [emailError, setEmailError] = useState(''); 
@@ -47,6 +44,7 @@ const SignIn = () => {
         .then(response => { //El response devuelve un 2xx
           console.log(response.data)
           dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
+          props.history.push('/subDetail');
         })
         .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
           dispatch({ type: 'LOGIN_ERROR', error: error.response.data.msg });
