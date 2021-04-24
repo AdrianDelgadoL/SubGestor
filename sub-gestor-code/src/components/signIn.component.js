@@ -95,28 +95,28 @@ export default class signIn extends Component{
         return (
             <div className="wrapper">
                 <div className="form-wrapper">
-                    <h1>Inici de sessió</h1>
+                    <h1>Inicio de sesión</h1>
                     <form onSubmit={this.handleSubmit} noValidate>
                         <div className="email">
                             <label htmlFor="email">Email: </label>
                             <input 
                                 type="email"
                                 className={formErrors.email.length > 0 ? "error" : null}
-                                placeholder="Entra el teu email"
+                                placeholder="Introduce tu email"
                                 name="email"
                                 required
                                 onChange={this.handleChange}
                             />
                             {formErrors.email.length > 0 && (
                                 <span className="errorMessage">{formErrors.email}</span>
-                            )}
+                           )}
                         </div>
                         <div className="password">
-                            <label htmlFor="password">Contrasenya: </label>
+                            <label htmlFor="password">Contraseña: </label>
                             <input
                                 type="password"
                                 className={formErrors.password.length > 0 ? "error" : null}
-                                placeholder="Entra la teva contrasenya"
+                                placeholder="Introduce tu contraseña"
                                 name="password"
                                 required
                                 onChange={this.handleChange}
@@ -127,9 +127,9 @@ export default class signIn extends Component{
                             )}
                         </div>
                         <div className="createAccount">
-                            <button type="submit">Inicia sessió</button>
-                            <small>Encara no tens un compte?</small> 
-                            <Link to ="/signup" className="nav-link">Registra't</Link>
+                            <button type="submit">Inicia sesión</button>
+                            <small>Todavía no tienes cuenta?</small> 
+                            <Link to ="/signup" className="nav-link">Regístrate</Link>
                         </div>
                     </form>
                 </div>
