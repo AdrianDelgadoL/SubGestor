@@ -17,14 +17,19 @@ class Navbar extends Component {
                 <div class="collapse navbar-collapse" id="nav">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <Link to ="/signIn" class="nav-link">Inicia sessió</Link>
+                            <Link to ="/signIn" class="nav-link">Inicia sesión</Link>
                         </li>
                         <li class="nav-item">
-                            <Link to ="/signUp" class="nav-link">Resgitra't</Link>
+                            <Link to ="/signUp" class="nav-link">Regístrate</Link>
                         </li>
                         <li class="nav-item" id="FAQ">
                             <Link to ="/faq" class="nav-link">FAQ</Link>
                         </li>
+                        {/* Este apartado del navegador solo es para poder ver el desarrollo de esta sección, quitar luego*/}
+                        <li class="nav-item" id="detail">
+                            <Link to ="/subDetail" class="nav-link">Detalle</Link>
+                        </li>
+
                     </ul>
                 </div>
                 </nav>

@@ -1,0 +1,176 @@
+.grid-container-header{
+    grid-area: header;
+    display: grid;
+    grid-template-areas: 
+    'image name modButton delButton';
+    background-color: #519e8a;
+}
+
+.image{
+    grid-area: image;
+    align-content: center;
+    margin-left: 30%;
+}
+
+#logo{
+    max-width: 200;
+    max-height: 200px;
+}
+
+#modifyButton{
+    background-color:lightgreen;
+}
+
+#deleteButton{
+    background-color:orangered;
+}
+
+.name{
+    grid-area: name;
+    align-self: center;
+}
+.modifyButton{
+    grid-area: modButton;
+    align-self: center;
+
+}
+.deleteButton{
+    grid-area: delButton;
+    align-self: center;
+
+}
+
+
+.grid-container-price{
+    grid-area: price;
+    display: grid;
+    grid-template-areas: 
+    'datePay frequency'
+    'price currency';
+    border: 1px solid black;
+    margin:5%;
+    text-align-last : center;
+}
+
+.datePayment{
+    grid-area: datePay;
+}
+
+.frequency{
+    grid-area: frequency;
+}
+
+.price{
+    grid-area: price;
+}
+
+.currency{
+    grid-area: currency;
+}
+
+.grid-container-extra{
+    grid-area: extra;
+    display: grid;
+    grid-template-areas:
+    'freeTrial hasEnd'
+    'dateEndTrial dateEnd';
+    border: 1px solid black;
+    margin:5%;
+    text-align-last:center;
+
+}
+
+.freeTrial{
+    grid-area: freeTrial;
+    margin-top: 30px;
+}
+
+.dateEndTrial{
+    grid-area: dateEndTrial;
+}
+
+.hasEnd{
+    grid-area: hasEnd;
+    margin-top: 30px;
+}
+
+.dateEnd{
+    grid-area: dateEnd;
+}
+
+.grid-container-information{
+    grid-area: information;
+    display: grid;
+    grid-template-areas:
+    'url startDate description'
+    'tags none descritpion';
+    border: 1px solid black;
+    margin:5%;
+    text-align-last : center;
+}
+
+.url{
+    grid-area: url;
+}
+
+.startDate{
+    grid-area: startDate;
+}
+
+.tags{
+    grid-area: tags;
+}
+
+.description{
+    grid-area: description;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-areas:
+    'header header header header header'
+    'price price price extra extra'
+    'information information information information information';
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+@media only screen and (max-width: 1500px) {
+    .grid-container-header{
+        grid-template-areas: 
+        'image name modButton'
+        'image name delButton';
+    }
+
+    .image{
+        margin-left: 20%;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .grid-container{
+        grid-template-areas:
+        'header'
+        'price'
+        'extra'
+        'information';
+    }
+
+    .grid-container-header{
+        grid-template-areas: 
+        'image name'
+        'image modButton'
+        'image delButton';
+    }
+    .image{
+        margin-left: 10%;
+    }
+
+    .grid-container-information{
+        grid-template-areas:
+        'url'
+        'startDate'
+        'tags'
+        'description';
+    }
+  }
