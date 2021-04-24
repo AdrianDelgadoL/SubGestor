@@ -10,6 +10,9 @@ import Navbar from "./components/navbar.component";
 import signUp from "./components/registro/signUp.component";
 import signIn from "./components/signIn.component";
 import FAQ from "./components/FAQ.component";
+import subDetail from "./components/subDetail.component";
+// Esta homepage servirá para antes de iniciar sesión
+import HomePage from "./components/homePage.component";
 
 
 class App extends Component {
@@ -32,9 +35,13 @@ class App extends Component {
     return (
         <Router>
             <Navbar />
+            <Route path="/" exact component={HomePage} />
             <Route path="/signIn" exact component={signIn} />
             <Route path="/signUp" exact component={signUp} />
             <Route path="/FAQ" exact component={FAQ} />
+            
+            {/*Solo para ver, quitar cuando se termine el diseño*/}
+            <Route path="/subDetail" exact component={subDetail} />
         </Router>
     );
   }
