@@ -10,3 +10,11 @@ h2 {
 .text {
     margin-top: 250px;
 }
+
+
+.text{
+    border: 10px solid #519e8a;
+    border-radius: 10px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
