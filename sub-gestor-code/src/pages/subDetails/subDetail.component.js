@@ -14,33 +14,33 @@ export default class subDetail extends Component {
                             <img id="logo" alt="imagen aleatoria" src="https://picsum.photos/700/400?random"></img>
                         </div>
                         <div className="name">
-                            <input type="text" id="name" defaultValue="Nom Subscripció"></input>
+                            <input type="text" id="name" defaultValue="Nombre suscripción"></input>
                         </div>
                         <div className="modifyButton">
-                            <input type="button" id="modifyButton" value="Desar canvis"></input>
+                            <input type="button" id="modifyButton" value="Guardar cambios"></input>
                         </div>
                         <div className="deleteButton">
-                            <input type="button" id="deleteButton" value="Eliminar subscripció"></input>
+                            <input type="button" id="deleteButton" value="Eliminar suscripción"></input>
                         </div>
                     </div>
                     <div className="grid-container-price">
                         <div className="datePayment">
-                            <label for="datePayment">Data de pagament:</label><br />
+                            <label for="datePayment">Fecha de pago:</label><br />
                             <input type="date" id="datePayment" defaultValue="2021-04-22"></input>
                         </div>
                         <div className="frequency">
-                            <label for="frequency">Freqüencia:</label><br />
+                            <label for="frequency">Frecuencia:</label><br />
                             <select id="frequency">
                                 <option value="mensual">Mensual</option>
                                 <option value="anual">Anual</option>
                             </select>
                         </div>
                         <div className="price">
-                            <label for="price">Preu:</label><br/>
+                            <label for="price">Precio:</label><br/>
                             <input type="number" id="price" defaultValue="7.5"></input>
                         </div>
                         <div className="currency">
-                            <label for="currency">Moneda:</label><br />
+                            <label for="currency">Divisa:</label><br />
                             <select id="currency">
                                 <option value="EUR">EUR</option>
                                 <option value="USD">USD</option>
@@ -50,35 +50,35 @@ export default class subDetail extends Component {
                     </div>
                     <div className="grid-container-extra">
                         <div className="freeTrial">
-                            <label for="freeTrial"><input type="checkbox" id="freeTrial"></input> Periode de proba</label><br />
+                            <label for="freeTrial"><input type="checkbox" id="freeTrial"></input>Periodo de prueba</label><br />
                         </div>
                         <div className="dateEndTrial">
-                            <label for="dateEndTrial">Data de vençuda:</label><br />
+                            <label for="dateEndTrial">Fecha de vencimiento:</label><br />
                             <input type="date" id="dateEndTrial" defaultValue="2021-04-22"></input>
                         </div>
                         <div className="hasEnd">
-                        <label for="hasEnd"><input type="checkbox" id="hasEnd"></input> Data de finalització</label><br />
+                        <label for="hasEnd"><input type="checkbox" id="hasEnd"></input>Fecha de finalización</label><br />
                         </div>
                         <div className="dateEnd">
-                            <label for="dateEnd">Data de finalització:</label><br />
+                            <label for="dateEnd">Fecha de finalización:</label><br />
                             <input type="date" id="dateEnd" defaultValue="2021-04-22"></input>
                         </div>
                     </div>
                     <div className="grid-container-information">
                         <div className="url">
-                            <label for="url">URL per desubscribir-se:</label><br />
+                            <label for="url">URL para desuscribirse:</label><br />
                             <input type="url" id="url" defaultValue="https://www.google.com/"></input>
                         </div>
                         <div className="startDate">
-                            <label for="startDate">Data d'inici:</label><br />
+                            <label for="startDate">Fecha de inicio:</label><br />
                             <input type="date" id="startDate" defaultValue="2021-04-22"></input>
                         </div>
                         <div className="tags">
-                            <label for="tags">Tags (separats per una coma):</label><br />
+                            <label for="tags">Tags (separados por una coma):</label><br />
                             <input type="text" id="tags" defaultValue="films,shared"></input>
                         </div>
                         <div className="description">
-                            <label for="description">Descripció:</label><br />
+                            <label for="description">Descripción:</label><br />
                             <textarea rows="4" cols="50" id="description" form="">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique massa sed nisi efficitur, eget aliquet sapien facilisis. Donec faucibus ex elit, a egestas nulla accumsan ut. Nunc vitae nisl elementum, convallis est quis, tempus nulla. Morbi pharetra aliquam ipsum, sit amet dictum mauris ultrices pulvinar. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque est lorem, mollis non tortor non, convallis dictum ligula. Donec et luctus felis. Duis commodo dolor eu dolor dignissim, et fringilla orci commodo. Sed elementum at nisl sit amet imperdiet. Ut a tincidunt nulla. Proin commodo tempor libero nec sagittis. Sed tincidunt magna ut mattis dapibus. In at rutrum metus. Ut vitae dolor vitae turpis egestas efficitur sed vel leo. 
                             </textarea>
