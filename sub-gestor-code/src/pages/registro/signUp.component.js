@@ -16,7 +16,7 @@ const passwordRegex = RegExp(
   "^(((?=.*[a-z])(?=.*[A-Z])))(?=.{8,})"
 );
 
-const SignUp = () => { 
+const SignUp = (props) => { 
   // Define el estado del componente
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState(''); 
@@ -34,7 +34,7 @@ const SignUp = () => {
 
   const formValid = () => {
     // Valida que los errores esten vacios
-    if (emailError.length > 0 || passwordError > 0) return false
+    if (emailError.length > 0 || passwordError.length > 0) return false
     if (email.length === 0 || password.length === 0 || repPassword.length === 0) return false
     return true
   };
@@ -49,6 +49,7 @@ const SignUp = () => {
           .then(response => { //El response devuelve un 2xx
             console.log(response.data)
             dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
+            props.history.push('/subDetail');
           })
           .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
             dispatch({ type: 'LOGIN_ERROR', error: error.response.data.msg });
@@ -58,7 +59,8 @@ const SignUp = () => {
             setEmail("")
             setPassword("")
             setRepPassword("")
-
+            setEmailError("");
+            setPasswordError("");
           })
     } else {
       setFormError("Invalid form")
@@ -88,9 +90,9 @@ const SignUp = () => {
         }
         setPassword(value)
         break;
-        case "pswrepeat":
-          setRepPassword(value)
-          break;
+      case "pswrepeat":
+        setRepPassword(value)
+        break;
       default:
         break;
     }
