@@ -12,7 +12,7 @@ const routes =[
     },
     
     {
-      isPrivate: true,
+      isPrivate: false,
       path:'/faq',
       component: FAQ
     },
