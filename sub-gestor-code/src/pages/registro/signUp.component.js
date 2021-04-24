@@ -34,7 +34,7 @@ const SignUp = () => {
 
   const formValid = () => {
     // Valida que los errores esten vacios
-    if (emailError.length > 0 || passwordError > 0) return false
+    if (emailError.length > 0 || passwordError.length > 0) return false
     if (email.length === 0 || password.length === 0 || repPassword.length === 0) return false
     return true
   };
@@ -58,7 +58,8 @@ const SignUp = () => {
             setEmail("")
             setPassword("")
             setRepPassword("")
-
+            setEmailError("");
+            setPasswordError("");
           })
     } else {
       setFormError("Invalid form")
@@ -88,9 +89,9 @@ const SignUp = () => {
         }
         setPassword(value)
         break;
-        case "pswrepeat":
-          setRepPassword(value)
-          break;
+      case "pswrepeat":
+        setRepPassword(value)
+        break;
       default:
         break;
     }
