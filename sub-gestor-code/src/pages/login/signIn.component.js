@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import {Link} from 'react-router-dom'
-import '../registro/register.css'
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
+import '../registro/register.css';
+import {useAuthDispatch} from '../../context/context';
+import axios from "axios";
 
 // Form cogido de este código
 //  https://github.com/MyNameIsURL/react-form-validation-tutorial/blob/master/src/App.js
@@ -15,125 +17,128 @@ const passwordRegex = RegExp(
   "^(((?=.*[a-z])(?=.*[A-Z])))(?=.{8,})"
 );
 
-const formValid = ({ formErrors, ...rest }) => {
-  let valid = true;
-
-  // Valida que los errores esten vacios
-  Object.values(formErrors).forEach(val => {
-    val.length > 0 && (valid = false);
-    console.log(val.length)
-  });
-
-  // Asegura que el form está lleno
-  Object.values(rest).forEach(val => {
-    val === null && (valid = false);
-  });
-
-  return valid;
-};
 
 
-export default class signIn extends Component{
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            email: null,
-            password: null,
-            // pswrepeat: null, da error si no comentamos
-            formErrors: {
-                email: "",
-                password: "",
-            }
-        }
-    }
+const SignIn = () => { 
+  const [email, setEmail] = useState(''); 
+  const [password, setPassword] = useState(''); 
+  const [emailError, setEmailError] = useState(''); 
+  const [passwordError, setPasswordError] = useState('');
+  const [formError, setFormError] = useState('');
+
+  const dispatch = useAuthDispatch()
+
+  const formValid = () => {
+    if (emailError.length > 0 || passwordError.length > 0) return false
+    if (email.length === 0 || password.length === 0) return false
+    return true
+  };
 
 
-    handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Comprueba que el formulario es correcto, logea mail y contraseña por consola
     // o muestra error
-    if (formValid(this.state)) {
-      console.log(`
-        --SUBMITTING--
-        Email: ${this.state.email}
-        Password: ${this.state.password}
-      `);
+    if (formValid()) {
+      dispatch({ type: 'REQUEST_LOGIN' });
+      axios.post('http://localhost:4000/user/login', {userEmail: email, userPassword: password})
+        .then(response => { //El response devuelve un 2xx
+          console.log(response.data)
+          dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
+        })
+        .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
+          dispatch({ type: 'LOGIN_ERROR', error: error.response.data.msg });
+          // Añadimos el error devuelto por back-end a nuestro formError para que se muestre en el formulario
+          setFormError(error.response.data.msg);
+          // Vaciamos el formulario
+          setEmail("")
+          setPassword("")
+          setPasswordError("");
+          setEmailError("");
+        })
     } else {
-      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      setFormError("Invalid form")
     }
   };
 
   // Sirve para mostrar el error en rojo en el campo
-  handleChange = e => {
+  const handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
-    let formErrors = { ...this.state.formErrors };
 
     switch (name) {
       case "email":
-        formErrors.email = emailRegex.test(value)
-          ? ""
-          : "adreça email incorrecte";
+        if(emailRegex.test(value)) {
+          setEmailError("");
+        } else {
+          setEmailError("adreça email incorrecte");
+        }
+        setEmail(value);
         break;
-      case "password":
-        formErrors.password = passwordRegex.test(value)
-         ? ""
-         : "la contrasenya ha de contenir una majúscula i 8 o més caràcters"
-        break;
+        case "password":
+          if(passwordRegex.test(value)) {
+            setPasswordError("");
+          } else {
+            setPasswordError("la contrasenya ha de contenir una majúscula i 8 o més caràcters");
+          }
+          setPassword(value)
+          break;
       default:
         break;
     }
-
-    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   };
 
 
-    render() {
-        const { formErrors } = this.state;
-        return (
-            <div className="wrapper">
-                <div className="form-wrapper">
-                    <h1>Inicio de sesión</h1>
-                    <form onSubmit={this.handleSubmit} noValidate>
-                        <div className="email">
-                            <label htmlFor="email">Email: </label>
-                            <input 
-                                type="email"
-                                className={formErrors.email.length > 0 ? "error" : null}
-                                placeholder="Introduce tu email"
-                                name="email"
-                                required
-                                onChange={this.handleChange}
-                            />
-                            {formErrors.email.length > 0 && (
-                                <span className="errorMessage">{formErrors.email}</span>
-                           )}
-                        </div>
-                        <div className="password">
-                            <label htmlFor="password">Contraseña: </label>
-                            <input
-                                type="password"
-                                className={formErrors.password.length > 0 ? "error" : null}
-                                placeholder="Introduce tu contraseña"
-                                name="password"
-                                required
-                                onChange={this.handleChange}
-                                pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z].{6,})"
-                            />
-                            {formErrors.password.length > 0 && (
-                                <span className="errorMessage">{formErrors.password}</span>
-                            )}
-                        </div>
-                        <div className="createAccount">
-                            <button type="submit">Inicia sesión</button>
-                            <small>Todavía no tienes cuenta?</small> 
-                            <Link to ="/signUp" className="nav-link">Regístrate</Link>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        );
-    }
+  return (
+      <div className="wrapper">
+          <div className="form-wrapper">
+              <h1>Inicio de sesión</h1>
+              <form noValidate>
+                  <div className="email">
+                      <label htmlFor="email">Email: </label>
+                      <input 
+                          type="email"
+                          className={emailError.length > 0 ? "error" : null}
+                          placeholder="Introduce tu email"
+                          name="email"
+                          required
+                          onChange={handleChange}
+                          value={email}
+                      />
+                      {emailError.length > 0 && (
+                          <span className="errorMessage">{emailError}</span>
+                      )}
+                  </div>
+                  <div className="password">
+                      <label htmlFor="password">Contraseña: </label>
+                      <input
+                          type="password"
+                          className={passwordError.length > 0 ? "error" : null}
+                          placeholder="Introduce tu contraseña"
+                          name="password"
+                          required
+                          onChange={handleChange}
+                          value={password}
+                          pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z].{6,})"
+                      />
+                      {passwordError.length > 0 && (
+                          <span className="errorMessage">{passwordError}</span>
+                      )}
+                  </div>
+                  {formError.length > 0 && (
+                      <span className="errorMessage">{formError}</span>
+                    )}
+                  <div className="createAccount">
+                      <button type="submit" onClick={handleSubmit}>Inicia sesión</button>
+                      <small>Todavía no tienes cuenta?</small> 
+                      <Link to ="/signUp" className="nav-link">Regístrate</Link>
+                  </div>
+              </form>
+          </div>
+      </div>
+  );
 }
+
+export default SignIn;
