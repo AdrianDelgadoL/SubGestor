@@ -90,6 +90,7 @@
     font-weight: lighter;
     letter-spacing: 1px;
     margin-bottom: 0.25em;
+    border-radius: 10px;
   }
 
   .createAccount button:hover {

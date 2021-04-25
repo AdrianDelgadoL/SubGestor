@@ -105,65 +105,65 @@ export default class signIn extends Component{
         const { formErrors } = this.state;
         return (
             <div className="formSub">
-                <h1 id="creator"> Create new subscription </h1>
+                <h2 id="creator"> Crear nueva suscripción </h2>
                 <form onSubmit={this.handleSubmit} noValidate>
                     <div className="formSub-grid">
-                        <p id="information"> Information </p>
+                        <p id="information">Información:</p>
                         <div className="information">
                             <div className="name">
-                                <label htmlFor="name"> Name (*): </label> <br />
-                                <input type="text" placeholder="Enter name ..." name="name" required onChange={this.handleChange}/>
+                                <label htmlFor="name"> Nombre (*): </label> <br />
+                                <input type="text" placeholder="Introduce el nombre" name="name" required onChange={this.handleChange}/>
                                 {formErrors.name.length > 0 && (
                                     <span className="errorMessage">{formErrors.name}</span>
                                 )}
                             </div>
                             <div className="free_trial">
-                                <label htmlFor="free_trial"> Is a Free Trial: </label> <br />
+                                <label htmlFor="free_trial"> Es prueba gratuita: </label> <br />
                                 <input type="checkbox" name="free_trial" onChange={this.handleChange}/>
                                 {formErrors.free_trial.length > 0 && (
                                     <span className="errorMessage">{formErrors.free_trial}</span>
                                 )}
                             </div>
                             <div className="free_trial_end">
-                                <label  htmlFor="free_trial_end"> End of Free Trial: </label> <br />
+                                <label  htmlFor="free_trial_end"> Fin de la prueba gratuita: </label> <br />
                                 <input type="date"  name="free_trial_end" onChange={this.handleChange}/>
                                 {formErrors.free_trial_end.length > 0 && (
                                     <span className="errorMessage">{formErrors.free_trial_end}</span>
                                 )}
                             </div>
                             <div className="end">
-                                <label  htmlFor="end"> Has an end date: </label> <br />
+                                <label  htmlFor="end"> Tiene fecha de finalización: </label> <br />
                                 <input type="checkbox" name="end" onChange={this.handleChange}/>
                                 {formErrors.end.length > 0 && (
                                     <span className="errorMessage">{formErrors.end}</span>
                                 )}
                             </div>
                             <div className="end_date">
-                                <label htmlFor="end_date"> End date: </label> <br />
+                                <label htmlFor="end_date"> Fecha finalización: </label> <br />
                                 <input type="date" name="end_date" onChange={this.handleChange}/>
                                 {formErrors.end_date.length > 0 && (
                                     <span className="errorMessage">{formErrors.end_date}</span>
                                 )}
                             </div>
                         </div>
-                        <p id="price_information"> Price information </p>
+                        <p id="price_information"> Información del precio</p>
                         <div className="price_information">
                             <div className="charge_date">
-                                <label htmlFor="charge_date"> Date of next payment: </label> <br />
+                                <label htmlFor="charge_date">Fecha del siguiente pago: </label> <br />
                                 <input type="date" name="charge_date" onChange={this.handleChange}/>
                                 {formErrors.charge_date.length > 0 && (
                                     <span className="errorMessage">{formErrors.charge_date}</span>
                                 )}
                             </div>
                             <div className="price">
-                                <label htmlFor="price"> Price (*): </label> <br />
-                                <input type="number" placeholder="Enter price..." name="price" required onChange={this.handleChange}/>
+                                <label htmlFor="price"> Precio (*): </label> <br />
+                                <input type="number" placeholder="Introduce el precio" name="price" required onChange={this.handleChange}/>
                                 {formErrors.price.length > 0 && (
                                     <span className="errorMessage">{formErrors.price}</span>
                                 )}
                             </div>
                             <div className="frequency">
-                                <label htmlFor="frequency"> Frequency: </label> <br />
+                                <label htmlFor="frequency"> Frecuencia: </label> <br />
                                 <select name="frequency" onChange={this.handleChange}>
                                     <option value="none"> --- </option>
                                     <option value="annual"> Annual</option>
@@ -177,7 +177,7 @@ export default class signIn extends Component{
                                 )}
                             </div>
                             <div className="currency">
-                                <label htmlFor="currency"> Currency: </label> <br />
+                                <label htmlFor="currency">Divisa: </label> <br />
                                 <select name="currency" onChange={this.handleChange}>
                                     <option value="none"> --- </option>
                                     <option value="EUR"> EURO (€)</option>
@@ -188,38 +188,38 @@ export default class signIn extends Component{
                                 )}
                             </div>
                         </div>
-                        <p id="additional_information"> Additional information </p>
+                        <p id="additional_information"> Información adicional</p>
                         <div className="additional_information">
                             <div className="url">
-                                <label  htmlFor="url"> URL to unsubscribe: </label> <br />
-                                <input type="text" placeholder="Enter URL ..." name="url" onChange={this.handleChange}/>
+                                <label  htmlFor="url"> URL para desuscribirse: </label> <br />
+                                <input type="text" placeholder="Introduce el URL" name="url" onChange={this.handleChange}/>
                                 {formErrors.url.length > 0 && (
                                     <span className="errorMessage">{formErrors.url}</span>
                                 )}
                             </div>
                             <div className="start_date">
-                                <label htmlFor="start_date"> Start date: </label> <br />
+                                <label htmlFor="start_date"> Fecha de inicio: </label> <br />
                                 <input type="date" name="start_date" onChange={this.handleChange}/>
                                 {formErrors.start_date.length > 0 && (
                                     <span className="errorMessage">{formErrors.start_date}</span>
                                 )}
                             </div>
                             <div className="description">
-                                <label htmlFor="description"> Description: </label> <br />
+                                <label htmlFor="description"> Descripción: </label> <br />
                                 <textarea rows="2" cols="50" form="" />
                                 {formErrors.description.length > 0 && (
                                     <span className="errorMessage">{formErrors.description}</span>
                                 )}
                             </div>
                             <div className="tags">
-                                <label htmlFor="tags"> Tags (separated by coma): </label> <br />
+                                <label htmlFor="tags"> Tags (separados por una coma): </label> <br />
                                 <input type="text" placeholder="Enter some tags ..." name="tags" onChange={this.handleChange}/>
                                 {formErrors.tags.length > 0 && (
                                     <span className="errorMessage">{formErrors.tags}</span>
                                 )}
                             </div>
                             <div className="img_src">
-                                <label htmlFor="img_src"> Choose an image: </label> <br />
+                                <label htmlFor="img_src"> Selecciona una imagen: </label> <br />
                                 <input type="file" name="img_src" onChange={this.handleChange}/>
                                 {formErrors.img_src.length > 0 && (
                                     <span className="errorMessage">{formErrors.img_src}</span>
@@ -227,10 +227,10 @@ export default class signIn extends Component{
                             </div>
                         </div>
                         <div className="info">
-                            <p id="info"> (*) Obligatory fields to complete </p>
+                            <p id="info"> (*) Campos obligatorios a rellenar</p>
                         </div>
                         <div className="createSubscription">
-                            <button type="submit"> Create subscription</button>
+                            <button type="submit">Crear suscripción</button>
                         </div>
                     </div>
                 </form>
