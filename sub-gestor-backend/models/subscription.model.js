@@ -15,7 +15,12 @@ const subscriptionsSchema = new Schema({
         type: Boolean,
         default: false
     },
+    free_trial_end: Date,
     start_date: Date,
+    end: {
+        type: Boolean,
+        default: false
+    },
     end_date: Date,
     currency: {
         type: String,
