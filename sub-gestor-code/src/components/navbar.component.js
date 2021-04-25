@@ -25,6 +25,11 @@ export default class Navbar extends Component {
                         <li class="nav-item" id="FAQ">
                             <Link to ="/FAQ" class="nav-link">FAQ</Link>
                         </li>
+
+                        <li class="nav-item" id="createSub">
+                            <Link to ="/createSub" class="nav-link"> Create Subscription </Link>
+                        </li>
+
                     </ul>
                 </div>
                 </nav>

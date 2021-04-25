@@ -11,6 +11,9 @@ import signUp from "./components/registro/signUp.component";
 import signIn from "./components/signIn.component";
 import FAQ from "./components/FAQ.component";
 
+// TODO: TOCAT
+import createSubscription from "./components/createSubscription.component";
+//
 
 class App extends Component {
   constructor(props) {
@@ -35,6 +38,9 @@ class App extends Component {
             <Route path="/signIn" exact component={signIn} />
             <Route path="/signUp" exact component={signUp} />
             <Route path="/FAQ" exact component={FAQ} />
+
+            <Route path="/createSub" exact component={createSubscription} />
+
         </Router>
     );
   }
