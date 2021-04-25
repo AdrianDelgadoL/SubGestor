@@ -11,7 +11,7 @@ function Tarjeta({title,imageSource,card_price}){
         <div class="text-col">
             <h3 className="titulo">{title}</h3>
             <p className="precio" >{card_price}</p>
-            <a href="#!" className="btn btn-outline-secondary border-0"> Consultar suscripción</a>
+            <a href="#!" id="consulta" className="btn btn-outline-secondary border-0"> Consultar suscripción</a>
         </div>
     </div>
     );

@@ -1,20 +1,21 @@
 .card-container{
     display:flex;
     align-items: center;
-    border:black 3px solid;
     margin: 15px;
     margin-bottom: 10px;
     text-align: center;
     padding: 10px;
-    background-color: thistle;
+    background-color: #e5e5e5;
+    border-radius: 10px;
 }
 
 
 .card-container img{
     height: 120px;
     width: 200px;
-    border: tomato 2px solid;
+    border: black 1px solid;
     margin: 20px;
+    border-radius: 10px;
 }
 
 .text-col{
@@ -24,7 +25,8 @@
 }
 
 .card-container:hover{
-    background-color: lightgreen;
-    box-shadow: 5px 10px 20px 1px rgba(255, 32, 32);
+    background-color: whitesmoke;
+    box-shadow: 0px 10px 50px #555;
 }
+
 
