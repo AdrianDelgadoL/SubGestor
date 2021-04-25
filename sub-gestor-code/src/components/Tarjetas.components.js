@@ -73,9 +73,15 @@ function Tarjetas(){
     return(
         <div className="container">
             <div className="row">
-                <div className="col-md2">
-                <Tarjeta/>
-                </div>               
+                {
+                    cards.map(card=>(
+                        <div className="row-md-2" key={card.id}>
+                            <Tarjeta title={card.title}imageSource={card.image} card_price={card.price}/>
+                            </div>
+                    ))
+                }
+               
+                           
             </div>
                 
         </div>

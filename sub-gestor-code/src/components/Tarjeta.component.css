@@ -7,23 +7,24 @@
     text-align: center;
     padding: 10px;
     background-color: thistle;
-    
-
 }
 
 
 .card-container img{
     height: 120px;
+    width: 200px;
     border: tomato 2px solid;
     margin: 20px;
 }
 
 .text-col{
     padding: 1px;
+    width: 200px;
     
 }
 
 .card-container:hover{
     background-color: lightgreen;
+    box-shadow: 5px 10px 20px 1px rgba(255, 32, 32);
 }
 
