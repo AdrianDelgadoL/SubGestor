@@ -25,6 +25,9 @@ class Navbar extends Component {
                         <li class="nav-item" id="FAQ">
                             <Link to ="/faq" class="nav-link">FAQ</Link>
                         </li>
+                        <li className="nav-item" id="createSub">
+                            <Link to="/createSub" class="nav-link"> Create Subscription </Link>
+                        </li>
                         {/* Este apartado del navegador solo es para poder ver el desarrollo de esta sección, quitar luego*/}
                         <li class="nav-item" id="detail">
                             <Link to ="/subDetail" class="nav-link">Detalle</Link>
