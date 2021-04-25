@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import './homePage.css'
-
-
+import Tarjetas from '../../components/Tarjetas.components'
 
 export default class HomePage extends Component {
     render() {
@@ -15,6 +14,9 @@ export default class HomePage extends Component {
                     <Link to ="/signUp" className="nav-link">Regístate</Link>
                     <p> o</p>
                     <Link to ="/signIn" className="nav-link">Inicia sesión</Link>
+                </div>
+                <div className="cards">
+                    <Tarjetas/>
                 </div>
             </div>
             
