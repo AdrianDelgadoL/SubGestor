@@ -1,0 +1,223 @@
+.grid-container-header{
+    grid-area: header;
+    display: grid;
+    grid-template-areas: 
+    'image name modButton delButton';
+    background-color: #e5e5e5;
+    border-radius: 10px;
+}
+
+.image{
+    grid-area: image;
+    align-content: center;
+    margin: 15px;
+    width: auto;
+}
+
+.grid-container-header img{
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+#logo{
+    max-width: 200;
+    max-height: 200px;
+}
+
+#modifyButton{
+    background-color: #519e8a;
+    color: #fff;
+    width: 65%;
+    font-size: 1em;
+    font-weight: lighter;
+    margin-bottom: 0.25em;
+}
+
+#modifyButton:hover {
+    color: #519e8a;
+    background-color: #fff;
+    border: 2px solid #519e8a;
+}
+
+
+#deleteButton{
+    background-color: #e76f51;
+    width: 65%;
+    color: white;
+}
+
+#deleteButton:hover {
+    color: #e76f51;
+    background-color: #fff;
+    border: 2px solid #e76f51;
+}
+
+.name{
+    grid-area: name;
+    align-self: center;
+}
+.modifyButton{
+    grid-area: modButton;
+    align-self: center;
+
+}
+.deleteButton{
+    grid-area: delButton;
+    align-self: center;
+
+}
+
+.grid-container-price{
+    grid-area: price;
+    display: grid;
+    grid-template-areas: 
+    'datePay frequency'
+    'price currency';
+    border-radius: 10px;
+    margin:5%;
+    text-align-last : center;
+    background-color: #e5e5e5;
+}
+
+.datePayment{
+    grid-area: datePay;
+    margin: 5px;
+}
+
+.frequency{
+    grid-area: frequency;
+    margin: 5px;
+}
+
+.price{
+    grid-area: price;
+    margin: 5px;
+}
+
+#price {
+    width: 15%;
+}
+
+.currency{
+    grid-area: currency;
+}
+
+.grid-container-extra{
+    grid-area: extra;
+    display: grid;
+    grid-template-areas:
+    'freeTrial hasEnd'
+    'dateEndTrial dateEnd';
+    border-radius: 10px;
+    margin:5%;
+    text-align-last:center;
+    background-color: #e5e5e5;
+}
+
+.freeTrial{
+    grid-area: freeTrial;
+    margin-top: 25px;
+}
+
+.dateEndTrial{
+    grid-area: dateEndTrial;
+    margin-bottom: 15px;
+}
+
+.hasEnd{
+    grid-area: hasEnd;
+    margin-top: 25px;
+}
+
+.dateEnd{
+    grid-area: dateEnd;
+    margin-bottom: 5px;
+}
+
+.grid-container-information{
+    grid-area: information;
+    display: grid;
+    grid-template-areas:
+    'url startDate description'
+    'tags none description';
+    border-radius: 10px;
+    margin-left: 2%;
+    margin-right: 2%;
+    height: auto;
+    text-align-last : center;
+    background-color: #e5e5e5;
+}
+
+.url{
+    grid-area: url;
+    margin-top: 15px;
+}
+
+.startDate{
+    grid-area: startDate;
+    margin-top: 15px;
+}
+
+.tags{
+    grid-area: tags;
+    margin-bottom: 15px;
+}
+
+.description{
+    grid-area: description;
+    margin-top: 15px;
+}
+
+.description textarea {
+    height: auto;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-areas:
+    'header header header header header'
+    'price price price extra extra'
+    'information information information information information';
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+@media only screen and (max-width: 1500px) {
+    .grid-container-header{
+        grid-template-areas: 
+        'image name modButton'
+        'image name delButton';
+    }
+
+    .image{
+        margin-left: 20%;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .grid-container{
+        grid-template-areas:
+        'header'
+        'price'
+        'extra'
+        'information';
+    }
+
+    .grid-container-header{
+        grid-template-areas: 
+        'image name'
+        'image modButton'
+        'image delButton';
+    }
+    .image{
+        margin-left: 10%;
+    }
+
+    .grid-container-information{
+        grid-template-areas:
+        'url'
+        'startDate'
+        'tags'
+        'description';
+    }
+  }

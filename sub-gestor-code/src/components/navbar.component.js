@@ -17,17 +17,20 @@ export default class Navbar extends Component {
                 <div class="collapse navbar-collapse" id="nav">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <Link to ="/signIn" class="nav-link">Inicia sessió</Link>
+                            <Link to ="/signIn" class="nav-link">Inicia sesión</Link>
                         </li>
                         <li class="nav-item">
-                            <Link to ="/signUp" class="nav-link">Registra't</Link>
+                            <Link to ="/signUp" class="nav-link">Regístrate</Link>
                         </li>
                         <li class="nav-item" id="FAQ">
-                            <Link to ="/FAQ" class="nav-link">FAQ</Link>
+                            <Link to ="/faq" class="nav-link">FAQ</Link>
                         </li>
-
-                        <li class="nav-item" id="createSub">
-                            <Link to ="/createSub" class="nav-link"> Create Subscription </Link>
+                        <li className="nav-item" id="createSub">
+                            <Link to="/createSub" class="nav-link"> Create Subscription </Link>
+                        </li>
+                        {/* Este apartado del navegador solo es para poder ver el desarrollo de esta sección, quitar luego*/}
+                        <li class="nav-item" id="detail">
+                            <Link to ="/subDetail" class="nav-link">Detalle</Link>
                         </li>
 
                     </ul>
@@ -37,3 +40,5 @@ export default class Navbar extends Component {
         )
     }
 }
+
+export default Navbar;
