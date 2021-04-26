@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Tarjeta from './Tarjeta.components.js'
-import './Tarjetas.component.css'
+import Tarjeta from './Subscription.components.js'
+import './SubList.component.css'
 import amazon_prime from '../assets/amazon-prime.jpg'
 import { useAuthState } from '../../context/context'
 import axios from "axios";
 
 
-function Tarjetas(){
+function SubList(){
 
     const userDetails = useAuthState()
     const userToken = userDetails.token
@@ -43,4 +43,4 @@ function Tarjetas(){
 }
 
 
-export default Tarjetas;
+export default SubList;

@@ -1,5 +1,5 @@
 import React from 'react'
-import './Tarjeta.component.css'
+import './Subscription.component.css'
 
 
 function Tarjeta({title,imageSource,card_price}){

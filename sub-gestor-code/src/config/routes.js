@@ -4,7 +4,7 @@ import FAQ from "../pages/faq/FAQ.component";
 import HomePage from "../pages/homePage/homePage.component";
 import subDetail from "../pages/subDetails/subDetail.component";
 import createSubscription from "../pages/createSubscription/createSubscription.component";
-import Tarjetas from "../pages/tarjetas/Tarjetas.components";
+import SubList from "../pages/subscriptions/SubList.components";
 //import PageNotFound from "../pages/notFound" (Hacer redireccion o generar pageNotFound)
 
 const routes =[
@@ -41,7 +41,7 @@ const routes =[
     {
       isPrivate: false,
       path:'/home',
-      component: Tarjetas
+      component: SubList
     },
     {
       isPrivate: true,
