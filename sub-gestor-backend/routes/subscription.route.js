@@ -21,12 +21,12 @@ GET /subscription/templates/:id (Obtener la información de una plantilla)
 
 router.get('/', auth, (req, res) => {
     //search the user in the DB to get their subscriptions
-    const {id} = req.body;
+    const {id} = req.userId;
     Subscription.find({user_id: id})
         .then(subscriptions => {
             if(subscriptions.length > 0 ) return res.status(200).send(subscriptions);
             console.log(subscriptions)
-            return res.status(400).json( {msg: "subscriptions not found"});
+            return res.status(404).json( {msg: "subscriptions not found"});
         })
 });
 

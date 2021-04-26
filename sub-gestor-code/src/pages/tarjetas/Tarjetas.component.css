@@ -1,6 +1,9 @@
 .container{
-    margin-left: 187px;
-    margin-right: 187px;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
 }
 
 

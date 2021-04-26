@@ -1,89 +1,43 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import Tarjeta from './Tarjeta.components.js'
 import './Tarjetas.component.css'
-import netflix from '../assets/netflix.jpg'
-import HBO from '../assets/hbo.png'
-import diseny_plus from '../assets/disney-plus.png'
 import amazon_prime from '../assets/amazon-prime.jpg'
-import apple_music from '../assets/apple-music.jpg'
-import psnplus from '../assets/psn-plus.jpg'
-import WOW from '../assets/wow.jpg'
-import spotify from '../assets/spotify.png'
-import xboxLive from '../assets/xbox-live.jpg'
+import { useAuthState } from '../../context/context'
+import axios from "axios";
 
-const cards=[
-    {
-        id:1,
-        title:'Netflix',
-        image: netflix,
-        price: 'Precio: 8.99€/mes'
-    },
-    {
-        id:2,
-        title:'HBO',
-        image: HBO,
-        price: 'Precio: 8.99€/mes'
-    },
-    {
-        id:3,
-        title:'Disney Plus',
-        image: diseny_plus,
-        price: 'Precio: 8.99€/mes'
-    },
-    {
-        id:4,
-        title:'Amazon Prime',
-        image: amazon_prime,
-        price: 'Precio: 3.99€/mes'
-    },
-    {
-        id:5,
-        title:'Apple Music',
-        image: apple_music,
-        price: 'Precio: 9.99€/mes'
-    },
-    {
-        id:6,
-        title:'PSN Plus',
-        image: psnplus,
-        price: 'Precio: 8.99€/mes'
-    },
-    {
-        id:7,
-        title:'WOW',
-        image: WOW,
-        price: 'Precio: 12.99€/mes'
-    },
-    {
-        id:8,
-        title:'Spotify',
-        image: spotify,
-        price: 'Precio: 9.99€/mes'
-    },
-    {
-        id:9,
-        title:'XBOX Live',
-        image: xboxLive,
-        price: 'Precio: 6.99€/mes'
-    },
-   
-]
 
 function Tarjetas(){
-    return(
-        <div className="container">
-            <div className="row">
-                {
-                    cards.map(card=>(
-                        <div className="row-md-2" key={card.id}>
-                            <Tarjeta title={card.title}imageSource={card.image} card_price={card.price}/>
-                            </div>
-                    ))
+
+    const userDetails = useAuthState()
+    const userToken = userDetails.token
+    const [tarjetas, setTarjetas] = useState(null)
+
+
+    useEffect(() => {
+        axios.get('http://localhost:4000/subscription/', {headers: {"x-auth-token": userToken}})
+            .then(response => {
+                setTarjetas(response.data.map(tarjeta => (                   
+                    <div className="row-md-2" key={tarjeta._id}>
+                        <Tarjeta title={tarjeta.name}imageSource={amazon_prime} card_price={tarjeta.price}/>
+                    </div>
+                )))
+            }).catch(error => {
+                if(error.response) {
+                    if(error.response.status == 404) {
+                        setTarjetas(
+                            <h1>Parece que aún no existe ninguna suscripción</h1>
+                        )
+                    }
                 }
-               
-                           
+            })
+    }, [])
+
+    return(
+        <div>
+            <h2>Tus Suscripciones</h2>
+            <div className="container">             
+                {tarjetas}                
             </div>
-                
         </div>
     )
 }
