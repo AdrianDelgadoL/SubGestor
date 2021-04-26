@@ -25,14 +25,15 @@ GET /subscription/templates/:id (Obtener la información de una plantilla)
  */
 router.get('/', auth, (req, res) => {
     //search the user in the DB to get their subscriptions
-    const {id} = req.body;
-    Subscription.find({user_id: id})
+    const {userId} = req.body;
+    Subscription.find({user_id: userId})
         .then(subscriptions => {
             if(subscriptions.length > 0 ) return res.status(200).send(subscriptions);
             console.log(subscriptions)
             return res.status(400).json( {msg: 'No se han encontrado suscripciones'});
         })
 });
+
 /**
  * /:id: The path to access the endpoint and the sub id to look for.
  * auth: authentication middleware
@@ -48,7 +49,12 @@ router.get('/:id', auth, (req, res) => {
         });
 });
 
-
+/**
+ * /: The path to access the endpoint.
+ * auth: authentication middleware.
+ * req: Request received. Contains the information required to create a new subscription.
+ * res: Response to the front-end.
+ */
 router.post('/', auth, (req, res) => {
 
     // TODO: Tags por añadir ya para el 7
@@ -60,32 +66,32 @@ router.post('/', auth, (req, res) => {
     } = req.body;
 
     // Comprovar usuario valido
-    if (!id) return res.status(400).json({ msg: "User id required." });
+    if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
     User.findOne({ '_id':mongoose.Types.ObjectId(id) })
         .then(user => {
 
             console.log(user);
             // No usuario == liada
             if (!user) return res.status(400).json({
-                msg: "User doesn't exists."
+                msg: 'No existe este usuario'
             });
 
             // Comprobar campos obligatorios pasados por POST
             if (!name || !active || !currency || !frequency || !price) {
                 return res.status(400).json({
-                    msg: "Please fill all the required fields."
+                    msg: 'Completa todos los campos'
                 });
             }
 
             // Comprobar formato fechas si estan puestas
             if (start_date) {
                 if (isNaN(Date.parse(start_date))) return res.status(400).json({
-                    msg : "Incorrect date format."
+                    msg : 'El formato de la fecha es incorrecto'
                 });
             }
             if (start_date) {
                 if (isNaN(Date.parse(end_date))) return res.status(400).json({
-                    msg : "Incorrect date format."
+                    msg : 'El formato de la fecha es incorrecto'
                 });
             }
 
@@ -111,7 +117,7 @@ router.post('/', auth, (req, res) => {
                 console.log(new_sub);
                 // Devoler estado de salida
                 return res.status(200).json({
-                    msg: "Created subscription successfully",
+                    msg: 'La suscripción se ha creado correctamente',
                     subscription_id: new_sub._id
                 });
             });
