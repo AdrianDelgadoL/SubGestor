@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
 import './homePage.css'
-import Tarjetas from '../../components/Tarjetas.components'
+import Tarjetas from '../tarjetas/Tarjetas.components'
 
 export default class HomePage extends Component {
     render() {
