@@ -63,7 +63,7 @@ const SignUp = (props) => {
             setPasswordError("");
           })
     } else {
-      setFormError("Invalid form")
+      setFormError("El formulario contiene errores")
     }
 
   };
