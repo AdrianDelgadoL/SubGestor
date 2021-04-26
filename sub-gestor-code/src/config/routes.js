@@ -39,12 +39,12 @@ const routes =[
       component: PageNotFound
     },*/
     {
-      isPrivate: false,
+      isPrivate: true,
       path:'/home',
       component: SubList
     },
     {
-      isPrivate: true,
+      isPrivate: false,
       path:'/',
       component: HomePage
     },

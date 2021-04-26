@@ -6,6 +6,36 @@
     align-content: center;
 }
 
+.createSubscription{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createSubscription a {
+    background-color: #519e8a;
+    border: 2px solid #fff;
+    width: 30%;
+    padding: 8px 0px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+    border-radius: 10px;
+    height: 50px;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+}
+
+.createSubscription a:hover {
+    background-color: #fff;
+    border: 2px solid #519e8a;
+    color: #519e8a;
+    text-decoration: none;
+}
+
 
 @media screen and (max-width:910px) {
     .container{

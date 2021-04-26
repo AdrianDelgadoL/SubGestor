@@ -34,7 +34,7 @@ export const AuthReducer = (initialState, action) => {
         user: "",
         token: null
       };
-
+    case "AUTH_ERROR":
     case "LOGIN_ERROR":
       return {
         ...initialState,
