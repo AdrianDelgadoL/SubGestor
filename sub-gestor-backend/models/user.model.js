@@ -18,9 +18,7 @@ const usersSchema = new Schema({
     prefered_currency: {
         type: String,
         default: 'EUR'
-    },
-    current_suscriptions: [String],
-    old_suscriptions: [String]
+    }
 });
 
 module.exports = mongoose.model('User', usersSchema, collection='users');
