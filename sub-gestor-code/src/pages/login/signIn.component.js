@@ -44,7 +44,7 @@ const SignIn = (props) => {
         .then(response => { //El response devuelve un 2xx
           console.log(response.data)
           dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
-          props.history.push('/');
+          props.history.push('/home');
         })
         .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
           console.log(error);

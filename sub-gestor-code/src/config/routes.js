@@ -41,13 +41,14 @@ const routes =[
     {
       isPrivate: false,
       path:'/home',
-      component: HomePage
+      component: Tarjetas
     },
     {
       isPrivate: true,
       path:'/',
-      component: Tarjetas
+      component: HomePage
     },
+    
   ]
    
   export default routes
