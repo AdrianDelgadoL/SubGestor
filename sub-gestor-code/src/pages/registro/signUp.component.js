@@ -101,7 +101,7 @@ const SignUp = (props) => {
   return (
       <div className="wrapper">
           <div className="form-wrapper">
-              <h1>Registre</h1>
+              <h1>Registro</h1>
               <form  noValidate>
                   <div className="email">
                       <label htmlFor="email">Email: </label>
@@ -109,7 +109,7 @@ const SignUp = (props) => {
                           value={email}
                           type="email"
                           className={emailError.length > 0 ? "error" : null}
-                          placeholder="Entra el teu email"
+                          placeholder="Introduce tu email"
                           name="email"
                           required
                           onChange={handleChange}
@@ -119,12 +119,12 @@ const SignUp = (props) => {
                     )}  
                   </div>
                   <div className="password">
-                      <label htmlFor="password">Contrasenya: </label>
+                      <label htmlFor="password">Contraseña: </label>
                       <input
                           value={password}
                           type="password"
                           //className={formErrors.password.length > 0 ? "error" : null}
-                          placeholder="Entra la teva contrasenya"
+                          placeholder="Introduce tu contraseña"
                           name="password"
                           required
                           onChange={handleChange}
@@ -135,13 +135,13 @@ const SignUp = (props) => {
                     )}
                   </div>
                   <div className="pswrepeat">
-                      <label htmlFor="pswrepeat">Repeteix la contrasenya: </label>
+                      <label htmlFor="pswrepeat">Repite la contraseña: </label>
                       <input 
                           value={repPassword}
                           type="password"
                           className=""
                           name="pswrepeat"
-                          placeholder="Repeteix la contrasenya"
+                          placeholder="Repite la contraseña"
                           required
                           onChange={handleChange}
                           pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z].{6,})"
@@ -151,9 +151,9 @@ const SignUp = (props) => {
                       <span className="errorMessage">{formError}</span>
                     )}
                   <div className="createAccount">
-                      <button onClick={handleSubmit} type="submit">Crea compte</button>
-                      <small>Ja tens un compte?</small> 
-                      <Link to ="/signIn" className="nav-link">Inicia sessió</Link>
+                      <button onClick={handleSubmit} type="submit">Crear cuenta</button>
+                      <small>Ya tienes una cuenta?</small> 
+                      <Link to ="/signIn" className="nav-link">Inicia sesión</Link>
                   </div>
               </form>
           </div>
