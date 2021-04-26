@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Tarjeta from './Subscription.components.js'
+import Subscription from './Subscription.components.js'
 import './SubList.component.css'
 import amazon_prime from '../assets/amazon-prime.jpg'
 import { useAuthState } from '../../context/context'
@@ -18,7 +18,7 @@ function SubList(){
             .then(response => {
                 setTarjetas(response.data.map(tarjeta => (                   
                     <div className="row-md-2" key={tarjeta._id}>
-                        <Tarjeta title={tarjeta.name}imageSource={amazon_prime} card_price={tarjeta.price}/>
+                        <Subscription title={tarjeta.name}imageSource={amazon_prime} card_price={tarjeta.price}/>
                     </div>
                 )))
             }).catch(error => {
