@@ -1,0 +1,184 @@
+.formSub-grid {
+    display: grid;
+    grid-template-areas:
+            'information information information information information'
+            'price_information price_information price_information price_information price_information price_information '
+            'additional_information additional_information additional_information additional_information additional_information'
+            'createSubscription createSubscription createSubscription createSubscription createSubscription';
+    margin: 10px;
+    align-content: center;
+    height: 75vh;
+    width: 100%;
+}
+/*
+.formSub {
+    display: grid;
+    grid-template-areas: 'creator'
+                         'formSub-grid';
+}
+*/
+.information {
+    display: grid;
+    grid-template-areas: 'name free_trial free_trial_end end end_date';
+    border-radius: 10px;
+    text-align: center;
+    background-color: #e5e5e5;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
+.price_information {
+    display: grid;
+    grid-template-areas: 'charge_date frequency'
+                         ' price currency';
+    border-radius: 10px;
+    text-align: center;
+    background-color: #e5e5e5;
+    width: 70%;
+    margin-left: 175px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
+.additional_information {
+    display: grid;
+    grid-template-areas: 'url start_date description'
+                         'tags img_src description';
+    border-radius: 10px;
+    text-align: center;
+    background-color: #e5e5e5;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input::error{
+    border: 1px solid red;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 0.75em;
+    display: grid;
+}
+
+h1 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-weight: initial;
+}
+
+#information {
+    font-weight: bold;
+    font-size: large;
+    margin-top: 120px;
+}
+#price_information {
+    margin-left: 200px;
+    margin-bottom: 0px;
+}
+
+#price_information, #additional_information {
+    font-weight: bold;
+    font-size: large;
+    margin-top: 20px;
+}
+
+#information, #additional_information {
+    margin-left: 50px;
+    margin-bottom: 0px;
+}
+
+
+.createSubscription{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createSubscription button {
+    background-color: #519e8a;
+    color: #fff;
+    border: 2px solid #fff;
+    width: 30%;
+    padding: 8px 0px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+    border-radius: 10px;
+    height: 50px;
+    font-size: 20px;
+}
+
+.createSubscription button:hover {
+    color: #519e8a;
+    background-color: #fff;
+    border: 2px solid #519e8a;
+}
+
+#info {
+    margin-top: 10px;
+    color: red;
+    font-size: 1em;
+    text-align: center;
+}
+
+@media only screen and (max-width: 1000px) {
+    .formSub-grid{
+        grid-template-areas:
+            'information'
+            'price_information'
+            'additional_information'
+            'createSubscription';
+    }
+
+    .information {
+        grid-template-areas: 'name'
+                             'free_trial'
+                             'free_trial_end'
+                             'end'
+                             'end_date';
+        /* margin-top: 500px; */
+    }
+    .price_information {
+        grid-template-areas: 'charge_date'
+                             'frequency'
+                             'price'
+                             'currency';
+        margin-left: 100px;
+    }
+
+    .additional_information {
+        grid-template-areas: 'url'
+                             'start_date'
+                             'description'
+                             'tags'
+                             'img_src';
+    }
+
+    h1 {
+        /*margin: 50px;*/
+        margin-bottom: 0px;
+    }
+
+    #price_information, #information, #additional_information {
+        margin-left: 100px;
+        margin-bottom: 0px;
+    }
+    #information {
+        margin-top: 900px;
+    }
+
+    .information, .additional_information {
+        width: 70%;
+        margin-left: 100px;
+    }
+}

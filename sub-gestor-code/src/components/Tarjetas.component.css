@@ -1,0 +1,19 @@
+.container{
+    margin-left: 187px;
+    margin-right: 187px;
+}
+
+
+@media screen and (max-width:910px) {
+    .container{
+        
+        margin-left:0.5%;
+       
+    }
+}
+@media screen and (max-width:1193px) and (min-width:910px) {
+    .container{
+        
+        margin-left:430px;
+    }
+}
