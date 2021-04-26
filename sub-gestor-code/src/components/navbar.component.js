@@ -9,7 +9,7 @@ class Navbar extends Component {
             <React.Fragment>
 
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <Link to="/" class="navbar-brand">SubGestor</Link>
+                <Link to="/home" class="navbar-brand">SubGestor</Link>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="#nav" aria-expanded="false" aria-label="Toggle navigation" onClick={console.log("navbar button pulsado")}>
                     <span class="navbar-toggler-icon"></span>
                 </button>
