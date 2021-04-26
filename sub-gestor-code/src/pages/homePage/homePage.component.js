@@ -15,9 +15,7 @@ export default class HomePage extends Component {
                     <p> o</p>
                     <Link to ="/signIn" className="nav-link">Inicia sesión</Link>
                 </div>
-                <div className="cards">
-                    <Tarjetas/>
-                </div>
+                
             </div>
             
         )
