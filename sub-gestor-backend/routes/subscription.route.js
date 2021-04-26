@@ -18,7 +18,11 @@ GET /subscription/old/:id (obtener detalle de una suscripción eliminada)
 GET /subscription/templates (Obtener todas las plantillas disponibles)
 GET /subscription/templates/:id (Obtener la información de una plantilla)
  */
-
+/**
+ * /: The path to access the endpoint to get user's subscriptions.
+ * req: Request received. Contains the user id to look for in the subscriptions BD.
+ * res: Response to the front-end.
+ */
 router.get('/', auth, (req, res) => {
     //search the user in the DB to get their subscriptions
     const {id} = req.body;
@@ -26,19 +30,24 @@ router.get('/', auth, (req, res) => {
         .then(subscriptions => {
             if(subscriptions.length > 0 ) return res.status(200).send(subscriptions);
             console.log(subscriptions)
-            return res.status(400).json( {msg: "subscriptions not found"});
+            return res.status(400).json( {msg: 'No se han encontrado suscripciones'});
         })
 });
-
+/**
+ * /:id: The path to access the endpoint and the sub id to look for.
+ * auth: authentication middleware
+ * req: Request received. Contains the url parameter.
+ * res: Response to the front-end.
+ */
 router.get('/:id', auth, (req, res) => {
     const id = req.params.id;
     Subscription.findById(id)
         .then(subscription => {
-            if(subscription) {
-                res.json(subscription);
-            }
+            if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
+            if(subscription) return res.status(200).json(subscription);
         });
 });
+
 
 router.post('/', auth, (req, res) => {
 
