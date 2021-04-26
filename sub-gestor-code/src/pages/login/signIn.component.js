@@ -72,7 +72,7 @@ const SignIn = (props) => {
         if(emailRegex.test(value)) {
           setEmailError("");
         } else {
-          setEmailError("adreça email incorrecte");
+          setEmailError("dirección de email incorrecta");
         }
         setEmail(value);
         break;
@@ -80,7 +80,7 @@ const SignIn = (props) => {
           if(passwordRegex.test(value)) {
             setPasswordError("");
           } else {
-            setPasswordError("la contrasenya ha de contenir una majúscula i 8 o més caràcters");
+            setPasswordError("la contraseña tiene que contener una mayúscula y 8 o más carácteres");
           }
           setPassword(value)
           break;
