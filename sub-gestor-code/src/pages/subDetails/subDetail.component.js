@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 //import {Link} from 'react-router-dom'
 import './subDetail.css'
 import {useAuthDispatch, useAuthState} from '../../context/context';
@@ -50,7 +50,7 @@ const SubDetail = (props) => {
         .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
             console.log(error);
             if(error.response) {
-                break; //tractar si hi ha resposta d'error
+                //TODO: tractar si hi ha resposta d'error
             }
         })
     };
