@@ -19,7 +19,7 @@ const SubList = (props) => {
             .then(response => {
                 setTarjetas(response.data.map(tarjeta => (                   
                     <div className="row-md-2" key={tarjeta._id}>
-                        <Subscription title={tarjeta.name}imageSource={amazon_prime} card_price={tarjeta.price}/>
+                        <Subscription title={tarjeta.name}imageSource={amazon_prime} card_price={tarjeta.price} payment_type={tarjeta.currency}/>
                     </div>
                 )))
             }).catch(error => {
