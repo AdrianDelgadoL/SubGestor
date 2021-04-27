@@ -136,7 +136,7 @@ const CreateSubscription = (props) => {
     return (
         <div className="formSub">
             <h2 id="creator"> Crear nueva suscripción </h2>
-            <form noValidate>
+            <form enctype="multipart/form-data" noValidate>
                 <div className="formSub-grid">
                     <p id="information"> Información </p>
                     <div className="information">
