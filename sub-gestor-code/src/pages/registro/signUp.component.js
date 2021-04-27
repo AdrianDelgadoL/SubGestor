@@ -49,7 +49,7 @@ const SignUp = (props) => {
           .then(response => { //El response devuelve un 2xx
             console.log(response.data)
             dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
-            props.history.push('/subDetail');
+            props.history.push('/home');
           })
           .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
             dispatch({ type: 'LOGIN_ERROR', error: error.response.data.msg });
@@ -63,7 +63,7 @@ const SignUp = (props) => {
             setPasswordError("");
           })
     } else {
-      setFormError("Invalid form")
+      setFormError("El formulario contiene errores")
     }
 
   };
@@ -78,7 +78,7 @@ const SignUp = (props) => {
         if(emailRegex.test(value)) {
           setEmailError("");
         } else {
-          setEmailError("adreça email incorrecte");
+          setEmailError("dirección de email incorrecta");
         }
         setEmail(value);
         break;
@@ -86,7 +86,7 @@ const SignUp = (props) => {
         if(passwordRegex.test(value)) {
           setPasswordError("");
         } else {
-          setPasswordError("la contrasenya ha de contenir una majúscula i 8 o més caràcters");
+          setPasswordError("la contraseña tiene que contener una mayúscula y 8 o más carácteres");
         }
         setPassword(value)
         break;

@@ -31,6 +31,7 @@ const subscriptionsSchema = new Schema({
         type: String,
         required: true
     },
+	charge_date: Date,
     url: String,
     price: {
         type: Number,

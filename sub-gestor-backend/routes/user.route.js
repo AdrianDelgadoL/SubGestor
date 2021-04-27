@@ -26,15 +26,15 @@ router.post('/create', (req, res) => {
     const {email, password, conf_pwd} = req.body;
     console.log(req.body);
     //validation for password and email
-    if( !email || !password || !conf_pwd) return res.status(400).json({ msg: 'Please enter all fields' });
-    if(password != conf_pwd) return res.status(400).json( { msg: "Passwords don't match" })
+    if( !email || !password || !conf_pwd) return res.status(400).json({ msg: 'Completa todos los campos' });
+    if(password != conf_pwd) return res.status(400).json( { msg: 'Las contraseñas no coinciden' })
     if(!emailValidator.validate(email)) {
-        return res.status(400).json ( {msg: 'Invalid email format, please repeat'})
+        return res.status(400).json ( {msg: 'El formato de correo es inválido'})
     }
 
     User.findOne({ email })
         .then(user => {
-            if(user) return res.status(400).json({ msg: 'User already exists' });
+            if(user) return res.status(400).json({ msg: 'Este usuario ya existe' });
             const newUser = new User({
                 email,
                 passwd_hash: password
@@ -78,51 +78,41 @@ router.post('/login', (req, res) => {
         const {userEmail, userPassword} = req.body;
         // comprova que hi hagi dades insertades
         if (!userEmail || !userPassword) {
-            return res.status(400).json({msg: 'Please enter all the fields'});
+            return res.status(400).json({msg: 'Completa todos los campos'});
         } else if(!emailValidator.validate(userEmail)) {
-            return res.status(400).json ( {msg: 'Invalid email format, please repeat'})
+            return res.status(400).json ( {msg: 'El formato de correo es inválido'})
         }
         // busca l'usuari a la BD a través del mail
         User.findOne({'email': userEmail})
             .then(user => {
                 // comprova si l'usuari existeix a la BD
                 if (!user) {
-                    return res.status(400).json({msg: 'No such user with this email, repeat it please'});
+                    return res.status(400).json({msg: 'No existe un usuario con este correo'});
                 }
+                // comparem els hash de les contrasenyes
+                bcrypt.compare(userPassword, user.passwd_hash, function(err, result) {
+                    if(err) throw err;
 
-                // fem hash a la contrasenya introduida
-                bcrypt.genSalt(10, (err, saltHash) => {
-                    bcrypt.hash(userPassword, saltHash, (err, hashedPassword) => {
-                        if(err) throw err;
-
-                        // comparem els hash de les contrasenyes
-                        bcrypt.compare(userPassword, user.passwd_hash, function(err, result) {
-                            if(err) throw err;
-
-                            if(!result) {
-                                return res.status(400).json( { msg: 'The password does not fit with this email, repeat it please' });
-                            }
-                            // correct authentication = generate token
-                            jwt.sign(
-                                { id: user.id },
-                                config.get('jwtSecret'),
-                                { expiresIn: 3600 },
-                                (err, token) => {
-                                    if (err) throw err;
-                                    res.status(200).json({
-                                        token,
-                                        user: {
-                                            email: user.email,
-                                        }
-                                    });
+                    if(!result) {
+                        return res.status(400).json( { msg: 'El correo o la contraseña son inválidos' });
+                    }
+                    // correct authentication = generate token
+                    jwt.sign(
+                        { id: user.id },
+                        config.get('jwtSecret'),
+                        { expiresIn: 3600 },
+                        (err, token) => {
+                            if (err) throw err;
+                            res.status(200).json({
+                                token,
+                                user: {
+                                    email: user.email,
                                 }
-                            )
+                            });
+                        }
+                    )
 
-                        });
-
-                    });
                 });
-
             }
         );
     }
