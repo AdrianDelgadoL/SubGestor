@@ -58,7 +58,7 @@ const SignIn = (props) => {
           setEmailError("");
         })
     } else {
-      setFormError("Invalid form")
+      setFormError("El formulario contiene errores")
     }
   };
 

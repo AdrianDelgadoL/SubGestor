@@ -1,8 +1,8 @@
 import React from 'react'
-import './Tarjeta.component.css'
+import './Subscription.component.css'
 
 
-function Tarjeta({title,imageSource,card_price}){
+function Subscription({title,imageSource,card_price}){
     return(
     <div class="card-container">
         <div class="img-col">
@@ -17,4 +17,4 @@ function Tarjeta({title,imageSource,card_price}){
     );
 }
 
-export default Tarjeta;
+export default Subscription;
