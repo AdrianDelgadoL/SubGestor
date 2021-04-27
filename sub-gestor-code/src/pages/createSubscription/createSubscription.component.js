@@ -226,7 +226,7 @@ const CreateSubscription = (props) => {
                         </div>
                         <div className="img_src">
                             <label htmlFor="img_src"> Selecciona una imagen: </label> <br />
-                            <input type="file" name="img_src" onChange={handleChange}/>
+                            <input id="select" type="file" name="img_src" onChange={handleChange}/>
                         </div>
                     </div>
                     <div className="info">
