@@ -4,6 +4,8 @@ const Subscription = require('../models/subscription.model');
 const auth = require('../middleware/auth.middleware');
 const User = require('../models/user.model');
 const mongoose = require('mongoose');
+const multer = require('multer');
+var upload = multer({dest: './testingFiles'}).single('image');
 // var fileId = mongoose.Types.ObjectId();
 
 /*
@@ -29,7 +31,6 @@ router.get('/', auth, (req, res) => {
     Subscription.find({user_id: id})
         .then(subscriptions => {
             if(subscriptions.length > 0 ) return res.status(200).send(subscriptions);
-            console.log(subscriptions)
             return res.status(404).json( {msg: 'No se han encontrado suscripciones'});
         })
 });
@@ -123,5 +124,16 @@ router.post('/', auth, (req, res) => {
             });
         });
 });
+
+router.post('/file', (req, res) => {
+    upload(req, res, (err) => {
+        if(err instanceof multer.MulterError) throw err;
+        console.log(req.file);
+        return res.json({msg: "upload bien"});
+    })
+})
+
+
+
 
 module.exports = router;
