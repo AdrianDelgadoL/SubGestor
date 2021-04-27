@@ -25,15 +25,22 @@ const routes =[
       component: FAQ
     },
     {
-        isPrivate: false,
-        path:'/createSub',
-        component: createSubscription
+      isPrivate: false,
+      path:'/createSub',
+      component: createSubscription
     },
+    {
+      isPrivate: false,
+      path:'/subDetail/:id',
+      component: SubDetail
+    },
+    // Esta deberia borrarse debido a que solo se puede entrar con el id ha esta ruta con el id.
     {
       isPrivate: false,
       path:'/subDetail',
       component: SubDetail
     },
+    
     /*{
       path:'/*',
       component: PageNotFound
