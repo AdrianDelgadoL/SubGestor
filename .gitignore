@@ -1,2 +1,3 @@
 #ficheros a no tener en cuenta
 /node_modules
+.idea/

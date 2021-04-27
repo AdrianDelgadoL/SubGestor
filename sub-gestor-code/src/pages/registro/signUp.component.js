@@ -16,7 +16,7 @@ const passwordRegex = RegExp(
   "^(((?=.*[a-z])(?=.*[A-Z])))(?=.{8,})"
 );
 
-const SignUp = () => { 
+const SignUp = (props) => { 
   // Define el estado del componente
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState(''); 
@@ -24,11 +24,17 @@ const SignUp = () => {
   const [emailError, setEmailError] = useState(''); 
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
+
+  //Cargamos el dispatch para poder usarlo después para avisar al reducer. Esto nos permite guardar el token y el usuario
+  //en el contexto creado en el fichero context. Para usarlo solo tenemos que llamar a dispatch() y pasarle un objeto JSON
+  //donde se indique el tipo de dispatch, es decir, la accion que esta ocurriendo y un payload si es necesario (de momento solo
+  //en el caso que la acción sea del tipo LOGIN_SUCCES). Este payload nos permite que el reducer obtenga la información necesaria.
+  //De momento solo guardamos el token y el email.
   const dispatch = useAuthDispatch()
 
   const formValid = () => {
     // Valida que los errores esten vacios
-    if (emailError.length > 0 || passwordError > 0) return false
+    if (emailError.length > 0 || passwordError.length > 0) return false
     if (email.length === 0 || password.length === 0 || repPassword.length === 0) return false
     return true
   };
@@ -40,25 +46,24 @@ const SignUp = () => {
     if (formValid()) {
       dispatch({ type: 'REQUEST_LOGIN' });
       axios.post('http://localhost:4000/user/create', {email, password, conf_pwd: repPassword})
-          .then(response => {
-              if(response.status !== 200) {
-                
-              } else {
-                dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
-                localStorage.setItem('currentUser', JSON.stringify(response.data))
-              }
+          .then(response => { //El response devuelve un 2xx
+            console.log(response.data)
+            dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
+            props.history.push('/home');
           })
-          .catch(function (error){
+          .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
             dispatch({ type: 'LOGIN_ERROR', error: error.response.data.msg });
-            //TODO: vaciar el formulario
+            // Añadimos el error devuelto por back-end a nuestro formError para que se muestre en el formulario
             setFormError(error.response.data.msg);
+            // Vaciamos el formulario
             setEmail("")
             setPassword("")
             setRepPassword("")
-
+            setEmailError("");
+            setPasswordError("");
           })
     } else {
-      setFormError("Invalid form")
+      setFormError("El formulario contiene errores")
     }
 
   };
@@ -73,7 +78,7 @@ const SignUp = () => {
         if(emailRegex.test(value)) {
           setEmailError("");
         } else {
-          setEmailError("adreça email incorrecte");
+          setEmailError("dirección de email incorrecta");
         }
         setEmail(value);
         break;
@@ -81,13 +86,13 @@ const SignUp = () => {
         if(passwordRegex.test(value)) {
           setPasswordError("");
         } else {
-          setPasswordError("la contrasenya ha de contenir una majúscula i 8 o més caràcters");
+          setPasswordError("la contraseña tiene que contener una mayúscula y 8 o más carácteres");
         }
         setPassword(value)
         break;
-        case "pswrepeat":
-          setRepPassword(value)
-          break;
+      case "pswrepeat":
+        setRepPassword(value)
+        break;
       default:
         break;
     }
@@ -96,7 +101,7 @@ const SignUp = () => {
   return (
       <div className="wrapper">
           <div className="form-wrapper">
-              <h1>Registre</h1>
+              <h1>Registro</h1>
               <form  noValidate>
                   <div className="email">
                       <label htmlFor="email">Email: </label>
@@ -104,7 +109,7 @@ const SignUp = () => {
                           value={email}
                           type="email"
                           className={emailError.length > 0 ? "error" : null}
-                          placeholder="Entra el teu email"
+                          placeholder="Introduce tu email"
                           name="email"
                           required
                           onChange={handleChange}
@@ -114,12 +119,12 @@ const SignUp = () => {
                     )}  
                   </div>
                   <div className="password">
-                      <label htmlFor="password">Contrasenya: </label>
+                      <label htmlFor="password">Contraseña: </label>
                       <input
                           value={password}
                           type="password"
                           //className={formErrors.password.length > 0 ? "error" : null}
-                          placeholder="Entra la teva contrasenya"
+                          placeholder="Introduce tu contraseña"
                           name="password"
                           required
                           onChange={handleChange}
@@ -130,13 +135,13 @@ const SignUp = () => {
                     )}
                   </div>
                   <div className="pswrepeat">
-                      <label htmlFor="pswrepeat">Repeteix la contrasenya: </label>
+                      <label htmlFor="pswrepeat">Repite la contraseña: </label>
                       <input 
                           value={repPassword}
                           type="password"
                           className=""
                           name="pswrepeat"
-                          placeholder="Repeteix la contrasenya"
+                          placeholder="Repite la contraseña"
                           required
                           onChange={handleChange}
                           pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z].{6,})"
@@ -146,9 +151,9 @@ const SignUp = () => {
                       <span className="errorMessage">{formError}</span>
                     )}
                   <div className="createAccount">
-                      <button onClick={handleSubmit} type="submit">Crea compte</button>
-                      <small>Ja tens un compte?</small> 
-                      <Link to ="/signin" className="nav-link">Inicia sessió</Link>
+                      <button onClick={handleSubmit} type="submit">Crear cuenta</button>
+                      <small>Ya tienes una cuenta?</small> 
+                      <Link to ="/signIn" className="nav-link">Inicia sesión</Link>
                   </div>
               </form>
           </div>
