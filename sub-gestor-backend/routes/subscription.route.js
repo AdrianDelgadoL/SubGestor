@@ -3,9 +3,7 @@ const router = express.Router();
 const Subscription = require('../models/subscription.model');
 const auth = require('../middleware/auth.middleware');
 const User = require('../models/user.model');
-const mongoose = require('mongoose');
-// var fileId = mongoose.Types.ObjectId();
-
+const upload = require('../middleware/upload.middleware')
 /*
 Endpoints for subscriptions
 GET /subscription (obtener todos las suscripciones activas)
@@ -18,28 +16,42 @@ GET /subscription/old/:id (obtener detalle de una suscripción eliminada)
 GET /subscription/templates (Obtener todas las plantillas disponibles)
 GET /subscription/templates/:id (Obtener la información de una plantilla)
  */
-
+/**
+ * /: The path to access the endpoint to get user's subscriptions.
+ * req: Request received. Contains the user id to look for in the subscriptions BD.
+ * res: Response to the front-end.
+ */
 router.get('/', auth, (req, res) => {
     //search the user in the DB to get their subscriptions
-    const {id} = req.body;
+    const {id} = req.userId;
     Subscription.find({user_id: id})
         .then(subscriptions => {
             if(subscriptions.length > 0 ) return res.status(200).send(subscriptions);
-            console.log(subscriptions)
-            return res.status(400).json( {msg: "subscriptions not found"});
+            return res.status(404).json( {msg: 'No se han encontrado suscripciones'});
         })
 });
 
+/**
+ * /:id: The path to access the endpoint and the sub id to look for.
+ * auth: authentication middleware
+ * req: Request received. Contains the url parameter.
+ * res: Response to the front-end.
+ */
 router.get('/:id', auth, (req, res) => {
     const id = req.params.id;
     Subscription.findById(id)
         .then(subscription => {
-            if(subscription) {
-                res.json(subscription);
-            }
+            if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
+            if(subscription) return res.status(200).json(subscription);
         });
 });
 
+/**
+ * /: The path to access the endpoint.
+ * auth: authentication middleware.
+ * req: Request received. Contains the information required to create a new subscription.
+ * res: Response to the front-end.
+ */
 router.post('/', auth, (req, res) => {
 
     // TODO: Tags por añadir ya para el 7
@@ -51,32 +63,32 @@ router.post('/', auth, (req, res) => {
     } = req.body;
 
     // Comprovar usuario valido
-    if (!id) return res.status(400).json({ msg: "User id required." });
+    if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
     User.findOne({ '_id':mongoose.Types.ObjectId(id) })
         .then(user => {
 
             console.log(user);
             // No usuario == liada
             if (!user) return res.status(400).json({
-                msg: "User doesn't exists."
+                msg: 'No existe este usuario'
             });
 
             // Comprobar campos obligatorios pasados por POST
             if (!name || !active || !currency || !frequency || !price) {
                 return res.status(400).json({
-                    msg: "Please fill all the required fields."
+                    msg: 'Completa todos los campos'
                 });
             }
 
             // Comprobar formato fechas si estan puestas
             if (start_date) {
                 if (isNaN(Date.parse(start_date))) return res.status(400).json({
-                    msg : "Incorrect date format."
+                    msg : 'El formato de la fecha es incorrecto'
                 });
             }
             if (start_date) {
                 if (isNaN(Date.parse(end_date))) return res.status(400).json({
-                    msg : "Incorrect date format."
+                    msg : 'El formato de la fecha es incorrecto'
                 });
             }
 
@@ -102,11 +114,20 @@ router.post('/', auth, (req, res) => {
                 console.log(new_sub);
                 // Devoler estado de salida
                 return res.status(200).json({
-                    msg: "Created subscription successfully",
+                    msg: 'La suscripción se ha creado correctamente',
                     subscription_id: new_sub._id
                 });
             });
         });
 });
+
+router.post('/file', upload.single('image'), (req, res) => {
+    console.log(req.file);
+    return res.json({msg: "upload bien"});
+
+})
+
+
+
 
 module.exports = router;
