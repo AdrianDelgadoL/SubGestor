@@ -134,32 +134,32 @@ const CreateSubscription = (props) => {
     };
 
     return (
-        <div className="formSub">
+        <div className="createSubscription-formSub">
             <h2 id="creator"> Crear nueva suscripción </h2>
             <form enctype="multipart/form-data" noValidate>
-                <div className="formSub-grid">
+                <div className="createSubscription-formSub-grid">
                     <p id="information"> Información </p>
-                    <div className="information">
-                        <div className="name">
+                    <div className="createSubscription-information">
+                        <div className="createSubscription-name">
                             <label htmlFor="name"> Nombre (*): </label> <br />
                             <input type="text" placeholder="Introduce el nombre" name="name" onChange={handleChange} required/>
                         </div>
-                        <div className="free_trial">
+                        <div className="createSubscription-free_trial">
                             <label htmlFor="free_trial"> Es una prueba gratuita: </label> <br />
                             <input type="checkbox" name="free_trial" onClick={ changeFreeTrialEnd }/>
                         </div>
-                        <div className="free_trial_end">
+                        <div className="createSubscription-free_trial_end">
                             <label  htmlFor="free_trial_end"> Finalización prueba gratuita: </label> <br />
                             <input disabled= {free_trial} type="date"  name="free_trial_end" onChange={handleChange}/>
                             {freeTrialEndError.length > 0 && (
                                 <span className="errorMessage">{freeTrialEndError}</span>
                             )}
                         </div>
-                        <div className="end">
+                        <div className="createSubscription-end">
                             <label  htmlFor="end"> Tiene fecha de finalización: </label> <br />
                             <input type="checkbox" name="end" onClick={ changeEndDate } />
                         </div>
-                        <div className="end_date">
+                        <div className="createSubscription-end_date">
                             <label htmlFor="end_date"> Fecha finalización: </label> <br />
                             <input disabled= {end}  type="date" name="end_date" onChange={handleChange}/>
                             {endDateError.length > 0 && (
@@ -168,22 +168,22 @@ const CreateSubscription = (props) => {
                         </div>
                     </div>
                     <p id="price_information"> Información sobre el precio</p>
-                    <div className="price_information">
-                        <div className="charge_date">
+                    <div className="createSubscription-price_information">
+                        <div className="createSubscription-charge_date">
                             <label htmlFor="charge_date"> Fecha del pago: </label> <br />
                             <input type="date" name="charge_date" onChange={handleChange}/>
                             {chargeDateError.length > 0 && (
                                 <span className="errorMessage">{chargeDateError}</span>
                             )}
                         </div>
-                        <div className="price">
+                        <div className="createSubscription-price">
                             <label htmlFor="price"> Precio (*): </label> <br />
                             <input type="number" placeholder="Introduce el precio" name="price" required onChange={handleChange}/>
                             {priceError > 0 && (
                                 <span className="errorMessage">{priceError}</span>
                             )}
                         </div>
-                        <div className="frequency">
+                        <div className="createSubscription-frequency">
                             <label htmlFor="frequency"> Frecuencia: </label> <br />
                             <select name="frequency" onChange={handleChange} >
                                 <option value="null"> --- </option>
@@ -194,7 +194,7 @@ const CreateSubscription = (props) => {
                                 <option value="weekly">Semanal</option>
                             </select>
                         </div>
-                        <div className="currency">
+                        <div className="createSubscription-currency">
                             <label htmlFor="currency"> Divisa: </label> <br />
                             <select name="currency" onChange={handleChange}>
                                 <option value="null"> --- </option>
@@ -204,32 +204,32 @@ const CreateSubscription = (props) => {
                         </div>
                     </div>
                     <p id="additional_information"> Información adicional </p>
-                    <div className="additional_information">
-                        <div className="url">
+                    <div className="createSubscription-additional_information">
+                        <div className="createSubscription-url">
                             <label  htmlFor="url"> URL para desuscribirse: </label> <br />
                             <input type="text" placeholder="Intorduce URL" name="url" onChange={handleChange}/>
                             {urlError.length > 0 && (
                                 <span className="errorMessage">{urlError}</span>
                             )}
                         </div>
-                        <div className="start_date">
+                        <div className="createSubscription-start_date">
                             <label htmlFor="start_date"> Fecha de inicio: </label> <br />
                             <input type="date" name="start_date" onChange={handleChange}/>
                         </div>
-                        <div className="description">
+                        <div className="createSubscription-description">
                             <label htmlFor="description"> Descripción: </label> <br />
                             <textarea rows="2" cols="50" form="" onChange={handleChange} />
                         </div>
-                        <div className="tags">
+                        <div className="createSubscription-tags">
                             <label htmlFor="tags"> Tags (separados por una coma): </label> <br />
                             <input type="text" placeholder="Introduce algún tag" name="tags" onChange={handleChange}/>
                         </div>
-                        <div className="img_src">
+                        <div className="createSubscription-img_src">
                             <label htmlFor="img_src"> Selecciona una imagen: </label> <br />
                             <input id="select" type="file" name="img_src" onChange={handleChange}/>
                         </div>
                     </div>
-                    <div className="info">
+                    <div className="createSubscription-info">
                         <p id="info"> (*) Campos obligatorios a completar</p>
                     </div>
                     <div className="createSubscription">

@@ -1,41 +1,31 @@
-.formSub-grid {
+.createSubscription-formSub-grid {
     display: grid;
     grid-template-areas:
-            'information information information information information'
-            'price_information price_information price_information price_information price_information price_information '
-            'additional_information additional_information additional_information additional_information additional_information'
+            'createSubscription-information createSubscription-information createSubscription-information createSubscription-information createSubscription-information'
+            'createSubscription-price_information createSubscription-price_information createSubscription-price_information createSubscription-price_information createSubscription-price_information createSubscription-price_information '
+            'createSubscription-additional_information createSubscription-additional_information createSubscription-additional_information createSubscription-additional_information createSubscription-additional_information'
             'createSubscription createSubscription createSubscription createSubscription createSubscription';
-    margin: 10px;
     align-content: center;
-    height: 75vh;
     width: 100%;
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
-/*
-.formSub {
+.createSubscription-information {
     display: grid;
-    grid-template-areas: 'creator'
-                         'formSub-grid';
-}
-*/
-
-.information {
-    display: grid;
-    grid-template-areas: 'name free_trial free_trial_end end end_date';
+    grid-template-areas: 'createSubscription-name createSubscription-free_trial createSubscription-free_trial_end createSubscription-end createSubscription-end_date';
     border-radius: 10px;
     text-align: center;
     background-color: #e5e5e5;
     padding: 20px;
     padding-bottom: 20px;
-    margin-top: 20px;
 }
 
-.price_information {
+.createSubscription-price_information {
     display: grid;
-    grid-template-areas: 'charge_date frequency'
-                         ' price currency';
+    grid-template-areas: 'createSubscription-charge_date createSubscription-frequency'
+                         ' createSubscription-price createSubscription-currency';
     border-radius: 10px;
     text-align: center;
     background-color: #e5e5e5;
@@ -46,10 +36,10 @@
     margin-top: 20px;
 }
 
-.additional_information {
+.createSubscription-additional_information {
     display: grid;
-    grid-template-areas: 'url start_date description'
-                         'tags img_src description';
+    grid-template-areas: 'createSubscription-url createSubscription-start_date createSubscription-description'
+                         'createSubscription-tags createSubscription-img_src createSubscription-description';
     border-radius: 10px;
     text-align: center;
     background-color: #e5e5e5;
@@ -62,7 +52,7 @@ label {
     font-weight: bold;
 }    
 
-input::error{
+input::error {
     border: 1px solid red;
 }
 
@@ -72,7 +62,7 @@ input::error{
     display: grid;
 }
 
-.charge_information {
+.createSubscription-charge_information {
     padding: 10px;
 }
 
@@ -85,7 +75,6 @@ h1 {
 #information {
     font-weight: bold;
     font-size: large;
-    margin-top: 120px;
 }
 
 #price_information {
@@ -142,59 +131,63 @@ h1 {
 }
 
 @media only screen and (max-width: 1000px) {
-    .formSub-grid{
+    .createSubscription-formSub-grid{
         grid-template-areas:
-            'information'
-            'price_information'
-            'additional_information'
+            'createSubscription-information'
+            'createSubscription-price_information'
+            'createSubscription-additional_information'
             'createSubscription';
+        margin-left: 5%;
+        margin-right: 5%;
+
     }
 
-    .information {
-        grid-template-areas: 'name'
-                             'free_trial'
-                             'free_trial_end'
-                             'end'
-                             'end_date';
-        /* margin-top: 500px; */
+    .createSubscription-information {
+        grid-template-areas: 'createSubscription-name'
+                             'createSubscription-free_trial'
+                             'createSubscription-free_trial_end'
+                             'createSubscription-end'
+                             'createSubscription-end_date';
+        margin-left: 5%;
+        text-align: center;
     }
-    .price_information {
-        grid-template-areas: 'charge_date'
-                             'frequency'
-                             'price'
-                             'currency';
-        margin-left: 100px;
+    .createSubscription-price_information {
+        grid-template-areas: 'createSubscription-charge_date'
+                             'createSubscription-frequency'
+                             'createSubscription-price'
+                             'createSubscription-currency';
+        margin-left: 5%;
+        text-align: center;
     }
 
-    .additional_information {
-        grid-template-areas: 'url'
-                             'start_date'
-                             'description'
-                             'tags'
-                             'img_src';
+    .createSubscription-additional_information {
+        grid-template-areas: 'createSubscription-url'
+                             'createSubscription-start_date'
+                             'createSubscription-description'
+                             'createSubscription-tags'
+                             'createSubscription-img_src';
         text-align: center;
     }
 
     h1 {
-        /*margin: 50px;*/
         margin-bottom: 0px;
     }
 
     #price_information, #information, #additional_information {
-        margin-left: 100px;
-        margin-bottom: 0px;
+        margin-left: 15%;
     }
 
-    #information {
-        margin-top: 900px;
-    }
-
-    .information, .additional_information {
+    .createSubscription-information, .createSubscription-additional_information, .createSubscription-price_information {
         width: 70%;
-        margin-left: 100px;
+        margin-left: 15%;
     }
 
-    .additional_information textarea,  #select{
+    .createSubscription-additional_information textarea,  #select{
         width: 70%;
+    }
+
+    .createSubscription button {
+        width: 60%;
+        margin-left: 0%;
     }
 }
