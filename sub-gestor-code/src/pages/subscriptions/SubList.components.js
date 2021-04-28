@@ -38,11 +38,11 @@ const SubList = (props) => {
 
     return(
         <div>
-            <h2>Tus Suscripciones</h2>
-            <div className="container">             
+            <h2>Tus suscripciones</h2>
+            <div className="subList-container container">             
                 {tarjetas}                
             </div>
-            <div className="createSubscription">
+            <div className="subList-createSubscription">
                 <Link to ="/createSub">Crear nueva suscripcion</Link>
             </div>
         </div>

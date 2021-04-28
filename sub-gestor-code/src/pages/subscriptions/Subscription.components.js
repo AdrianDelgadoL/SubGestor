@@ -17,14 +17,14 @@ function Subscription({title,imageSource,card_price,payment_type, charge_date, s
     }
     
     return(
-    <div class="card-container">
+    <div class="Subscription-card-container">
         <div class="img-col">
             <img src={imageSource} alt=""></img>
         </div>
-        <div class="text-col">
-            <h3 className="titulo">{title}</h3>
-            <p className="precio" >{card_price}{selectCurrency()}</p>
-            <p className="charge_date" >Próximo cobro: {moment(charge_date).format("DD/MM/YYYY")}</p>
+        <div class="Subscription-text-col text-col">
+            <h3 className="Subscription-titulo">{title}</h3>
+            <p className="Subscription-precio" >{card_price}{selectCurrency()}</p>
+            <p className="Subscription-charge_date" >Próximo cobro: {moment(charge_date).format("DD/MM/YYYY")}</p>
             <Link to ={detailLink} className="btn btn-outline-secondary border-0" >Consultar suscripción</Link>
         </div>
     </div>

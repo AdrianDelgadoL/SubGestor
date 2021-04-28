@@ -1,19 +1,19 @@
-.container{
+.subList-container{
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
     align-content: center;
 }
 
-.createSubscription{
+.subList-createSubscription{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.createSubscription a {
+.subList-createSubscription a {
     background-color: #519e8a;
     border: 2px solid #fff;
     width: 30%;
@@ -29,24 +29,10 @@
     text-align: center;
 }
 
-.createSubscription a:hover {
+.subList-createSubscription a:hover {
     background-color: #fff;
     border: 2px solid #519e8a;
     color: #519e8a;
     text-decoration: none;
 }
 
-
-@media screen and (max-width:910px) {
-    .container{
-        
-        margin-left:0.5%;
-       
-    }
-}
-@media screen and (max-width:1193px) and (min-width:910px) {
-    .container{
-        
-        margin-left:430px;
-    }
-}
