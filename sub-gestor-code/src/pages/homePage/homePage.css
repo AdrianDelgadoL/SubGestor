@@ -2,17 +2,18 @@
     text-align: center;
 }
 
-.titulo {
+.homePage_titulo {
     font-weight: lighter;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 
 
-.text{
+.homePage_text{
     margin-left: 300px;
     margin-right: 300px;
-}.boton{
+}
+.homePage_boton{
     width: 200px;
     padding:15px 0;
     text-align: center;
@@ -26,7 +27,7 @@
     position:relative;
     margin-left:280px;
 }
-span{
+.homePage_span{
    background: #009688;
    height: 100%;
    width: 0;
@@ -38,15 +39,15 @@ span{
    color:blue;
    transition:0.4s;
 }
-.boton:hover{
+.homePage_boton:hover{
    color:white;
 }
-.boton:hover span{
+.homePage_boton:hover span{
    width: 100%;
 }
 
 
-.eslogan{
+.homePage_eslogan{
     font-size: 20px;
     font-family: none;
     margin-top:20px
@@ -54,7 +55,7 @@ span{
 
 
 
-.c-img{
+.homePage_c-img{
     
     width: 600px;
     height:330px;
@@ -64,18 +65,18 @@ span{
     align-items:center;
 }
 
-.foto1,.foto2{
+.homePage_foto{
     width:100%;
     height: 100%;
 
 }
-.subtit{
+.homePage_subtit{
     color:#fff;
     padding:10px 20px;
     font-weight: bold;
     margin-top:100px;
 }
-.txt{
+.homePage_txt{
     text-align: center;
     position:absolute;
     opacity:0;
@@ -85,54 +86,46 @@ span{
     background: rgba(0,0,0,0.6);
 }
 
-.txt:hover{
+.homePage_txt:hover{
     opacity:1;
+    
 }
 
-.txt > *{
+.homePage_txt > *{
     transform:translateY(20px);
     transition: transform 0.25s;
 }
 
-.txt:hover > *{
-    transform: translateY(0px); 
+.homePage_txt:hover > *{
+    transform: translateY(0px);
 }
 
-.d-img{
+.homePage_d-img{
     
     width: 600px;
     height:330px;
+    
+    
     margin-left:40px;
     position:relative;
     display:flex;
     align-items:center;
 }
 
-.c-img:hover{
-    box-shadow: 0px 10px 50px #555;
-}
-.d-img:hover{
-    box-shadow: 0px 10px 50px #555;
-}
-
-.imagenes{
+.homePage_imagenes{
     text-align:center;
     margin-top:45px;
 }
 
-.imagen-1{
+.homePage_imagen-1{
     display:inline-block; 
 }
 
-.imagen-2{
+.homePage_imagen-2{
     display:inline-block;
-    border-radius: 10px;
+
 }
-
-
-
-
-.pie {
+.homepage-pie {
     height:50px;
     line-height:50px;
     background:black;
@@ -143,12 +136,13 @@ span{
     align-items:center;
   }
 
-  #footer{
+
+.homepage-footer{
     display:flex;
     margin-bottom:0px;
   }
 
-  .logo{
+  .homepage-logo{
       height: 100%;
       width:100px;
   }
