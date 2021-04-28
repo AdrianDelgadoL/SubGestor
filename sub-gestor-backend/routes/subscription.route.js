@@ -52,15 +52,15 @@ router.get('/:id', auth, (req, res) => {
  * req: Request received. Contains the information required to create a new subscription.
  * res: Response to the front-end.
  */
-router.post('/', auth, (req, res) => {
+router.post('/', auth, upload.single('image'), (req, res) => {
 
     // TODO: Tags por añadir ya para el 7
 
     const {
         id, name, active, free_trail, start_date, end_date,
-        currency, frequency, url, price, description,
-        img_src
+        currency, frequency, url, price, description
     } = req.body;
+    const {img_src} = req.file.filename;
 
     // Comprovar usuario valido
     if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
@@ -123,6 +123,7 @@ router.post('/', auth, (req, res) => {
 
 router.post('/file', upload.single('image'), (req, res) => {
     console.log(req.file);
+    console.log(req.file.filename);
     return res.json({msg: "upload bien"});
 
 })
