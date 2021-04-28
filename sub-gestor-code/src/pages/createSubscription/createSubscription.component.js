@@ -136,7 +136,7 @@ const CreateSubscription = (props) => {
     return (
         <div className="formSub">
             <h2 id="creator"> Crear nueva suscripción </h2>
-            <form noValidate>
+            <form enctype="multipart/form-data" noValidate>
                 <div className="formSub-grid">
                     <p id="information"> Información </p>
                     <div className="information">
@@ -226,7 +226,7 @@ const CreateSubscription = (props) => {
                         </div>
                         <div className="img_src">
                             <label htmlFor="img_src"> Selecciona una imagen: </label> <br />
-                            <input type="file" name="img_src" onChange={handleChange}/>
+                            <input id="select" type="file" name="img_src" onChange={handleChange}/>
                         </div>
                     </div>
                     <div className="info">
