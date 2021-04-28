@@ -64,7 +64,7 @@ span{
     align-items:center;
 }
 
-img{
+.foto1,.foto2{
     width:100%;
     height: 100%;
 
@@ -87,7 +87,6 @@ img{
 
 .txt:hover{
     opacity:1;
-    
 }
 
 .txt > *{
@@ -96,8 +95,7 @@ img{
 }
 
 .txt:hover > *{
-    transform: translateY(0px);
-    
+    transform: translateY(0px); 
 }
 
 .d-img{

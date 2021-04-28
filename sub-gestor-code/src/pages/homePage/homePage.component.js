@@ -20,7 +20,7 @@ export default class HomePage extends Component {
                 <div class="imagenes">
                 <div class="imagen-1">
                 <div class="c-img">
-                    <img src={foto1} alt=""></img>
+                    <img class="foto1"src={foto1} alt=""></img>
                     <div class="txt">
                         
                         <p className="subtit">El pasaje "Lorem ipsum..." se ha extraído del texto que dice "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...", que se traduciría como 
@@ -31,7 +31,7 @@ export default class HomePage extends Component {
                 </div>
                 <div class="imagen-2">
                 <div class="d-img">
-                    <img src={foto2}  alt=""></img>
+                    <img class="foto2" src={foto2}  alt=""></img>
                     <div class="txt">
                         <p className="subtit">El pasaje "Lorem ipsum..." se ha extraído del texto que dice "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...", que se traduciría como 
                             "No hay nadie que ame el dolor mismo, que lo busque y lo quiera tener, simplemente porque es el dolor..."</p>
