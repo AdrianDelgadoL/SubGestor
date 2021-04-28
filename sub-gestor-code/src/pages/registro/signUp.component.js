@@ -99,11 +99,11 @@ const SignUp = (props) => {
   };
 
   return (
-      <div className="wrapper">
-          <div className="form-wrapper">
+      <div className="signUp-wrapper">
+          <div className="signUp-form-wrapper">
               <h1>Registro</h1>
               <form  noValidate>
-                  <div className="email">
+                  <div className="signUp-email">
                       <label htmlFor="email">Email: </label>
                       <input 
                           value={email}
@@ -115,10 +115,10 @@ const SignUp = (props) => {
                           onChange={handleChange}
                       />
                     {emailError.length > 0 && (
-                      <span className="errorMessage">{emailError}</span>
+                      <span className="signUp-errorMessage">{emailError}</span>
                     )}  
                   </div>
-                  <div className="password">
+                  <div className="signUp-password">
                       <label htmlFor="password">Contraseña: </label>
                       <input
                           value={password}
@@ -134,7 +134,7 @@ const SignUp = (props) => {
                       <span className="errorMessage">{passwordError}</span>
                     )}
                   </div>
-                  <div className="pswrepeat">
+                  <div className="signUp-pswrepeat">
                       <label htmlFor="pswrepeat">Repite la contraseña: </label>
                       <input 
                           value={repPassword}
@@ -148,9 +148,9 @@ const SignUp = (props) => {
                       />
                   </div>
                   {formError.length > 0 && (
-                      <span className="errorMessage">{formError}</span>
+                      <span className="signUp-errorMessage">{formError}</span>
                     )}
-                  <div className="createAccount">
+                  <div className="signUp-createAccount">
                       <button onClick={handleSubmit} type="submit">Crear cuenta</button>
                       <small>Ya tienes una cuenta?</small> 
                       <Link to ="/signIn" className="nav-link">Inicia sesión</Link>
