@@ -11,11 +11,8 @@ export default class HomePage extends Component {
                 <h2 className="homePage_titulo">SubGestor</h2>
                 <div className="homePage_text">
                     <h3 className="homePage_eslogan">Gestiona tus suscripciones de forma sencilla y mantén el control de tus servicios contratados</h3>
-                    <form method="get" action="/signIn">
-                        <button className="homePage_boton"type="submit"><span className="homePage_span"></span>Empieza ya</button>
-                    </form>
+                    
                 </div>  
-                
                 <body className="homePage_cuerpo">  
                 <div className="homePage_imagenes">
                     <div className="homePage_imagen-1">
@@ -43,19 +40,19 @@ export default class HomePage extends Component {
                     </div>
                     
                 </div> 
+             <form method="get" action="/signIn">
+                <button className="homePage_boton"type="submit">Empieza ya</button>
+            </form>
                 
-                </body>
+        </body>
  	        <footer className="homepage-footer">
                 <div class="homepage-pie">2021 &copy; 
                 <img class="homepage-logo" src={logo} alt=""></img>
                 
                 </div>
 
-                </footer>
+            </footer>
                 </div>
-            
-            
-            
         )
     }
 }
