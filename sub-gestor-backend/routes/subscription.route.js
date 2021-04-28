@@ -3,7 +3,8 @@ const router = express.Router();
 const Subscription = require('../models/subscription.model');
 const auth = require('../middleware/auth.middleware');
 const User = require('../models/user.model');
-const upload = require('../middleware/upload.middleware')
+const upload = require('../middleware/upload.middleware');
+const updates = require('../middleware/updates.middleware');
 /*
 Endpoints for subscriptions
 GET /subscription (obtener todos las suscripciones activas)
@@ -21,15 +22,7 @@ GET /subscription/templates/:id (Obtener la información de una plantilla)
  * req: Request received. Contains the user id to look for in the subscriptions BD.
  * res: Response to the front-end.
  */
-router.get('/', auth, (req, res) => {
-    //search the user in the DB to get their subscriptions
-    const {id} = req.userId;
-    Subscription.find({user_id: id})
-        .then(subscriptions => {
-            if(subscriptions.length > 0 ) return res.status(200).send(subscriptions);
-            return res.status(404).json( {msg: 'No se han encontrado suscripciones'});
-        })
-});
+router.get('/', auth, updates, (req, res) => {});
 
 /**
  * /:id: The path to access the endpoint and the sub id to look for.
