@@ -48,13 +48,19 @@
 .homePage_subtit{
     color:#fff;
     padding: 5%;
+    
+    
     font-weight: bold;
-    margin-top: 15%;
-    text-align: center;
+    max-height: 100%;
+    height: 100%;
+    width: 100%;
+    margin-top:9%;
+    position:relative;
 }
 
 .homePage_txt{
     text-align: center;
+    align-items: center;
     position:absolute;
     opacity:0;
     transition:opacity 0.25s;
@@ -144,7 +150,7 @@
 .homepage-footer{
     display:flex;
     margin-bottom:0px;
-    position:static;
+    position:inherit;
   }
 
 .homepage-logo{
@@ -171,16 +177,21 @@
 
     .homePage_boton {
         width: 100%;
-
     }
 
     .homePage_txt {
         width: 100%;
     }
-
-    .homePage_subtit {
+    .homePage_subtit{
         width: 100%;
+        height: 100%;
+        
+        margin-bottom: 7%;
+        margin-top:5%;
+        font-size: smaller;
     }
+
+   
 
 
   }
