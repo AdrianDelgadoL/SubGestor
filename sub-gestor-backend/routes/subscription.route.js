@@ -67,7 +67,7 @@ router.post('/', auth, upload.single('image'), (req, res) => {
             });
 
             // Comprobar campos obligatorios pasados por POST
-            if (!name || !active || !currency || !frequency || !price) {
+            if (!name || !active || !currency || !price) {
                 return res.status(400).json({
                     msg: 'Completa todos los campos'
                 });
@@ -98,7 +98,7 @@ router.post('/', auth, upload.single('image'), (req, res) => {
                 end_date:
                     (end_date) ? new Date(end_date) : undefined,
                 currency: currency,
-                frequency: frequency,
+                frequency: (frequency) ? (frequency == 1) : undefined,
                 url: url,
                 price: price,
                 img_src: img_src,
