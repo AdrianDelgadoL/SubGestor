@@ -58,7 +58,7 @@ const CreateSubscription = (props) => {
         // Valida que els camps obligatoris estan plens
         if(name == null) {
             valid = false;
-        } else if(name === 0 || price == null) {
+        } else if(name === 0 || price == null || currency == null) {
             valid = false;
         }
         return valid;
@@ -79,24 +79,24 @@ const CreateSubscription = (props) => {
         const { name, value } = e.target;
         switch (name) {
             case "free_trial_end":
-                validateValue.isBefore(value) ? setFreeTrialEndError("Invalid date") : setFreeTrialEndError("");
+                validateValue.isBefore(value) ? setFreeTrialEndError("Fecha inválida") : setFreeTrialEndError("");
                 setFreeTrialEnd(value);
                 break;
             case "end_date":
-                validateValue.isBefore(value) ? setEndDateError("Invalid date") : setEndDateError("");
+                validateValue.isBefore(value) ? setEndDateError("Fecha inválida") : setEndDateError("");
                 setEndDate(value);
                 break;
             case "charge_date":
-                validateValue.isBefore(value) ? setChargeDateError("Invalid date") : setChargeDateError("");
+                validateValue.isBefore(value) ? setChargeDateError("Fecha inválida") : setChargeDateError("");
                 setChargeDate(value);
                 break;
             case "price":
-                ((validateValue.isInt(value) || validateValue.isDecimal(value)) && (value >= 0)) ? setPriceError("") : setPriceError("Invalid value, must be a positive number");
+                ((validateValue.isInt(value) || validateValue.isDecimal(value)) && (value >= 0)) ? setPriceError("") : setPriceError("Valor inválido, tiene que ser un número positivo");
                 setPrice(value);
                 break;
             case "url":
                 if(value.length > 0) {
-                    validateValue.isURL(value) ? setUrlError("") : setUrlError("Invalid value, must be a URL (Example: http://www.example.com)");
+                    validateValue.isURL(value) ? setUrlError("") : setUrlError("Valor inválido, tiene que ser una URL (Ejemplo: http://www.example.com)");
                     setUrl(value);
                 } else {
                     setUrlError('');
@@ -179,7 +179,7 @@ const CreateSubscription = (props) => {
                         <div className="createSubscription-price">
                             <label htmlFor="price"> Precio (*): </label> <br />
                             <input type="number" placeholder="Introduce el precio" name="price" required onChange={handleChange}/>
-                            {priceError > 0 && (
+                            {priceError.length > 0 && (
                                 <span className="errorMessage">{priceError}</span>
                             )}
                         </div>
@@ -195,8 +195,8 @@ const CreateSubscription = (props) => {
                             </select>
                         </div>
                         <div className="createSubscription-currency">
-                            <label htmlFor="currency"> Divisa: </label> <br />
-                            <select name="currency" onChange={handleChange}>
+                            <label htmlFor="currency"> Divisa (*): </label> <br />
+                            <select name="currency" required onChange={handleChange}>
                                 <option value="null"> --- </option>
                                 <option value="EUR"> EURO (€)</option>
                                 <option value="Dolars"> DOLAR ($)</option>

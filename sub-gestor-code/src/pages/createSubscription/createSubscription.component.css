@@ -57,7 +57,7 @@ input::error {
 }
 
 .errorMessage {
-    color: red;
+    color: #ff0000;
     font-size: 0.75em;
     display: grid;
 }
