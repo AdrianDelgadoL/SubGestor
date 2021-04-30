@@ -1,9 +1,8 @@
-import React, { Component, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 //import {Link} from 'react-router-dom'
 import './subDetail.css'
 import {useAuthDispatch, useAuthState} from '../../context/context';
 import axios from "axios";
-
 
 const SubDetail = (props) => { 
 
@@ -12,38 +11,41 @@ const SubDetail = (props) => {
     const userDetails = useAuthState();
     //props.match.params.id -> id de consulta
     // /detail/:id
-    const [name, setName] = useState(null);
-    const [datePayment, setDatePayment] = useState(null);
-    const [frequency, setFrequency] = useState(null);
-    const [price, setPrice] = useState(null);
-    const [currency, setCurrency] = useState(null);
-    const [freeTrial, setFreeTrial] = useState(null);
-    const [dateEndTrial, setDateEndTrial] = useState(null);
-    const [hasEnd, setHasEnd] = useState(null);
-    const [dateEnd, setDateEnd] = useState(null);
-    const [url, setUrl] = useState(null);
-    const [startDate, setStartDate] = useState(null);
-    const [tags, setTags] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [imgSrc, setImgSrc] = useState(null);
+    var [name, setName] = useState(null);
+    var [datePayment, setDatePayment] = useState(null);
+    var [frequency, setFrequency] = useState(null);
+    var [price, setPrice] = useState(null);
+    var [currency, setCurrency] = useState(null);
+    var [freeTrial, setFreeTrial] = useState(null);
+    var [dateEndTrial, setDateEndTrial] = useState(null);
+    var [hasEnd, setHasEnd] = useState(null);
+    var [dateEnd, setDateEnd] = useState(null);
+    var [url, setUrl] = useState(null);
+    var [startDate, setStartDate] = useState(null);
+    var [tags, setTags] = useState(null);
+    var [description, setDescription] = useState(null);
+    var [imgSrc, setImgSrc] = useState(null);
 
-    const getSub = () => {
+    useEffect(() => {
         console.log(props.match.params.id);
-        axios.get('http://localhost:4000/'+ props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
+        axios.get('http://localhost:4000/subscription/'+ props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
         .then(response => {
+            console.log("Dades:");
             console.log(response.data);
             setName(name = response.data.name);
             setImgSrc(imgSrc = response.data.img_src);
-            setDatePayment(datePayment = response.data.charge_date);
+            setDatePayment(datePayment = response.data.charge_date.substr(0, response.data.charge_date.indexOf('T')));
             setFrequency(frequency = response.data.frequency);
             setPrice(price = response.data.price);
             setCurrency(currency = response.data.currency);
             setFreeTrial(freeTrial = response.data.free_trial);
-            setDateEndTrial(dateEndTrial = response.data.free_trial_end);
-            setHasEnd(hasEnd = response.data); //falta en el subscription.model.js
-            setDateEnd(dateEnd = response.data.end_date);
+            if(freeTrial)
+                setDateEndTrial(dateEndTrial = response.data.free_trial_end.substr(0, response.data.free_trial_end.indexOf('T')));
+            setHasEnd(hasEnd = response.data.end);
+            if(hasEnd)
+                setDateEnd(dateEnd = response.data.end_date.substr(0, response.data.end_date.indexOf('T')));
             setUrl(url = response.data.url);
-            setStartDate(startDate = response.data.start_date);
+            setStartDate(startDate = response.data.start_date.substr(0, response.data.start_date.indexOf('T')));
             setTags(tags = response.data.tags);
             setDescription(description = response.data.description);
         })
@@ -53,7 +55,7 @@ const SubDetail = (props) => {
                 //TODO: tractar si hi ha resposta d'error
             }
         })
-    };
+    }, [])
 
     return (
         <div>
