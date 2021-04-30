@@ -7,11 +7,10 @@ function updates(req, res, next) {
     Subscription.find({user_id: id})
         .then(subscriptions => {
 
-            if(!subscriptions) return res.status(404);
+            if(!subscriptions) return res.status(404).json({msg: "No se han encontrado suscripciones"});
 
             subscriptions.forEach(sub => {
                 if(sub.active) {
-
                     if (Date.now() > sub.charge_date) {
 
                         switch (sub.frequency) {
@@ -40,7 +39,6 @@ function updates(req, res, next) {
                             .catch((err) => {
                             if(err) console.log(err);
                         })
-
                     }
                 }
             });
