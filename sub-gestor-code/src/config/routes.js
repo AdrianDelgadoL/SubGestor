@@ -10,47 +10,50 @@ import SubList from "../pages/subscriptions/SubList.components";
 const routes =[
     
     {
+      forUnlogged: true,
       isPrivate: false,
       path:'/signIn',
       component: signIn
     },
     {
+      forUnlogged: true,
       isPrivate: false,
       path:'/signUp',
       component: SignUp
     },
     {
+      forUnlogged: false,
       isPrivate: false,
       path:'/faq',
       component: FAQ
     },
     {
+      forUnlogged: false,
       isPrivate: false,
       path:'/createSub',
       component: createSubscription
     },
     {
+      forUnlogged: false,
       isPrivate: false,
       path:'/subDetail/:id',
       component: SubDetail
     },
     // Esta deberia borrarse debido a que solo se puede entrar con el id ha esta ruta con el id.
     {
+      forUnlogged: false,
       isPrivate: false,
       path:'/subDetail',
       component: SubDetail
     },
-    
-    /*{
-      path:'/*',
-      component: PageNotFound
-    },*/
     {
+      forUnlogged: false,
       isPrivate: true,
       path:'/home',
       component: SubList
     },
     {
+      forUnlogged: true,
       isPrivate: false,
       path:'/',
       component: HomePage
