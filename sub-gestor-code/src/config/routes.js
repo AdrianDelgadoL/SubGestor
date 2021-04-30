@@ -35,17 +35,11 @@ const routes =[
     },
     {
       forUnlogged: false,
-      isPrivate: false,
+      isPrivate: true,
       path:'/subDetail/:id',
       component: SubDetail
     },
     // Esta deberia borrarse debido a que solo se puede entrar con el id ha esta ruta con el id.
-    {
-      forUnlogged: false,
-      isPrivate: false,
-      path:'/subDetail',
-      component: SubDetail
-    },
     {
       forUnlogged: false,
       isPrivate: true,
