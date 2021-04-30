@@ -137,6 +137,7 @@
     width: 100%;
 }
 
+/*
 .homepage-pie {
     left: 0;
     bottom: 0;
@@ -153,11 +154,13 @@
     position:inherit;
   }
 
+
 .homepage-logo{
       height: 100%;
       width:100px;
   }
 
+*/
 
 @media only screen and (max-width: 1000px) {
       
@@ -190,8 +193,5 @@
         margin-top:5%;
         font-size: smaller;
     }
-
-   
-
 
   }
