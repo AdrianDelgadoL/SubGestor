@@ -40,18 +40,11 @@ export default class HomePage extends Component {
                     </div>
                     
                 </div> 
-             <form method="get" action="/signIn">
+             <form method="get" action="/signIn" class="homePage-form">
                 <button className="homePage_boton"type="submit">Empieza ya</button>
             </form>
                 
         </body>
- 	        <footer className="homepage-footer">
-                <div class="homepage-pie">2021 &copy; 
-                <img class="homepage-logo" src={logo} alt=""></img>
-                
-                </div>
-
-            </footer>
                 </div>
         )
     }
