@@ -3,6 +3,7 @@ const router = express.Router();
 const Subscription = require('../models/subscription.model');
 const auth = require('../middleware/auth.middleware');
 const User = require('../models/user.model');
+const mongoose = require('mongoose');
 const upload = require('../middleware/upload.middleware');
 const updates = require('../middleware/updates.middleware');
 /*
@@ -53,7 +54,8 @@ router.post('/', auth, upload.single('image'), (req, res) => {
         id, name, active, end, free_trail, free_trial_end, start_date, end_date,
         currency, frequency, url, price, description
     } = req.body;
-    const {img_src} = req.file.filename;
+    const {img_src} = (req.file) ? req.file.filename : "default.jpg"; //imagen por defecto si no hay imagen
+
 
     // Comprovar usuario valido
     if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
@@ -67,7 +69,7 @@ router.post('/', auth, upload.single('image'), (req, res) => {
             });
 
             // Comprobar campos obligatorios pasados por POST
-            if (!name || !active || !currency || !price) {
+            if (!name || !active || !currency || !frequency || !price) {
                 return res.status(400).json({
                     msg: 'Completa todos los campos'
                 });
@@ -98,7 +100,7 @@ router.post('/', auth, upload.single('image'), (req, res) => {
                 end_date:
                     (end_date) ? new Date(end_date) : undefined,
                 currency: currency,
-                frequency: (frequency) ? (frequency == 1) : undefined,
+                frequency: (frequency),
                 url: url,
                 price: price,
                 img_src: img_src,
