@@ -39,7 +39,7 @@
 .createSubscription-additional_information {
     display: grid;
     grid-template-areas: 'createSubscription-url createSubscription-start_date createSubscription-description'
-                         'createSubscription-tags createSubscription-img_src createSubscription-description';
+                         'createSubscription-tags createSubscription-img_src createSubscription-error';
     border-radius: 10px;
     text-align: center;
     background-color: #e5e5e5;
@@ -165,7 +165,8 @@ h1 {
                              'createSubscription-start_date'
                              'createSubscription-description'
                              'createSubscription-tags'
-                             'createSubscription-img_src';
+                             'createSubscription-img_src'
+                             'createSubscription-error';
         text-align: center;
     }
 
