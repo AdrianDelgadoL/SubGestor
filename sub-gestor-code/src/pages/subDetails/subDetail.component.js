@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 //import {Link} from 'react-router-dom'
 import './subDetail.css'
-import {useAuthDispatch, useAuthState} from '../../context/context';
+import {useAuthState} from '../../context/context';
 import axios from "axios";
 
 const SubDetail = (props) => { 
 
-    const dispatch = useAuthDispatch();
+    //const dispatch = useAuthDispatch();
     //useAuthState en header (x-auth-token)
     const userDetails = useAuthState();
     //props.match.params.id -> id de consulta
@@ -30,24 +30,22 @@ const SubDetail = (props) => {
         console.log(props.match.params.id);
         axios.get('http://localhost:4000/subscription/'+ props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
         .then(response => {
-            console.log("Dades:");
-            console.log(response.data);
-            setName(name = response.data.name);
-            setImgSrc(imgSrc = response.data.img_src);
-            setDatePayment(datePayment = response.data.charge_date.substr(0, response.data.charge_date.indexOf('T')));
-            setFrequency(frequency = response.data.frequency);
-            setPrice(price = response.data.price);
-            setCurrency(currency = response.data.currency);
-            setFreeTrial(freeTrial = response.data.free_trial);
+            setName(response.data.name);
+            setImgSrc("/images/" + response.data.img_src);
+            setDatePayment(response.data.charge_date.substr(0, response.data.charge_date.indexOf('T')));
+            setFrequency(response.data.frequency);
+            setPrice(response.data.price);
+            setCurrency(response.data.currency);
+            setFreeTrial(response.data.free_trial);
             if(freeTrial)
-                setDateEndTrial(dateEndTrial = response.data.free_trial_end.substr(0, response.data.free_trial_end.indexOf('T')));
-            setHasEnd(hasEnd = response.data.end);
+                setDateEndTrial(response.data.free_trial_end.substr(0, response.data.free_trial_end.indexOf('T')));
+            setHasEnd(response.data.end);
             if(hasEnd)
-                setDateEnd(dateEnd = response.data.end_date.substr(0, response.data.end_date.indexOf('T')));
-            setUrl(url = response.data.url);
-            setStartDate(startDate = response.data.start_date.substr(0, response.data.start_date.indexOf('T')));
-            setTags(tags = response.data.tags);
-            setDescription(description = response.data.description);
+                setDateEnd(response.data.end_date.substr(0, response.data.end_date.indexOf('T')));
+            setUrl(response.data.url);
+            setStartDate(response.data.start_date.substr(0, response.data.start_date.indexOf('T')));
+            setTags(response.data.tags);
+            setDescription(response.data.description);
         })
         .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
             console.log(error);
@@ -63,7 +61,7 @@ const SubDetail = (props) => {
             <div className="grid-container">
                 <div className="grid-container-header">
                     <div className="image">
-                        <img id="logo" alt="imagen aleatoria" src="https://picsum.photos/700/400?random"></img>
+                        <img id="logo" alt="imagen aleatoria" src={imgSrc}></img>
                     </div>
                     <div className="name">
                         <input type="text" id="name" defaultValue={name}></input>
@@ -131,8 +129,7 @@ const SubDetail = (props) => {
                     </div>
                     <div className="description">
                         <label for="description">Descripción:</label><br />
-                        <textarea rows="4" cols="50" id="description" form="">
-                        {description}
+                        <textarea rows="4" cols="50" id="description" form="" defaultValue={description}>
                         </textarea>
                     </div>
                 </div>

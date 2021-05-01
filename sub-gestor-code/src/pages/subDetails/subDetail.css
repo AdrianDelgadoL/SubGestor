@@ -79,6 +79,13 @@
     background-color: #e5e5e5;
 }
 
+input[type=number] {
+    width: 100%;
+    padding: 10px 0px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
 .datePayment{
     grid-area: datePay;
     margin: 5px;
