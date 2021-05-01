@@ -31,14 +31,11 @@ const subscriptionsSchema = new Schema({
         type: String,
         required: true
     },
-	charge_date: Date,
     url: String,
     charge_date: Date,
     price: {
-        type: Number,
+        type: mongoose.Decimal128,
         required: true,
-        get: getPrice,
-        set: setPrice
     },
     description: String,
     img_src: String,
@@ -48,14 +45,6 @@ const subscriptionsSchema = new Schema({
         required: true
     }
 });
-
-function getPrice(num){
-    return (num/100).toFixed(2);
-}
-
-function setPrice(num){
-    return num*100;
-}
 
 
 
