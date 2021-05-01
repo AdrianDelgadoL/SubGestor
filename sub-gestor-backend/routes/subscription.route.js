@@ -4,10 +4,15 @@ const Subscription = require('../models/subscription.model');
 const auth = require('../middleware/auth.middleware');
 const User = require('../models/user.model');
 const mongoose = require('mongoose');
+<<<<<<< HEAD
 const multer = require('multer');
 var upload = multer({dest: './testingFiles'}).single('image');
 // var fileId = mongoose.Types.ObjectId();
 
+=======
+const upload = require('../middleware/upload.middleware');
+const updates = require('../middleware/updates.middleware');
+>>>>>>> subscriptions-backend
 /*
 Endpoints for subscriptions
 GET /subscription (obtener todos las suscripciones activas)
@@ -22,6 +27,7 @@ GET /subscription/templates/:id (Obtener la información de una plantilla)
  */
 /**
  * /: The path to access the endpoint to get user's subscriptions.
+<<<<<<< HEAD
  * req: Request received. Contains the user id to look for in the subscriptions BD.
  * res: Response to the front-end.
  */
@@ -34,6 +40,12 @@ router.get('/', auth, (req, res) => {
             return res.status(404).json( {msg: 'No se han encontrado suscripciones'});
         })
 });
+=======
+ * auth: authentication middleware.
+ * updates: middleware for charge_date automatic updating.
+ */
+router.get('/', auth, updates, (req, res) => {});
+>>>>>>> subscriptions-backend
 
 /**
  * /:id: The path to access the endpoint and the sub id to look for.
@@ -56,19 +68,21 @@ router.get('/:id', auth, (req, res) => {
  * req: Request received. Contains the information required to create a new subscription.
  * res: Response to the front-end.
  */
-router.post('/', auth, (req, res) => {
+router.post('/', auth, upload.single('image'), (req, res) => {
 
     // TODO: Tags por añadir ya para el 7
 
     const {
-        id, name, active, free_trail, start_date, end_date,
-        currency, frequency, url, price, description,
-        img_src
+        id, name, active, end, free_trail, free_trial_end, start_date, end_date,
+        currency, frequency, url, price, description
     } = req.body;
+    const img_src = (req.file) ? req.file.filename : "default.jpg"; //imagen por defecto si no hay imagen
+    console.log(req.file);
+    console.log(img_src);
 
     // Comprovar usuario valido
     if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
-    User.findOne({ '_id':mongoose.Types.ObjectId(id) })
+    User.findOne({ '_id': mongoose.Types.ObjectId(id) })
         .then(user => {
 
             console.log(user);
@@ -101,12 +115,15 @@ router.post('/', auth, (req, res) => {
                 name: name,
                 active: ( active == 1),
                 free_trail: (free_trail) ? (free_trail == 1) : undefined,
+                free_trial_end:
+                    (free_trial_end) ? new Date(free_trial_end) : undefined,
                 start_date:
                     (start_date) ? new Date(start_date) : undefined,
+                end: (end) ? (end == 1) : undefined,
                 end_date:
                     (end_date) ? new Date(end_date) : undefined,
                 currency: currency,
-                frequency: frequency,
+                frequency: (frequency),
                 url: url,
                 price: price,
                 img_src: img_src,
@@ -124,16 +141,6 @@ router.post('/', auth, (req, res) => {
             });
         });
 });
-
-router.post('/file', (req, res) => {
-    upload(req, res, (err) => {
-        if(err instanceof multer.MulterError) throw err;
-        console.log(req.file);
-        return res.json({msg: "upload bien"});
-    })
-})
-
-
 
 
 module.exports = router;
