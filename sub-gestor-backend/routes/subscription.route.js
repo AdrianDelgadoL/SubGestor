@@ -23,7 +23,7 @@ GET /subscription/templates/:id (Obtener la información de una plantilla)
  * auth: authentication middleware.
  * updates: middleware for charge_date automatic updating.
  */
-router.get('/', auth, updates);
+router.get('/', auth, updates, (req, res) => {});
 
 /**
  * /:id: The path to access the endpoint and the sub id to look for.
