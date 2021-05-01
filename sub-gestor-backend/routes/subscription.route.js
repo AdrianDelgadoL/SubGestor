@@ -72,7 +72,7 @@ router.post('/', auth, (req, res) => {
         img_src
     } = req.body;
 
-    const id = req.userId.id;
+    const id = req.userId;
 
     // Comprovar usuario valido
     if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
