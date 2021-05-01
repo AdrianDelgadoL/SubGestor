@@ -131,7 +131,7 @@ const SignUp = (props) => {
                           pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z].{6,})"
                       />
                       {passwordError.length > 0 && (
-                      <span className="errorMessage">{passwordError}</span>
+                      <span className="signUp-errorMessage">{passwordError}</span>
                     )}
                   </div>
                   <div className="signUp-pswrepeat">
