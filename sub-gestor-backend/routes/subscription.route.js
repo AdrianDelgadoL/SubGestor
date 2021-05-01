@@ -47,6 +47,8 @@ router.get('/:id', auth, (req, res) => {
         .then(subscription => {
             if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
             if(subscription) return res.status(200).json(subscription);
+        }).catch(err => {
+            return res.status(404).json({msg: 'Suscripción no encontrada'});
         });
 });
 
