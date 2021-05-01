@@ -34,7 +34,7 @@ const subscriptionsSchema = new Schema({
     url: String,
     charge_date: Date,
     price: {
-        type: mongoose.Decimal128,
+        type: Number,
         required: true,
     },
     description: String,
@@ -45,7 +45,6 @@ const subscriptionsSchema = new Schema({
         required: true
     }
 });
-
 
 
 module.exports = mongoose.model('Subscriptions', subscriptionsSchema, collection='subscriptions');
