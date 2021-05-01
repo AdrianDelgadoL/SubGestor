@@ -61,19 +61,22 @@ router.get('/:id', auth, (req, res) => {
 router.post('/', auth, (req, res) => {
 
     // TODO: Tags por añadir ya para el 7
+    console.log('Endpoint: /subscriptions ;; Method: POST');
 
     const {
-        id, name, active, free_trail, start_date, end_date,
+        name, active, free_trail, start_date, end_date,
         currency, frequency, url, price, description,
         img_src
     } = req.body;
+
+    const id = req.userId.id;
 
     // Comprovar usuario valido
     if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
     User.findOne({ '_id':mongoose.Types.ObjectId(id) })
         .then(user => {
 
-            console.log(user);
+            // console.log(user);
             // No usuario == liada
             if (!user) return res.status(400).json({
                 msg: 'No existe este usuario'
@@ -117,7 +120,7 @@ router.post('/', auth, (req, res) => {
             });
             newSubscription.save()
             .then(new_sub => {
-                console.log(new_sub);
+                // console.log(new_sub);
                 // Devoler estado de salida
                 return res.status(200).json({
                     msg: 'La suscripción se ha creado correctamente',
