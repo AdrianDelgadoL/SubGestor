@@ -4,13 +4,13 @@ const validateValue = require('validator');
 
 
 const CreateSubscription = (props) => {
-    const [name, setName] = useState(null);
+    const [nameSub, setName] = useState(null);
     const [free_trial, setFreeTrial] = useState(true);
     const [free_trial_end, setFreeTrialEnd] = useState(null);
     const [end, setEnd] = useState(true);
     const [end_date, setEndDate] = useState(null);
-    const [currency, setCurrency] = useState(null);
-    const [frequency, setFrequency] = useState(null);
+    const [currency, setCurrency] = useState("EUR");
+    const [frequency, setFrequency] = useState("monthly");
     const [price, setPrice] = useState(null);
     const [charge_date, setChargeDate] = useState(null);
     const [url, setUrl] = useState(null);
@@ -38,6 +38,7 @@ const CreateSubscription = (props) => {
 
     const changeEndDate = async (e) => {
         // elimina el valor de end_date si se desactiva la opcion (disabled == true)
+        console.log(end_date)
         if(!end) {
             setEndDate(null);
             setEndDateError('');
@@ -49,18 +50,26 @@ const CreateSubscription = (props) => {
     const formValid = () => {
         // Valida que los errores esten vacios
         let valid = true;
-        let errorValues = [freeTrialEndError, endDateError, priceError, chargeDateError, urlError, formError];
+        setFormError('');
+        let errorValues = [freeTrialEndError, endDateError, priceError, chargeDateError, urlError];
         errorValues.forEach(value => {
             if(value.length > 0) {
                 valid = false;
             }
         })
         // Valida que els camps obligatoris estan plens
-        if(name == null) {
+        if(nameSub == null) {
             valid = false;
-        } else if(name === 0 || price == null || currency == null) {
+            setFormError("ERROR: faltan campos obligatiorios por completar");
+        } else if(nameSub.length === 0 || price == null) {
             valid = false;
+            setFormError("ERROR: faltan campos obligatiorios por completar");
         }
+        console.log("DADES ENVIADES")
+        console.log("Name = " + nameSub);
+        console.log("Frequencia = " + frequency);
+        console.log("Divisa = " + currency);
+        console.log("Preu = " + price);
         return valid;
     };
 
@@ -103,7 +112,7 @@ const CreateSubscription = (props) => {
                     setUrl(null);
                 }
                 break;
-            case "name":
+            case "nameSub":
                 setName(value);
                 break;
             case "end":
@@ -113,6 +122,7 @@ const CreateSubscription = (props) => {
                 setFrequency(value);
                 break;
             case "currency":
+                console.log("HOLA");
                 setCurrency(value);
                 break;
             case "free_trial":
@@ -141,8 +151,8 @@ const CreateSubscription = (props) => {
                     <p id="information"> Información </p>
                     <div className="createSubscription-information">
                         <div className="createSubscription-name">
-                            <label htmlFor="name"> Nombre (*): </label> <br />
-                            <input type="text" placeholder="Introduce el nombre" name="name" onChange={handleChange} required/>
+                            <label htmlFor="nameSub"> Nombre (*): </label> <br />
+                            <input type="text" placeholder="Introduce el nombre" name="nameSub" onChange={handleChange} required/>
                         </div>
                         <div className="createSubscription-free_trial">
                             <label htmlFor="free_trial"> Es una prueba gratuita: </label> <br />
@@ -184,11 +194,11 @@ const CreateSubscription = (props) => {
                             )}
                         </div>
                         <div className="createSubscription-frequency">
-                            <label htmlFor="frequency"> Frecuencia: </label> <br />
-                            <select name="frequency" onChange={handleChange} >
-                                <option value="null"> --- </option>
-                                <option value="annual"> Anual</option>
+                            <label htmlFor="frequency"> Frecuencia (*): </label> <br />
+                            <select name="frequency" required onChange={handleChange} >
                                 <option value="monthly"> Mensual</option>
+                                <option value="onetime">Una vez</option>
+                                <option value="annual"> Anual</option>
                                 <option value="bimonthly"> Bimensual</option>
                                 <option value="quarterly"> Trimestral</option>
                                 <option value="weekly">Semanal</option>
@@ -197,7 +207,6 @@ const CreateSubscription = (props) => {
                         <div className="createSubscription-currency">
                             <label htmlFor="currency"> Divisa (*): </label> <br />
                             <select name="currency" required onChange={handleChange}>
-                                <option value="null"> --- </option>
                                 <option value="EUR"> EURO (€)</option>
                                 <option value="Dolars"> DOLAR ($)</option>
                             </select>
@@ -231,6 +240,9 @@ const CreateSubscription = (props) => {
                     </div>
                     <div className="createSubscription-info">
                         <p id="info"> (*) Campos obligatorios a completar</p>
+                        {formError.length > 0  && (
+                            <p id="info">{formError}</p>
+                        )}
                     </div>
                     <div className="createSubscription">
                         <button type="submit" onClick={handleSubmit}> Crear suscripción</button>
