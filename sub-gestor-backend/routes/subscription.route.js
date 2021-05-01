@@ -62,6 +62,9 @@ router.post('/', auth, (req, res) => {
 
     // TODO: Tags por añadir ya para el 7
     console.log('Endpoint: /subscriptions ;; Method: POST');
+    console.log('req.file: '+req.file)
+    console.log('req.files: '+req.files);
+    console.log('req.body: '+JSON.stringify(req.body))
 
     const {
         name, active, free_trail, start_date, end_date,
