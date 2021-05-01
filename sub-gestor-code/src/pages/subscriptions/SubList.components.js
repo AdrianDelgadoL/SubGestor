@@ -24,7 +24,7 @@ const SubList = (props) => {
                 )))
             }).catch(error => {
                 if(error.response) {
-                    if(error.response.status == 404) {
+                    if(error.response.status === 404) {
                         setTarjetas(
                             <h1>Parece que aún no existe ninguna suscripción</h1>
                         )
@@ -34,7 +34,7 @@ const SubList = (props) => {
                     }
                 }
             })
-    }, [])
+    }, [dispatch, props.history, userToken])
 
     return(
         <div>
