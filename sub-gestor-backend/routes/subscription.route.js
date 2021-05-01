@@ -54,8 +54,9 @@ router.post('/', auth, upload.single('image'), (req, res) => {
         id, name, active, end, free_trail, free_trial_end, start_date, end_date,
         currency, frequency, url, price, description
     } = req.body;
-    const {img_src} = (req.file) ? req.file.filename : "default.jpg"; //imagen por defecto si no hay imagen
-
+    const img_src = (req.file) ? req.file.filename : "default.jpg"; //imagen por defecto si no hay imagen
+    console.log(req.file);
+    console.log(img_src);
 
     // Comprovar usuario valido
     if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
