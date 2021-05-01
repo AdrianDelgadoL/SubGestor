@@ -91,11 +91,11 @@ const SignIn = (props) => {
 
 
   return (
-      <div className="wrapper">
-          <div className="form-wrapper">
+      <div className="signUp-wrapper">
+          <div className="signUp-form-wrapper">
               <h1>Inicio de sesión</h1>
               <form noValidate>
-                  <div className="email">
+                  <div className="signUp-email">
                       <label htmlFor="email">Email: </label>
                       <input 
                           type="email"
@@ -107,10 +107,10 @@ const SignIn = (props) => {
                           value={email}
                       />
                       {emailError.length > 0 && (
-                          <span className="errorMessage">{emailError}</span>
+                          <span className="signUp-errorMessage">{emailError}</span>
                       )}
                   </div>
-                  <div className="password">
+                  <div className="signUp-password">
                       <label htmlFor="password">Contraseña: </label>
                       <input
                           type="password"
@@ -123,13 +123,13 @@ const SignIn = (props) => {
                           pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z].{6,})"
                       />
                       {passwordError.length > 0 && (
-                          <span className="errorMessage">{passwordError}</span>
+                          <span className="signUp-errorMessage">{passwordError}</span>
                       )}
                   </div>
                   {formError.length > 0 && (
-                      <span className="errorMessage">{formError}</span>
+                      <span className="signUp-errorMessage">{formError}</span>
                     )}
-                  <div className="createAccount">
+                  <div className="signUp-createAccount">
                       <button type="submit" onClick={handleSubmit}>Inicia sesión</button>
                       <small>Todavía no tienes cuenta?</small> 
                       <Link to ="/signUp" className="nav-link">Regístrate</Link>

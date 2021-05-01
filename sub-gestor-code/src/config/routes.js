@@ -2,7 +2,7 @@ import SignUp from "../pages/registro/signUp.component";
 import signIn from "../pages/login/signIn.component";
 import FAQ from "../pages/faq/FAQ.component";
 import HomePage from "../pages/homePage/homePage.component";
-import subDetail from "../pages/subDetails/subDetail.component";
+import SubDetail from "../pages/subDetails/subDetail.component";
 import createSubscription from "../pages/createSubscription/createSubscription.component";
 import SubList from "../pages/subscriptions/SubList.components";
 //import PageNotFound from "../pages/notFound" (Hacer redireccion o generar pageNotFound)
@@ -10,40 +10,44 @@ import SubList from "../pages/subscriptions/SubList.components";
 const routes =[
     
     {
+      forUnlogged: true,
       isPrivate: false,
       path:'/signIn',
       component: signIn
     },
     {
+      forUnlogged: true,
       isPrivate: false,
       path:'/signUp',
       component: SignUp
     },
     {
+      forUnlogged: false,
       isPrivate: false,
       path:'/faq',
       component: FAQ
     },
     {
-        isPrivate: false,
-        path:'/createSub',
-        component: createSubscription
-    },
-    {
+      forUnlogged: false,
       isPrivate: false,
-      path:'/subDetail',
-      component: subDetail
+      path:'/createSub',
+      component: createSubscription
     },
-    /*{
-      path:'/*',
-      component: PageNotFound
-    },*/
     {
+      forUnlogged: false,
+      isPrivate: true,
+      path:'/subDetail/:id',
+      component: SubDetail
+    },
+    // Esta deberia borrarse debido a que solo se puede entrar con el id ha esta ruta con el id.
+    {
+      forUnlogged: false,
       isPrivate: true,
       path:'/home',
       component: SubList
     },
     {
+      forUnlogged: true,
       isPrivate: false,
       path:'/',
       component: HomePage

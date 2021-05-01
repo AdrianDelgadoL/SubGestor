@@ -1,15 +1,15 @@
-.wrapper {
-    height: 80vh;
+  .signUp-wrapper {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: whitesmoke;
+    margin-top: 5%;
   }
 
-  .form-wrapper{
-    width: 500px;
+  .signUp-form-wrapper{
+    width: 25%;
     display: flex;
     flex-direction: column;
     padding: 20px 40px;
@@ -33,7 +33,7 @@
   }
   
   label {
-    font-size: 1em;
+    font-size: 16px;
     margin-bottom: 0.25em;
     color: #222;
     font-weight: lighter;
@@ -56,30 +56,27 @@
     border: 1px solid red;
   }
   
-  .errorMessage {
+  .signUp-errorMessage {
     color: red;
     font-size: 0.75em;
     display: relative;
   }
   
-  .email, .password, .pswrepeat {
+  .signUp-email, .signUp-password, .signUp-pswrepeat {
       display: flex;
       flex-direction: column;
       margin-bottom: 15px;
+      width: 100%
   }
-  
-  .email, .password, .pswrepeat{
-    width: 100%
-  }
-  
-  .createAccount{
+    
+  .signUp-createAccount{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .createAccount button {
+  .signUp-createAccount button {
     background-color: #519e8a;
     color: #fff;
     border: 2px solid #fff;
@@ -93,14 +90,24 @@
     border-radius: 10px;
   }
 
-  .createAccount button:hover {
+  .signUp-createAccount button:hover {
     color: #519e8a;
     background-color: #fff;
     border: 2px solid #519e8a;
   }
 
-  .createAccount small{
+  .signUp-createAccount small{
     color: #999;
     font-weight: lighter;
   }
   
+  @media only screen and (max-width: 1400px) {
+      .signUp-wrapper {
+        width: 100%;
+        padding: 5%;
+      }
+
+      .signUp-form-wrapper {
+        width: 100%;
+      }
+  }

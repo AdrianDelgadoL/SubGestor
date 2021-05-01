@@ -32,6 +32,7 @@ class App extends Component {
               path={route.path}
               component={route.component}
               isPrivate={route.isPrivate}
+              forUnlogged={route.forUnlogged}
             />
             ))}
           </Switch>

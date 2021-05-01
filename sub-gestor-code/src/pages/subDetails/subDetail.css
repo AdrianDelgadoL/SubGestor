@@ -79,6 +79,12 @@
     background-color: #e5e5e5;
 }
 
+input[type=number] {
+    padding: 10px 0px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
 .datePayment{
     grid-area: datePay;
     margin: 5px;
@@ -92,10 +98,6 @@
 .price{
     grid-area: price;
     margin: 5px;
-}
-
-#price {
-    width: 15%;
 }
 
 .currency{

@@ -37,6 +37,8 @@ router.get('/:id', auth, (req, res) => {
         .then(subscription => {
             if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
             if(subscription) return res.status(200).json(subscription);
+        }).catch(err => {
+            return res.status(404).json({msg: 'Suscripción no encontrada'});
         });
 });
 
@@ -49,21 +51,28 @@ router.get('/:id', auth, (req, res) => {
 router.post('/', auth, upload.single('image'), (req, res) => {
 
     // TODO: Tags por añadir ya para el 7
+    console.log('Endpoint: /subscriptions ;; Method: POST');
+    console.log('req.file: '+req.file)
+    console.log('req.files: '+req.files);
+    console.log('req.body: '+JSON.stringify(req.body))
 
     const {
-        id, name, active, end, free_trail, free_trial_end, start_date, end_date,
+        name, active, end, free_trail, free_trial_end, start_date, end_date,
         currency, frequency, url, price, description
     } = req.body;
     const img_src = (req.file) ? req.file.filename : "default.jpg"; //imagen por defecto si no hay imagen
     console.log(req.file);
     console.log(img_src);
 
+    const { id } = req.userId;
+
     // Comprovar usuario valido
     if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
-    User.findOne({ '_id': mongoose.Types.ObjectId(id) })
+    console.log(id)
+    User.findById(id)
         .then(user => {
 
-            console.log(user);
+            // console.log(user);
             // No usuario == liada
             if (!user) return res.status(400).json({
                 msg: 'No existe este usuario'
@@ -77,12 +86,12 @@ router.post('/', auth, upload.single('image'), (req, res) => {
             }
 
             // Comprobar formato fechas si estan puestas
-            if (start_date) {
+            if (start_date !== "null") {
                 if (isNaN(Date.parse(start_date))) return res.status(400).json({
                     msg : 'El formato de la fecha es incorrecto'
                 });
             }
-            if (start_date) {
+            if (end_date !== "null") {
                 if (isNaN(Date.parse(end_date))) return res.status(400).json({
                     msg : 'El formato de la fecha es incorrecto'
                 });
@@ -94,12 +103,12 @@ router.post('/', auth, upload.single('image'), (req, res) => {
                 active: ( active == 1),
                 free_trail: (free_trail) ? (free_trail == 1) : undefined,
                 free_trial_end:
-                    (free_trial_end) ? new Date(free_trial_end) : undefined,
+                    (free_trial_end !== "null") ? new Date(free_trial_end) : undefined,
                 start_date:
-                    (start_date) ? new Date(start_date) : undefined,
+                    (start_date !== "null" ) ? new Date(start_date) : undefined,
                 end: (end) ? (end == 1) : undefined,
                 end_date:
-                    (end_date) ? new Date(end_date) : undefined,
+                    (end_date !== "null" ) ? new Date(end_date) : undefined,
                 currency: currency,
                 frequency: (frequency),
                 url: url,
@@ -110,7 +119,7 @@ router.post('/', auth, upload.single('image'), (req, res) => {
             });
             newSubscription.save()
             .then(new_sub => {
-                console.log(new_sub);
+                // console.log(new_sub);
                 // Devoler estado de salida
                 return res.status(200).json({
                     msg: 'La suscripción se ha creado correctamente',

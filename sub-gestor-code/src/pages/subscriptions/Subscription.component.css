@@ -1,4 +1,4 @@
-.card-container{
+.Subscription-card-container{
     display:flex;
     align-items: center;
     margin: 15px;
@@ -10,7 +10,7 @@
 }
 
 
-.card-container img{
+.Subscription-card-container img{
     height: 120px;
     width: 200px;
     border: black 1px solid;
@@ -18,13 +18,13 @@
     border-radius: 10px;
 }
 
-.text-col{
+.Subscription-text-col{
     padding: 1px;
     width: 200px;
     
 }
 
-.card-container:hover{
+.Subscription-card-container:hover{
     background-color: whitesmoke;
     box-shadow: 0px 10px 50px #555;
 }
