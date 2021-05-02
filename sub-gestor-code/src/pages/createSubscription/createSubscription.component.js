@@ -35,12 +35,20 @@ const CreateSubscription = (props) => {
 
     const changeImage = async (e) => {
         let img = e.target.files[0];
+        if (!img) {
+            setImgSrcError('');
+            setImgSrc(null);
+            return;
+        }
         if (img.size > 1024 * 1024) {
             setImgSrc(null);
-            setImgSrcError('El tamaño de la imagen es superior a 1Mb.');
+            setImgSrcError('El tamaño de la imagen es superior a 1Mb');
+        } else if (!img.type.startsWith('image')) {
+            setImgSrc(null);
+            setImgSrcError('Por favor seleccione una imagen');
         } else {
             setImgSrcError('');
-            setImgSrc(e.target.files[0])
+            setImgSrc(e.target.files[0]);
         }
     }
 
@@ -144,8 +152,6 @@ const CreateSubscription = (props) => {
             console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
     };
-
-    
 
     const handleChange = async (e) => {
         e.preventDefault();
