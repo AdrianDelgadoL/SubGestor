@@ -12,7 +12,7 @@ function updates(req, res, next) {
             subscriptions.forEach(sub => {
                 if(sub.active) {
                     if (Date.now() > sub.charge_date) {
-
+                        console.log("Modifing date")
                         switch (sub.frequency) {
                             case "monthly":
                                 sub.charge_date.setMonth(sub.charge_date.getMonth()+1);

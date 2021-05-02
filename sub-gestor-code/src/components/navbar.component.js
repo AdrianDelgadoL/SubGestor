@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'; 
-import {useAuthState} from '../context/context'
+import {useAuthDispatch, useAuthState} from '../context/context'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navbar = (props) => {
     const userDetails = useAuthState()
     const isLogged = Boolean(userDetails.token)
+    const dispatch = useAuthDispatch()
+    const logout = () => {
+        dispatch({ type: 'LOGOUT'})
+    }
+
     return (
         <React.Fragment>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -28,6 +33,11 @@ const Navbar = (props) => {
                     <li class="nav-item" id="FAQ">
                         <Link to ="/faq" class="nav-link">FAQ</Link>
                     </li>
+                    {isLogged && (
+                        <li class="nav-item">
+                            <Link to ="/signUp" onClick={logout} class="nav-link">Logout</Link>
+                        </li>
+                    )}
                 </ul>
             </div>
             </nav>
