@@ -11,7 +11,7 @@ function updates(req, res, next) {
 
             subscriptions.forEach(sub => {
                 if(sub.active) {
-                    if (Date.now() > sub.charge_date) {
+                    while (Date.now() > sub.charge_date) {
                         console.log("Modifing date")
                         switch (sub.frequency) {
                             case "monthly":
@@ -29,6 +29,11 @@ function updates(req, res, next) {
                             case "annual":
                                 sub.charge_date.setMonth(sub.charge_date.getMonth()+12);
                                 break;
+                            /*case "onetime":
+                                sub.active = false;
+                                sub.charge_date = null;
+                                sub.markModified("active");
+                                break;*/
                         }
                         sub.markModified("charge_date");
                         sub.save()

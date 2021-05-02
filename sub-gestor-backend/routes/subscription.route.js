@@ -38,9 +38,23 @@ router.get('/:id', auth, (req, res) => {
             if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
             if(subscription) return res.status(200).json(subscription);
         }).catch(err => {
+            console.log(err);
             return res.status(404).json({msg: 'Suscripción no encontrada'});
         });
 });
+
+
+router.delete('/:id', auth, (req, res) => {
+    const id = req.params.id;
+    Subscription.findByIdAndDelete(id)
+        .then(subscription => {
+            if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
+            if(subscription) return res.status(200).json({msg: "Suscripción eliminada"});
+        }).catch(err => {
+        console.log(err);
+        return res.status(404).json({msg: 'Suscripción no encontrada'});
+    });
+})
 
 /**
  * /: The path to access the endpoint.
@@ -80,7 +94,7 @@ router.post('/', auth, upload.single('image'), (req, res) => {
             });
 
             // Comprobar campos obligatorios pasados por POST
-            if (!name || !active || !currency || !frequency || !price) {
+            if (!name || !active || !charge_date || !currency || !frequency || !price) {
                 return res.status(400).json({
                     msg: 'Completa todos los campos'
                 });
@@ -135,6 +149,9 @@ router.post('/', auth, upload.single('image'), (req, res) => {
                     subscription_id: new_sub._id
                 });
             });
+        })
+        .catch(err => {
+            console.log(err);
         });
 });
 
