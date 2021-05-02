@@ -55,6 +55,13 @@ const SubDetail = (props) => {
         })
     }, [])
 
+    const eliminar = () => {
+        axios.delete('http://localhost:4000/subscription/' + props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
+        .then(response => {
+            props.history.push('/home');
+        })
+    }
+
     return (
         <div>
             <h2>Información detallada de la suscripción</h2>
@@ -70,7 +77,7 @@ const SubDetail = (props) => {
                         <input type="button" id="modifyButton" value="Guardar cambios"></input>
                     </div>
                     <div className="deleteButton">
-                        <input type="button" id="deleteButton" value="Eliminar suscripción"></input>
+                        <input onClick={eliminar} type="button" id="deleteButton" value="Eliminar suscripción"></input>
                     </div>
                 </div>
                 <div className="grid-container-price">
