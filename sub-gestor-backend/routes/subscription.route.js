@@ -58,8 +58,9 @@ router.post('/', auth, upload.single('image'), (req, res) => {
 
     const {
         name, active, end, free_trail, free_trial_end, start_date, end_date,
-        currency, frequency, url, price, description
+        currency, frequency, url, price, description, charge_date
     } = req.body;
+
     const img_src = (req.file) ? req.file.filename : "default.jpg"; //imagen por defecto si no hay imagen
     console.log(req.file);
     console.log(img_src);
@@ -97,6 +98,12 @@ router.post('/', auth, upload.single('image'), (req, res) => {
                 });
             }
 
+            if (charge_date !== "null"){
+                if (isNaN(Date.parse(charge_date))) return res.status(400).json({
+                    msg : 'El formato de la fecha es incorrecto'
+                });
+            }
+
             // Meterlo en la base de datos
             const newSubscription = new Subscription({
                 name: name,
@@ -115,6 +122,8 @@ router.post('/', auth, upload.single('image'), (req, res) => {
                 price: price,
                 img_src: img_src,
                 description: description,
+                charge_date:
+                    (charge_date !== "null") ? new Date(charge_date) : undefined,
                 user_id: user._id // Cambio de ultima hora
             });
             newSubscription.save()

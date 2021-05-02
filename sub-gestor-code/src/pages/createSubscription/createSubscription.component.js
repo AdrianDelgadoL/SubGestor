@@ -291,7 +291,7 @@ const CreateSubscription = (props) => {
                         </div>
                         <div className="createSubscription-description">
                             <label htmlFor="description"> Descripción: </label> <br />
-                            <textarea rows="2" cols="50" form="" onChange={handleChange} />
+                            <textarea rows="2" cols="50" form="" name="description" onChange={handleChange} />
                         </div>
                         <div className="createSubscription-tags">
                             <label htmlFor="tags"> Tags (separados por una coma): </label> <br />
