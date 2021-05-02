@@ -43,7 +43,8 @@ const SubDetail = (props) => {
             if(hasEnd)
                 setDateEnd(response.data.end_date.substr(0, response.data.end_date.indexOf('T')));
             setUrl(response.data.url);
-            setStartDate(response.data.start_date.substr(0, response.data.start_date.indexOf('T')));
+            if(response.data.start_date)
+                setStartDate(response.data.start_date.substr(0, response.data.start_date.indexOf('T')));
             setTags(response.data.tags);
             setDescription(response.data.description);
         })

@@ -17,21 +17,19 @@ const SubList = (props) => {
     useEffect(() => {
         axios.get('http://localhost:4000/subscription/', {headers: {"x-auth-token": userToken}})
             .then(response => {
-                setTarjetas(response.data.map(tarjeta => (                   
-                    <div className="row-md-2" key={tarjeta._id}>
-                        <Subscription title={tarjeta.name} imageSource={imageRoute + tarjeta.img_src} card_price={tarjeta.price} payment_type={tarjeta.currency} charge_date={tarjeta.charge_date} sub_id={tarjeta._id} url={tarjeta.url}/>
-                    </div>
-                )))
+                if(response.data.length == 0) {
+                    setTarjetas(<h1>Parece que aún no existe ninguna suscripción</h1>)
+                } else {
+                    setTarjetas(response.data.map(tarjeta => (                   
+                        <div className="row-md-2" key={tarjeta._id}>
+                            <Subscription title={tarjeta.name} imageSource={imageRoute + tarjeta.img_src} card_price={tarjeta.price} payment_type={tarjeta.currency} charge_date={tarjeta.charge_date} sub_id={tarjeta._id} url={tarjeta.url}/>
+                        </div>
+                    )))
+                }
             }).catch(error => {
                 if(error.response) {
-                    if(error.response.status === 404) {
-                        setTarjetas(
-                            <h1>Parece que aún no existe ninguna suscripción</h1>
-                        )
-                    } else {
-                        dispatch({ type: 'AUTH_ERROR', error: error.response.data })
-                        props.history.push('/');
-                    }
+                    dispatch({ type: 'AUTH_ERROR', error: error.response.data })
+                    props.history.push('/');
                 }
             })
     }, [dispatch, props.history, userToken])
