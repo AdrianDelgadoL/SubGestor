@@ -57,7 +57,7 @@ router.post('/', auth, upload.single('image'), (req, res) => {
     console.log('req.body: '+JSON.stringify(req.body))
 
     const {
-        name, active, end, free_trail, free_trial_end, start_date, end_date,
+        name, active, end, free_trial, free_trial_end, start_date, end_date,
         currency, frequency, url, price, description, charge_date
     } = req.body;
 
@@ -107,13 +107,13 @@ router.post('/', auth, upload.single('image'), (req, res) => {
             // Meterlo en la base de datos
             const newSubscription = new Subscription({
                 name: name,
-                active: ( active == 1),
-                free_trail: (free_trail) ? (free_trail == 1) : undefined,
+                active: ( active === 'true'),
+                free_trial: (free_trial === 'true'),
                 free_trial_end:
                     (free_trial_end !== "null") ? new Date(free_trial_end) : undefined,
                 start_date:
                     (start_date !== "null" ) ? new Date(start_date) : undefined,
-                end: (end) ? (end == 1) : undefined,
+                end: (end === 'true'),
                 end_date:
                     (end_date !== "null" ) ? new Date(end_date) : undefined,
                 currency: currency,

@@ -109,9 +109,9 @@ const CreateSubscription = (props) => {
             // Valors base
             data.append('name', nameSub);
             data.append('active', true);
-            data.append('free_trial', free_trial);
+            data.append('free_trial', !free_trial);
             data.append('free_trial_end', free_trial_end);
-            data.append('end', end);
+            data.append('end', !end);
             data.append('end_date', end_date);
             data.append('currency', currency);
             data.append('frequency', frequency);
