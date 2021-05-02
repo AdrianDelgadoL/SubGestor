@@ -35,7 +35,7 @@ const Navbar = (props) => {
                     </li>
                     {isLogged && (
                         <li class="nav-item">
-                            <Link to ="/signUp" onClick={logout} class="nav-link">Logout</Link>
+                            <Link to ="/" onClick={logout} class="nav-link">Logout</Link>
                         </li>
                     )}
                 </ul>
