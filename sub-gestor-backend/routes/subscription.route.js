@@ -82,14 +82,14 @@ router.post('/', auth, upload.single('image'), (req, res) => {
     const { id } = req.userId;
 
     // Comprovar usuario valido
-    if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
+    if (!id) return res.status(401).json({ msg: 'Es necesaria la ID del usuario' });
     console.log(id)
     User.findById(id)
         .then(user => {
 
             // console.log(user);
             // No usuario == liada
-            if (!user) return res.status(400).json({
+            if (!user) return res.status(401).json({
                 msg: 'No existe este usuario'
             });
 
