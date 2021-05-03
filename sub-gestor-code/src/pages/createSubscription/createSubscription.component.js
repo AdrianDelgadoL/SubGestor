@@ -140,7 +140,7 @@ const CreateSubscription = (props) => {
             })
             .catch(err => {
                 if (err.response.status === 401) { // Sin autorización envialos al login
-                    dispatch({ type: 'AUTH_ERROR', error: error.response.data })
+                    dispatch({ type: 'AUTH_ERROR', error: err.response.data })
                     props.history.push('/signIn');
                     return;
                 }
