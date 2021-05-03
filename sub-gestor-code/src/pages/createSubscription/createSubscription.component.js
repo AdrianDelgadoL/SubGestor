@@ -15,9 +15,9 @@ const CreateSubscription = (props) => {
     const [frequency, setFrequency] = useState("monthly");
     const [price, setPrice] = useState(null);
     const [charge_date, setChargeDate] = useState(null);
-    const [url, setUrl] = useState(null);
+    const [url, setUrl] = useState('');
     const [start_date, setStartDate] = useState(null);
-    const [description, setDescription] = useState(null);
+    const [description, setDescription] = useState('');
     const [img_src, setImgSrc] = useState(null);
     const [tags, setTags] = useState(null);
 
@@ -180,7 +180,7 @@ const CreateSubscription = (props) => {
                     setUrl(value);
                 } else {
                     setUrlError('');
-                    setUrl(null);
+                    setUrl('');
                 }
                 break;
             case "nameSub":
