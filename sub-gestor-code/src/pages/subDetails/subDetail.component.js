@@ -83,7 +83,7 @@ const SubDetail = (props) => {
                 </div>
                 <div className="grid-container-price">
                     <div className="datePayment">
-                        <label for="datePayment">Fecha de pago:</label><br />
+                        <label for="datePayment">Fecha de pago: (mm/dd/yyyy)</label><br />
                         <input type="date" id="datePayment" defaultValue={datePayment}></input>
                     </div>
                     <div className="frequency">
