@@ -1,0 +1,194 @@
+.createSubscription-formSub-grid {
+    display: grid;
+    grid-template-areas:
+            'createSubscription-information createSubscription-information createSubscription-information createSubscription-information createSubscription-information'
+            'createSubscription-price_information createSubscription-price_information createSubscription-price_information createSubscription-price_information createSubscription-price_information createSubscription-price_information '
+            'createSubscription-additional_information createSubscription-additional_information createSubscription-additional_information createSubscription-additional_information createSubscription-additional_information'
+            'createSubscription createSubscription createSubscription createSubscription createSubscription';
+    align-content: center;
+    width: 100%;
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.createSubscription-information {
+    display: grid;
+    grid-template-areas: 'createSubscription-name createSubscription-free_trial createSubscription-free_trial_end createSubscription-end createSubscription-end_date';
+    border-radius: 10px;
+    text-align: center;
+    background-color: #e5e5e5;
+    padding: 20px;
+    padding-bottom: 20px;
+}
+
+.createSubscription-price_information {
+    display: grid;
+    grid-template-areas: 'createSubscription-charge_date createSubscription-frequency'
+                         ' createSubscription-price createSubscription-currency';
+    border-radius: 10px;
+    text-align: center;
+    background-color: #e5e5e5;
+    width: 70%;
+    margin-left: 175px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
+.createSubscription-additional_information {
+    display: grid;
+    grid-template-areas: 'createSubscription-url createSubscription-start_date createSubscription-description'
+                         'createSubscription-tags createSubscription-img_src createSubscription-error';
+    border-radius: 10px;
+    text-align: center;
+    background-color: #e5e5e5;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
+label {
+    font-weight: bold;
+}    
+
+input::error {
+    border: 1px solid red;
+}
+
+.errorMessage {
+    color: #ff0000;
+    font-size: 0.75em;
+    display: grid;
+}
+
+.createSubscription-charge_information {
+    padding: 10px;
+}
+
+h1 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-weight: initial;
+}
+
+#information {
+    font-weight: bold;
+    font-size: large;
+}
+
+#price_information {
+    margin-left: 200px;
+    margin-bottom: 0px;
+    width: 50%;
+}
+
+#price_information, #additional_information {
+    font-weight: bold;
+    font-size: large;
+    margin-top: 20px;
+}
+
+#information, #additional_information {
+    margin-left: 50px;
+    margin-bottom: 0px;
+}
+
+
+.createSubscription{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createSubscription button {
+    background-color: #519e8a;
+    color: #fff;
+    border: 2px solid #fff;
+    width: 30%;
+    padding: 8px 0px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+    border-radius: 10px;
+    height: 50px;
+    font-size: 20px;
+}
+
+.createSubscription button:hover {
+    color: #519e8a;
+    background-color: #fff;
+    border: 2px solid #519e8a;
+}
+
+#info {
+    margin-top: 10px;
+    color: red;
+    font-size: 1em;
+    text-align: center;
+}
+
+@media only screen and (max-width: 1000px) {
+    .createSubscription-formSub-grid{
+        grid-template-areas:
+            'createSubscription-information'
+            'createSubscription-price_information'
+            'createSubscription-additional_information'
+            'createSubscription';
+        margin-left: 5%;
+        margin-right: 5%;
+
+    }
+
+    .createSubscription-information {
+        grid-template-areas: 'createSubscription-name'
+                             'createSubscription-free_trial'
+                             'createSubscription-free_trial_end'
+                             'createSubscription-end'
+                             'createSubscription-end_date';
+        margin-left: 5%;
+        text-align: center;
+    }
+    .createSubscription-price_information {
+        grid-template-areas: 'createSubscription-charge_date'
+                             'createSubscription-frequency'
+                             'createSubscription-price'
+                             'createSubscription-currency';
+        margin-left: 5%;
+        text-align: center;
+    }
+
+    .createSubscription-additional_information {
+        grid-template-areas: 'createSubscription-url'
+                             'createSubscription-start_date'
+                             'createSubscription-description'
+                             'createSubscription-tags'
+                             'createSubscription-img_src'
+                             'createSubscription-error';
+        text-align: center;
+    }
+
+    h1 {
+        margin-bottom: 0px;
+    }
+
+    #price_information, #information, #additional_information {
+        margin-left: 15%;
+    }
+
+    .createSubscription-information, .createSubscription-additional_information, .createSubscription-price_information {
+        width: 70%;
+        margin-left: 15%;
+    }
+
+    .createSubscription-additional_information textarea,  #select{
+        width: 70%;
+    }
+
+    .createSubscription button {
+        width: 60%;
+        margin-left: 0%;
+    }
+}

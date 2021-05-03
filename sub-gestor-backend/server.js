@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const PORT = 4000;
 const helloRoutes = require('./routes/hello.route');
 const userRoutes = require('./routes/user.route');
-
+const subsRoutes = require('./routes/subscription.route');
 
 const config = require('config');
 app.use(cors());
@@ -29,6 +29,7 @@ connection.once('open', () => {
 // el router de hello asociandolo a la ruta /hello
 app.use('/hello', helloRoutes);
 app.use('/user', userRoutes);
+app.use('/subscription', subsRoutes);
 
 
 app.listen(PORT, function() {
