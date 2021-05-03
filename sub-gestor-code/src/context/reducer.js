@@ -29,6 +29,7 @@ export const AuthReducer = (initialState, action) => {
       };
     case "LOGOUT":
       localStorage.setItem('currentUser', null)
+      localStorage.setItem('token', null)
       return {
         ...initialState,
         user: "",
@@ -36,6 +37,8 @@ export const AuthReducer = (initialState, action) => {
       };
     case "AUTH_ERROR":
     case "LOGIN_ERROR":
+      localStorage.setItem('currentUser', null)
+      localStorage.setItem('token', null)
       return {
         ...initialState,
         loading: false,
