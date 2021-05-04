@@ -26,8 +26,8 @@ function Subscription({title,imageSource,card_price,payment_type, charge_date, s
             <p className="Subscription-precio" >{card_price}{selectCurrency()}</p>
             <p className="Subscription-charge_date" >Próximo cobro: {moment(charge_date).format("DD/MM/YYYY")}</p>
             <Link to ={detailLink} className="btn btn-outline-secondary border-0" >Consultar suscripción</Link>
-            {url.length == 0 && (
-                <a href={url}> Cancelar suscripción</a>
+            {url.length !== 0 && (
+                <a href={url}>Cancelar suscripción</a>
             )}
         </div>
     </div>
