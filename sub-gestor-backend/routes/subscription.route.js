@@ -43,13 +43,29 @@ router.get('/:id', auth, (req, res) => {
         });
 });
 
-
+/**
+ * /:id: The path to access the endpoint and the sub id to look for.
+ * auth: authentication middleware
+ * req: Request received. Contains the url parameter.
+ * res: Response to the front-end.
+ */
 router.delete('/:id', auth, (req, res) => {
     const id = req.params.id;
-    Subscription.findByIdAndDelete(id)
-        .then(subscription => {
+    Subscription.findById(id)
+        .then( subscription => {
             if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
-            if(subscription) return res.status(200).json({msg: "Suscripción eliminada"});
+
+            //Para contarla como eliminada se desactiva en la base de datos, se guarda para el historico
+            subscription.active = false;
+            subscription.markModified("active");
+            subscription.save()
+                .then(sub => {
+                    if(sub) return res.status(200).json({msg: "Suscripción eliminada"});
+                })
+                .catch(err => {
+                    console.log(err);
+                    return res.status(400).json( {msg: "Ha habido un problema, intentalo mas tarde"});
+                });
         }).catch(err => {
         console.log(err);
         return res.status(404).json({msg: 'Suscripción no encontrada'});
@@ -82,19 +98,19 @@ router.post('/', auth, upload.single('image'), (req, res) => {
     const { id } = req.userId;
 
     // Comprovar usuario valido
-    if (!id) return res.status(400).json({ msg: 'Es necesaria la ID del usuario' });
+    if (!id) return res.status(401).json({ msg: 'Es necesaria la ID del usuario' });
     console.log(id)
     User.findById(id)
         .then(user => {
 
             // console.log(user);
             // No usuario == liada
-            if (!user) return res.status(400).json({
+            if (!user) return res.status(401).json({
                 msg: 'No existe este usuario'
             });
 
             // Comprobar campos obligatorios pasados por POST
-            if (!name || !active || !charge_date || !currency || !frequency || !price) {
+            if (!name || !active || !charge_date|| !currency || !frequency || !price ) {
                 return res.status(400).json({
                     msg: 'Completa todos los campos'
                 });
@@ -116,6 +132,7 @@ router.post('/', auth, upload.single('image'), (req, res) => {
                 if (isNaN(Date.parse(charge_date))) return res.status(400).json({
                     msg : 'El formato de la fecha es incorrecto'
                 });
+                console.log(charge_date);
             }
 
             // Meterlo en la base de datos

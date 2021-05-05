@@ -11,7 +11,7 @@ function auth(req, res, next) {
         req.userId = decodedToken;
         next();
     } catch (e) {
-        return res.status(400).json({msg: "Bad token"});
+        return res.status(401).json({msg: "Bad token"});
     }
 }
 

@@ -4,7 +4,7 @@ function updates(req, res, next) {
     const { id } = req.userId;
 
 
-    Subscription.find({user_id: id})
+    Subscription.find({user_id: id, active: true})
         .then(subscriptions => {
 
             if(!subscriptions) return res.status(404).json({msg: "No se han encontrado suscripciones"});
@@ -29,11 +29,11 @@ function updates(req, res, next) {
                             case "annual":
                                 sub.charge_date.setMonth(sub.charge_date.getMonth()+12);
                                 break;
-                            /*case "onetime":
+                            case "onetime":
                                 sub.active = false;
                                 sub.charge_date = null;
                                 sub.markModified("active");
-                                break;*/
+                                break;
                         }
                         sub.markModified("charge_date");
                         sub.save()

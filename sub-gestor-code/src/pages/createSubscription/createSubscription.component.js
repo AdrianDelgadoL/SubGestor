@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { useAuthState } from '../../context/context.js';
+import { useAuthState, useAuthDispatch } from '../../context/context.js';
 import axios from 'axios';
 import './createSubscription.component.css'
 const validateValue = require('validator');
@@ -15,9 +15,9 @@ const CreateSubscription = (props) => {
     const [frequency, setFrequency] = useState("monthly");
     const [price, setPrice] = useState(null);
     const [charge_date, setChargeDate] = useState(null);
-    const [url, setUrl] = useState(null);
+    const [url, setUrl] = useState('');
     const [start_date, setStartDate] = useState(null);
-    const [description, setDescription] = useState(null);
+    const [description, setDescription] = useState('');
     const [img_src, setImgSrc] = useState(null);
     const [tags, setTags] = useState(null);
 
@@ -31,7 +31,7 @@ const CreateSubscription = (props) => {
     const [ backendError, setBackendError ] = useState('');
 
     const userToken = useAuthState().token;
-
+    const dispatch = useAuthDispatch()
 
     const changeImage = async (e) => {
         let img = e.target.files[0];
@@ -140,6 +140,7 @@ const CreateSubscription = (props) => {
             })
             .catch(err => {
                 if (err.response.status === 401) { // Sin autorización envialos al login
+                    dispatch({ type: 'AUTH_ERROR', error: err.response.data })
                     props.history.push('/signIn');
                     return;
                 }
@@ -179,7 +180,7 @@ const CreateSubscription = (props) => {
                     setUrl(value);
                 } else {
                     setUrlError('');
-                    setUrl(null);
+                    setUrl('');
                 }
                 break;
             case "nameSub":
