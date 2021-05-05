@@ -6,9 +6,8 @@ const PORT = 4000;
 const helloRoutes = require('./routes/hello.route');
 const userRoutes = require('./routes/user.route');
 const subsRoutes = require('./routes/subscription.route');
-////////
 const templatesSub = require('./routes/templates.route');
-//////////
+
 const config = require('config');
 app.use(cors());
 app.use(express.json());
@@ -32,9 +31,8 @@ connection.once('open', () => {
 app.use('/hello', helloRoutes);
 app.use('/user', userRoutes);
 app.use('/subscription', subsRoutes);
-////////////
 app.use('/templates', templatesSub)
-///////////
+
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
