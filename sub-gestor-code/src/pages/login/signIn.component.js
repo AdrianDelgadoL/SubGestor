@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import '../registro/register.css';
+import './signIn.css';
+import POPUP from './popup'
 import {useAuthDispatch} from '../../context/context';
 import axios from "axios";
+
 
 // Form cogido de este código
 //  https://github.com/MyNameIsURL/react-form-validation-tutorial/blob/master/src/App.js
@@ -23,6 +25,9 @@ const SignIn = (props) => {
   const [emailError, setEmailError] = useState(''); 
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
+  const [buttonPopUp,setButtonPopup]=useState(false);
+  
+  
 
   const dispatch = useAuthDispatch()
 
@@ -89,13 +94,14 @@ const SignIn = (props) => {
     }
   };
 
-
+  
   return (
-      <div className="signUp-wrapper">
-          <div className="signUp-form-wrapper">
+    
+      <div className="signIn-wrapper">
+          <div className="signIn-form-wrapper">
               <h1>Inicio de sesión</h1>
               <form noValidate>
-                  <div className="signUp-email">
+                  <div className="signIn-email">
                       <label htmlFor="email">Email: </label>
                       <input 
                           type="email"
@@ -107,11 +113,12 @@ const SignIn = (props) => {
                           value={email}
                       />
                       {emailError.length > 0 && (
-                          <span className="signUp-errorMessage">{emailError}</span>
+                          <span className="signIn-errorMessage">{emailError}</span>
                       )}
                   </div>
-                  <div className="signUp-password">
+                  <div className="signIn-password">
                       <label htmlFor="password">Contraseña: </label>
+                      {buttonPopUp}
                       <input
                           type="password"
                           className={passwordError.length > 0 ? "error" : null}
@@ -123,18 +130,24 @@ const SignIn = (props) => {
                           pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z].{6,})"
                       />
                       {passwordError.length > 0 && (
-                          <span className="signUp-errorMessage">{passwordError}</span>
+                          <span className="signIn-errorMessage">{passwordError}</span>
                       )}
                   </div>
                   {formError.length > 0 && (
-                      <span className="signUp-errorMessage">{formError}</span>
+                      <span className="signIn-errorMessage">{formError}</span>
                     )}
-                  <div className="signUp-createAccount">
+                  <div className="signIn-createAccount">
                       <button type="submit" onClick={handleSubmit}>Inicia sesión</button>
                       <small>Todavía no tienes cuenta?</small> 
                       <Link to ="/signUp" className="nav-link">Regístrate</Link>
-                  </div>
+                  </div>   
               </form>
+              <div className="signIn-forget-pw">
+                      <small className="signIn-pregunta">Has olvidado tu contraseña?</small> 
+                      <button onClick={()=>setButtonPopup(true)}className="signIn-recuperar">Recuperar Contraseña</button>
+                  </div>
+                
+                  <POPUP trigger={buttonPopUp} setTrigger={setButtonPopup} ></POPUP>
           </div>
       </div>
   );
