@@ -1,3 +1,8 @@
 #ficheros a no tener en cuenta
 /node_modules
 .idea/
+
+# test selenium
+geckodriver.log
+__pycache__/
+__pycache__/*
