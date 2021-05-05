@@ -5,6 +5,7 @@ import HomePage from "../pages/homePage/homePage.component";
 import SubDetail from "../pages/subDetails/subDetail.component";
 import createSubscription from "../pages/createSubscription/createSubscription.component";
 import SubList from "../pages/subscriptions/SubList.components";
+import selectPlantilla from "../pages/selectPlantilla/selectPlantilla.component";
 //import PageNotFound from "../pages/notFound" (Hacer redireccion o generar pageNotFound)
 
 const routes =[
@@ -30,6 +31,12 @@ const routes =[
     {
       forUnlogged: false,
       isPrivate: false,
+      path:'/selectPlantilla',
+      component: selectPlantilla
+    },
+    {
+      forUnlogged: false,
+      isPrivate: false,
       path:'/createSub',
       component: createSubscription
     },
@@ -39,7 +46,7 @@ const routes =[
       path:'/subDetail/:id',
       component: SubDetail
     },
-    // Esta deberia borrarse debido a que solo se puede entrar con el id ha esta ruta con el id.
+    // Esta deberia borrarse debido a que solo se puede entrar con el id a esta ruta con el id.
     {
       forUnlogged: false,
       isPrivate: true,
