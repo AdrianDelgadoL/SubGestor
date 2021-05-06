@@ -176,6 +176,7 @@ input[type=number] {
 
 .grid-container{
     display: grid;
+    width: 100%;
     grid-template-areas:
     'header header header header header'
     'price price price extra extra'
