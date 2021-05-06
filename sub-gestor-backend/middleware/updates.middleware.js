@@ -29,11 +29,11 @@ function updates(req, res, next) {
                             case "annual":
                                 sub.charge_date.setMonth(sub.charge_date.getMonth()+12);
                                 break;
-                            /*case "onetime":
+                            case "onetime":
                                 sub.active = false;
                                 sub.charge_date = null;
                                 sub.markModified("active");
-                                break;*/
+                                break;
                         }
                         sub.markModified("charge_date");
                         sub.save()
@@ -47,6 +47,7 @@ function updates(req, res, next) {
                     }
                 }
             });
+
             res.status(200).send(subscriptions);
         });
     next();
