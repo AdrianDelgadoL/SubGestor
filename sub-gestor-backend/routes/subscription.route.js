@@ -81,10 +81,14 @@ router.put('/:id', auth, upload.single('image'), dateValidator, (req, res) => {
             for( var key in req.body) {  // por cada campo se comprueba si se ha modificado y se guarda en caso de que lo sea
                 if(req.body.hasOwnProperty(key) && substr.hasOwnProperty(key)) {
                     if(req.body[key] !== substr[key]) {
-                        sub[key] = req.body[key];
+                        sub[key] = req.body[key] !== "null" ? req.body[key] : undefined;
                         sub.markModified(key.toString());
                     }
                 }
+            }
+            if(img_src !== "null") {
+                sub.img_src = img_src;
+                sub.markModified('img_src');
             }
             sub.save()
                 .then(sub => {
@@ -100,9 +104,6 @@ router.put('/:id', auth, upload.single('image'), dateValidator, (req, res) => {
             console.log(err);
             return res.status(400).json( {msg: "Error al buscar la suscripción"})
         })
-
-
-
 })
 
 /**
