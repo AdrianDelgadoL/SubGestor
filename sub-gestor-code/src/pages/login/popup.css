@@ -32,3 +32,24 @@
     font-weight: bold;
     color:red;
 }
+.popup-exitoso{
+    text-align: center;
+    margin: 10px;
+    width:100%;
+    font-size: 25px;
+    font-weight: bold;
+    color:chartreuse;
+    margin-left:32%;
+}
+
+.popup-formulario{
+    margin-left: 30%;
+}
+
+
+.popup-errorMessage{
+    width: 100%;
+    margin:5px;
+    color: red;
+    font-size: 0.8em;
+}
