@@ -65,7 +65,7 @@ const SubDetail = (props) => {
 
     return (
         <div>
-            <h2>Información detallada de la suscripción</h2>
+            <h2 id="title_subDetail">Información detallada de la suscripción</h2>
             <div className="grid-container">
                 <div className="grid-container-header">
                     <div className="image">
