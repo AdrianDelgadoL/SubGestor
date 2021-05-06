@@ -40,7 +40,7 @@ router.get('/:id', auth, (req, res) => {
             if(subscription) return res.status(200).json(subscription);
         }).catch(err => {
             console.log(err);
-            return res.status(404).json({msg: 'Suscripción no encontrada'});
+            return res.status(500).json({msg: 'Error al buscar la suscripcion'});
         });
 });
 
@@ -59,7 +59,7 @@ router.delete('/:id', auth, (req, res) => {
             if(subscription) return res.status(200).json({msg: "Suscripción eliminada"});
         }).catch(err => {
         console.log(err);
-        return res.status(404).json({msg: 'Suscripción no encontrada'});
+        return res.status(500).json({msg: 'Error al eliminar la suscripcion'});
     });
 })
 
@@ -97,13 +97,13 @@ router.put('/:id', auth, upload.single('image'), dateValidator, (req, res) => {
                 )
                 .catch(err => {
                     console.log(err);
-                    return res.status(400).json({msg: "Error al modificar la suscripción."})
+                    return res.status(500).json({msg: "Error al modificar la suscripción."})
                 })
         })
         .catch(err => {
             console.log(err);
-            return res.status(400).json( {msg: "Error al buscar la suscripción"})
-        })
+            return res.status(500).json( {msg: "Error al buscar la suscripción"})
+        });
 })
 
 /**
@@ -180,7 +180,12 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
                     msg: 'La suscripción se ha creado correctamente',
                     subscription_id: new_sub._id
                 });
-            });
+
+            })
+                .catch(err => {
+                    console.log(err);
+                    return res.status(500).json({msg: "Error al guardar la suscripción"});
+                })
         })
         .catch(err => {
             console.log(err);
