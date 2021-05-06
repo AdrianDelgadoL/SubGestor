@@ -1,14 +1,14 @@
 import React, { useEffect, useState} from 'react';
 //import {Link} from 'react-router-dom'
 import './subDetail.css'
-import {useAuthState} from '../../context/context';
+import {useAuthState, useAuthDispatch} from '../../context/context';
 import axios from "axios";
 const validateValue = require('validator');
 
 
 const SubDetail = (props) => { 
 
-    //const dispatch = useAuthDispatch();
+    const dispatch = useAuthDispatch();
     //useAuthState en header (x-auth-token)
     const userDetails = useAuthState();
     //props.match.params.id -> id de consulta
@@ -48,6 +48,7 @@ const SubDetail = (props) => {
             setPrice(response.data.price);
             setCurrency(response.data.currency);
             setFreeTrial(response.data.free_trial);
+            console.log(freeTrial)
             if(freeTrial)
                 setDateEndTrial(response.data.free_trial_end.substr(0, response.data.free_trial_end.indexOf('T')));
             setHasEnd(response.data.end);
@@ -87,6 +88,7 @@ const SubDetail = (props) => {
     }
 
     const changeFreeTrialEnd = async (e) => {
+        console.log("free trial cambiado")
         if (!freeTrial) {
             setDateEndTrial(null);
             setFreeTrialEndError('');
@@ -112,50 +114,67 @@ const SubDetail = (props) => {
     const formValid = () => {
         // Valida que los errores esten vacios
         let valid = true;
+        console.log(freeTrialEndError)
+        console.log(endDateError)
+        console.log(priceError)
+        console.log(chargeDateError)
+        console.log(urlError)
+        console.log(imgSrcError)
+
         let errorValues = [freeTrialEndError, endDateError, priceError, chargeDateError, urlError, imgSrcError];
         errorValues.forEach(value => {
             if (value.length > 0) {
                 valid = false;
             }
         })
+        return valid;
     };
 
     //TODO: petició de canvi i gestió dels errors
     const handleSubmit = async (e) => {
+        console.log("Handle Submit");
         e.preventDefault();
         if(formValid()) {
             let data = new FormData();
             data.append('name', name);
             data.append('active', true);
-            data.append('free_trial', !freeTrial);
-            data.append('free_trial_end', dateEndTrial);
-            data.append('end', !hasEnd);
-            data.append('end_date', dateEnd);
+            data.append('free_trial', !freeTrial); //no updatea bien
+            data.append('free_trial_end', dateEndTrial); //no updatea bien
+            data.append('end', !hasEnd); //no updatea bien
+            data.append('end_date', dateEnd); //no updatea bien
             data.append('currency', currency);
             data.append('frequency', frequency);
             data.append('price', price);
             data.append('charge_date', datePayment);
             data.append('url', url);
-            data.append('start_date', startDate);
+            data.append('start_date', startDate); //no updatea bien
             data.append('description', description);
             data.append('tags', tags);
             data.append('image', imgSrc);
-
+            console.log(data.get('name','free_trial', 'free_trial_end', 'url'))
             axios.put('http://localhost:4000/subscription/'+ props.match.params.id, data, {headers: 
             {
                 "x-auth-token": userDetails.token,
                 "Content-Type": "multipart/form-data"
             }})
             .then(
-                //al modificar la suscripcion 
+                console.log("modificacion correcta")//al modificar la suscripcion 
             )
-            .catch(
-                //si devuelve un error el backend
-            )
+            .catch( err => {
+                if (err.response.status === 401) {
+                    dispatch({ type: 'AUTH_ERROR', error: err.response.data })
+                    props.history.push('/signIn');
+                    return;
+                }
+                if (err.response) {
+                    setBackendError(err.response.data.msg);
+                }
+            });
         }
     }
 
     const handleChange = e => {
+        console.log("Handle Change");
         e.preventDefault();
         const { name, value } = e.target;
 
@@ -345,6 +364,9 @@ const SubDetail = (props) => {
                                 onChange={handleChange}
                                 name="url"
                                 ></input>
+                            {urlError.length > 0 && (
+                                <span className="errorMessage">{urlError}</span>
+                            )}
                         </div>
                         <div className="startDate">
                             <label for="startDate">Fecha de inicio:</label><br />
@@ -355,9 +377,7 @@ const SubDetail = (props) => {
                                 onChange={handleChange}
                                 name="start_date"
                                 ></input>
-                            {urlError.length > 0 && (
-                                <span className="errorMessage">{urlError}</span>
-                            )}
+                            
                         </div>
                         <div className="tags">
                             <label for="tags">Tags (separados por una coma):</label><br />
@@ -372,7 +392,7 @@ const SubDetail = (props) => {
                         <div className="description">
                             <label for="description">Descripción:</label><br />
                             <textarea 
-                                rows="2" 
+                                rows="4" 
                                 cols="50" 
                                 id="description" 
                                 form="" 
