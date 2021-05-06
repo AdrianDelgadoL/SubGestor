@@ -6,6 +6,7 @@ const User = require('../models/user.model');
 const mongoose = require('mongoose');
 const upload = require('../middleware/upload.middleware');
 const updates = require('../middleware/updates.middleware');
+
 /*
 Endpoints for subscriptions
 GET /subscription (obtener todos las suscripciones activas)
@@ -15,8 +16,6 @@ PUT /subscription/:id (Modificar una suscripción)
 DELETE /subscription/:id (Eliminar una suscripcion)
 GET /subscription/old (obtener todos las suscripciones eliminadas)
 GET /subscription/old/:id (obtener detalle de una suscripción eliminada)
-GET /subscription/templates (Obtener todas las plantillas disponibles)
-GET /subscription/templates/:id (Obtener la información de una plantilla)
  */
 /**
  * /: The path to access the endpoint to get user's subscriptions.
@@ -154,6 +153,8 @@ router.post('/', auth, upload.single('image'), (req, res) => {
             console.log(err);
         });
 });
+
+
 
 
 module.exports = router;
