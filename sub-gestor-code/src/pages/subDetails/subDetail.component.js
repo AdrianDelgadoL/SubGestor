@@ -3,6 +3,8 @@ import React, { useEffect, useState} from 'react';
 import './subDetail.css'
 import {useAuthState} from '../../context/context';
 import axios from "axios";
+const validateValue = require('validator');
+
 
 const SubDetail = (props) => { 
 
@@ -86,7 +88,7 @@ const SubDetail = (props) => {
 
     const changeFreeTrialEnd = async (e) => {
         if (!freeTrial) {
-            setFreeTrialEnd(null);
+            setDateEndTrial(null);
             setFreeTrialEndError('');
         }
         setFreeTrial(!freeTrial);
@@ -94,10 +96,10 @@ const SubDetail = (props) => {
 
     const changeEndDate = async (e) => {
         if (!hasEnd) {
-            setEndDate(null);
+            setDateEnd(null);
             setEndDateError('');
         }
-        setEnd(!hasEnd);
+        setHasEnd(!hasEnd);
     };
 
     const eliminar = () => {
@@ -110,7 +112,6 @@ const SubDetail = (props) => {
     const formValid = () => {
         // Valida que los errores esten vacios
         let valid = true;
-        setFormError('');
         let errorValues = [freeTrialEndError, endDateError, priceError, chargeDateError, urlError, imgSrcError];
         errorValues.forEach(value => {
             if (value.length > 0) {
@@ -161,15 +162,15 @@ const SubDetail = (props) => {
         switch (name) {
             case "free_trial_end":
                 validateValue.isBefore(value) ? setFreeTrialEndError("Fecha inválida") : setFreeTrialEndError("");
-                setFreeTrialEnd(value);
+                setDateEndTrial(value);
                 break;
             case "end_date":
                 validateValue.isBefore(value) ? setEndDateError("Fecha inválida") : setEndDateError("");
-                setEndDate(value);
+                setDateEnd(value);
                 break;
             case "charge_date":
                 validateValue.isBefore(value) ? setChargeDateError("Fecha inválida") : setChargeDateError("");
-                setChargeDate(value);
+                setDatePayment(value);
                 break;
             case "price":
                 ((validateValue.isInt(value) || validateValue.isDecimal(value)) && (value >= 0)) ? setPriceError("") : setPriceError("Valor inválido, tiene que ser un número positivo");
@@ -188,7 +189,7 @@ const SubDetail = (props) => {
                 setName(value);
                 break;
             case "end":
-                setEnd(value);
+                setHasEnd(value);
                 break;
             case "frequency":
                 setFrequency(value);
