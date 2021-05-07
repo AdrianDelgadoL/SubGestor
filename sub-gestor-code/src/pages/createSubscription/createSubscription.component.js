@@ -87,7 +87,7 @@ const CreateSubscription = (props) => {
         if (nameSub == null) {
             valid = false;
             setFormError("ERROR: faltan campos obligatiorios por completar");
-        } else if (nameSub.length === 0 || price == null) {
+        } else if (nameSub.length === 0 || price == null || charge_date == null) {
             valid = false;
             setFormError("ERROR: faltan campos obligatiorios por completar");
         }
@@ -96,6 +96,7 @@ const CreateSubscription = (props) => {
         console.log("Frequencia = " + frequency);
         console.log("Divisa = " + currency);
         console.log("Preu = " + price);
+        console.log("Charge date =" + charge_date);
         return valid;
     };
 
@@ -251,8 +252,8 @@ const CreateSubscription = (props) => {
                     <p id="price_information"> Información sobre el precio</p>
                     <div className="createSubscription-price_information">
                         <div className="createSubscription-charge_date">
-                            <label htmlFor="charge_date"> Fecha del pago: </label> <br />
-                            <input type="date" name="charge_date" onChange={handleChange} />
+                            <label htmlFor="charge_date"> Fecha del pago (*): </label> <br />
+                            <input type="date" name="charge_date" required onChange={handleChange} />
                             {chargeDateError.length > 0 && (
                                 <span className="errorMessage">{chargeDateError}</span>
                             )}
