@@ -18,30 +18,31 @@ const Popup = (props) =>{
             return true;
         }
       };   
-      
+    
 
     const handleChange=(event)=>{
         const {name,value}=event.target;
         setEmail(prevEmail=>({
             ...prevEmail,
-            [name]:value
-
-            
+            [name]:value 
         }))
+
         switch (name) {
             case "email":
               if(emailRegex.test(value)) {
-                console.log("hola que tal");
+                console.log("pasa el test");
+                setEmailError("")
               } else {
                 setEmailError("Dirección de email incorrecta");
+                console.log("no pasa el test")
+                setFormError("")
+                setMensaje("")
               }
               setEmail(value);
               break;
             default:
-              break;
-              
-          };
-        
+              break;   
+          };     
     }
 
     const cambio=()=>{
@@ -50,27 +51,29 @@ const Popup = (props) =>{
         setEmailError(0);
         setMensaje('');
         setFormError('');
-
     }
+
     const handleSubmit=(event)=>{
         event.preventDefault();
 
         if(formValid()){
-            setMensaje("Revisa tu correo");
+            setMensaje("Revisa tu bandeja de entrada ");
+            setFormError("")
         }else{
             setFormError("El formulario contiene errores")
+            setMensaje("")
+            setEmail("")
         }
         console.log(email);
     }
-    
+
     return (props.trigger) ? (
         <div className="popup">
             <div className="popup-inner">
                 <h4 className="popup-titulo">¿Tienes problemas para iniciar sesión?</h4>
                 <p className="popup-texto">Si has olvidado tu contraseña puedes reestablecerla indicando en el siguiente campo el correo electrónico con el
                     que te registraste. 
-
-                    Una vez hecho esto, ve a mirar tu correo electrónico y sigue los pasos indicados.
+                    Una vez hecho esto, ve a mirar tu correo electrónico y sigue los pasos indicados en el mail que recibirás.
                 </p>
                 <form noValidate className="popup-formulario" >
                     <input 
@@ -80,30 +83,23 @@ const Popup = (props) =>{
                     name="email"
                     required
                     value={email}
-                    onChange={handleChange}
-                            />
+                    onChange={handleChange} />
                    
                     <input 
                     type="submit" 
                     value="Enviar" 
-                    onClick={handleSubmit}
-                    
-                     />
+                    onClick={handleSubmit} />
                     {emailError.length > 0 && (<span className="popup-errorMessage">{emailError}</span>)}
                     {formError.length > 0 && (
                       <span className="popup-errorMessage">{formError}</span>
-                    )}
-                   
+                    )}  
                 </form>
-                <button className="close-btn" onClick={cambio}>X</button>
-                {mensaje.length > 0 && (
-                      <span className="popup-exitoso">{mensaje}</span>)}
-                {props.children}
-                
 
+                <button className="popup-close-btn" onClick={cambio}>X</button>
+                {mensaje.length > 0 && (<p className="popup-exitoso">{mensaje}</p>)}
+                {props.children}
             </div>
         </div>
     ): "";
-
-    }
+}
 export default Popup

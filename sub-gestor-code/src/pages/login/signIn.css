@@ -102,15 +102,18 @@
   }
 
   .signIn-forget-pw{
-      margin-left: 80%;
+      
       text-align: center;
+      
+      flex-direction: column;
         
   }
   .signIn-recuperar{
     background-color: #519e8a;
     color: #fff;
     border: 2px solid #fff;
-    width: 100%;
+    width: auto;
+    height: auto;
     margin-top: 1em;
     padding: 8px 0px;
     font-size: 1em;
@@ -124,7 +127,15 @@
     background-color: #fff;
     border: 2px solid #519e8a;
   }
-
+.signIn-pregunta{
+  width: 10px;
+  height: 10px;
+  margin:10px;
+  text-align: center;
+  align-items: right;
+  justify-content: center;
+  
+}
   
   @media only screen and (max-width: 1400px) {
       .signIn-wrapper {
