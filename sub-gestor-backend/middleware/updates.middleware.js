@@ -47,10 +47,8 @@ function updates(req, res, next) {
                 }
             });
 
-            // TODO: ordenar las suscripciones por fecha de cobro
-            console.log("abans de sort" + subscriptions);
+            console.log("Antes del sort" + subscriptions);
             subscriptions.sort(function(sub1, sub2) {
-                // falta mirar lo de free_trial_end i tema undefined que es fica data actual
                 if(sub1.charge_date > sub2.charge_date || sub1.charge_date === undefined) {
                     return 1;
                 } else if(sub1.charge_date < sub2.charge_date || sub2.charge_date === undefined) {
@@ -58,7 +56,7 @@ function updates(req, res, next) {
                 }
                 return 0;
             });
-
+            console.log("Despues del sort: ");
             subscriptions.forEach(sub => {
                 console.log("sub_date " + sub.charge_date + " sub_name " + sub.name);
             });
