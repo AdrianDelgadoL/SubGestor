@@ -7,16 +7,64 @@ import amazon from '../assets/amazon.jpg';
 import apple from '../assets/apple-music.jpg';
 import dazn from '../assets/dazn.jpg';
 import hbo from '../assets/hbo.png';
-import netflix from '../assets/netflix.jpg';
+import Netflix from '../assets/netflix.jpg';
 import psn from '../assets/psn-plus.jpg';
 import spotify from '../assets/spotify.png';
 import wow from '../assets/wow.jpg';
 import xbox from '../assets/xbox-live.jpg';
+import TemplateSub from './TemplatesSub'
+
+const SelectPlantilla = (props) => {
+
+    const userDetails = useAuthState()
+    const dispatch = useAuthDispatch()
+    const userToken = userDetails.token
+
+    const [templates, setTemplates] = useState(null)
+    const imageRoute = "/images/"
+
+    useEffect(() => {
+        axios.get('http://localhost:4000/templates/', {headers: {"x-auth-token": userToken}}).then(
+            response => {
+                console.log(response.data)
+                // dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
+                setTemplates(response.data.map(dt => (
+                    <div className="selectPlantilla-grid-container">
+                        <div className="selectPlantilla-grid-area" id="selectPlantila-grid-amazon">
+                            <a href="/home">
+                                <TemplateSub name={dt.name}/>
+                            </a>
+                        </div>
+                    </div>
+                )));
+            }
+        );
+    }, [dispatch, props.history, userToken])
 
 
+    return (
+        <div className="selectPlantilla-propia">
+            <div className="selectPlantilla-tarjeta">
+                <h1 className="selectPlantilla-subtitulo">Crea tu propia plantilla</h1>
+                <form method="get" action="/createSub" className="homePage-form">
+                    <button className="selectPlantilla-tarjeta-button" type="submit">Empieza ya</button>
+                </form>
+            </div>
+
+            <hr className="selectPlantilla-separator"/>
+            <div className="selectPlantilla-plantillas">
+                <h1 className="selectPlantilla-subtitulo">Utiliza una plantilla creada</h1>
+                {templates}
+            </div>
+        </div>
+    );
+}
+/*
 const selectPlantilla = (props) => {
+
     return(
         <div class="selectPlantilla-wrapper">
+
             <div class="selectPlantilla-propia">
                 <div class="selectPlantilla-tarjeta">
                     <h1 className="selectPlantilla-subtitulo">Crea tu propia plantilla</h1>
@@ -79,6 +127,6 @@ const selectPlantilla = (props) => {
         </div>
     )
 }
+*/
 
-
-export default selectPlantilla;
+export default SelectPlantilla;
