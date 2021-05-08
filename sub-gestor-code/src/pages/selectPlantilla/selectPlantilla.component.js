@@ -3,15 +3,17 @@ import {Link} from 'react-router-dom';
 import './selectPlantilla.css';
 import { useAuthState, useAuthDispatch } from '../../context/context';
 import axios from "axios";
-import amazon from '../assets/amazon.jpg';
+/*
+import amazon from '../../../public/images/amazon.png';
 import apple from '../assets/apple-music.jpg';
 import dazn from '../assets/dazn.jpg';
 import hbo from '../assets/hbo.png';
-import Netflix from '../assets/netflix.jpg';
+import Netflix from '../../../public/images/netflix.png';
 import psn from '../assets/psn-plus.jpg';
-import spotify from '../assets/spotify.png';
+import spotify from '../../../public/images/spotify.png';
 import wow from '../assets/wow.jpg';
 import xbox from '../assets/xbox-live.jpg';
+ */
 import TemplateSub from './TemplatesSub'
 
 const SelectPlantilla = (props) => {
@@ -27,12 +29,11 @@ const SelectPlantilla = (props) => {
         axios.get('http://localhost:4000/templates/', {headers: {"x-auth-token": userToken}}).then(
             response => {
                 console.log(response.data)
-                // dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
                 setTemplates(response.data.map(dt => (
                     <div className="selectPlantilla-grid-container">
-                        <div className="selectPlantilla-grid-area" id="selectPlantila-grid-amazon">
+                        <div className="selectPlantilla-grid-area">
                             <a href="/home">
-                                <TemplateSub name={dt.name}/>
+                                <TemplateSub name={dt.img_src}/>
                             </a>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ GET /templates/:id (Obtener la información de una plantilla)
 
 // recuperar plantillas
 router.get('/', auth, (req, res) => {
-    Templates.find().select("name").then(templates => {
+    Templates.find().select("img_src").then(templates => {
         if(!templates) {
             return res.status(404).json({msg: "Plantillas no encontradas"});
         } else {

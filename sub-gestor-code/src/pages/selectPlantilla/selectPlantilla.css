@@ -87,10 +87,12 @@
 }
 
 .selectPlantilla-grid-container {
-    display: grid;
+    display: flex;
+    /* display: grid;
     grid-template-areas: 'selectPlantilla-grid-amazon selectPlantilla-grid-apple selectPlantilla-grid-dazn' 
                          'selectPlantilla-grid-hbo selectPlantilla-grid-netflix selectPlantilla-grid-psn'
                          'selectPlantilla-grid-spotify selectPlantilla-grid-wow selectPlantilla-grid-xbox';
+    */
     border-radius: 10px;
     text-align: center;
     background-color: whitesmoke;
