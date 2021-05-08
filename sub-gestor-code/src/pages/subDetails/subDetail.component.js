@@ -15,7 +15,7 @@ const SubDetail = (props) => {
     // /detail/:id
     const [name, setName] = useState(null);
     const [datePayment, setDatePayment] = useState(null);
-    const [frequency, setFrequency] = useState(null);
+    const [frequency, setFrequency] = useState('');
     const [price, setPrice] = useState(null);
     const [currency, setCurrency] = useState(null);
     const [freeTrial, setFreeTrial] = useState(null);
@@ -45,16 +45,24 @@ const SubDetail = (props) => {
             setImgSrc("/images/" + response.data.img_src);
             setDatePayment(response.data.charge_date.substr(0, response.data.charge_date.indexOf('T')));
             setFrequency(response.data.frequency);
+            console.log(response.data.frequency)
             setPrice(response.data.price);
             setCurrency(response.data.currency);
             setFreeTrial(response.data.free_trial);
-            console.log(freeTrial)
-            if(freeTrial)
+            console.log("free trial: "+ response.data.free_trial);
+            if(response.data.free_trial){
+                console.log(response.data.free_trial_end);
                 setDateEndTrial(response.data.free_trial_end.substr(0, response.data.free_trial_end.indexOf('T')));
+            }
             setHasEnd(response.data.end);
-            if(hasEnd)
+            console.log("final: " + response.data.end);
+            if(response.data.end){
+                console.log(response.data.end_date);
                 setDateEnd(response.data.end_date.substr(0, response.data.end_date.indexOf('T')));
+            }
             setUrl(response.data.url);
+            console.log("data inici:");
+            console.log(response.data.start_date);
             if(response.data.start_date)
                 setStartDate(response.data.start_date.substr(0, response.data.start_date.indexOf('T')));
             setTags(response.data.tags);
@@ -147,11 +155,11 @@ const SubDetail = (props) => {
             data.append('price', price);
             data.append('charge_date', datePayment);
             data.append('url', url);
-            data.append('start_date', startDate); //no updatea bien
+            data.append('start_date', startDate); //se envia al backend bien, no devuelve updatedo
             data.append('description', description);
             data.append('tags', tags);
             data.append('image', imgSrc);
-            console.log(data.get('name','free_trial', 'free_trial_end', 'url'))
+            console.log(data.get('start_date'))
             axios.put('http://localhost:4000/subscription/'+ props.match.params.id, data, {headers: 
             {
                 "x-auth-token": userDetails.token,
@@ -292,7 +300,7 @@ const SubDetail = (props) => {
                         </div>
                         <div className="frequency">
                             <label for="frequency">Frecuencia:</label><br />
-                            <select id="frequency" defaultValue={frequency} onChange={handleChange} name="frequency">
+                            <select id="frequency" value={frequency} onChange={handleChange} name="frequency">
                                 <option value="mensual">Mensual</option>
                                 <option value="anual">Anual</option>
                             </select>
@@ -312,7 +320,7 @@ const SubDetail = (props) => {
                         </div>
                         <div className="currency">
                             <label for="currency">Divisa:</label><br />
-                            <select id="currency" defaultValue={currency} onChange={handleChange} name="currency">
+                            <select id="currency" value={currency} onChange={handleChange} name="currency">
                                 <option value="EUR">EUR</option>
                                 <option value="USD">USD</option>
                                 <option value="GBP">GBP</option>
