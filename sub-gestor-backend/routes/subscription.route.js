@@ -37,7 +37,8 @@ router.get('/:id', auth, (req, res) => {
     Subscription.findById(id)
         .then(subscription => {
             if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
-            if(subscription) return res.status(200).json(subscription);
+            if(subscription.active === true) return res.status(200).json(subscription);
+            return res.status(404).json({msg: 'Suscripción no encontrada'});
         }).catch(err => {
             console.log(err);
             return res.status(500).json({msg: 'Error al buscar la suscripcion'});
