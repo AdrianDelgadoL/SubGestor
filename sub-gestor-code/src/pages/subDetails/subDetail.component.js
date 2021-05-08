@@ -13,20 +13,20 @@ const SubDetail = (props) => {
     const userDetails = useAuthState();
     //props.match.params.id -> id de consulta
     // /detail/:id
-    const [name, setName] = useState(null);
+    const [name, setName] = useState('');
     const [datePayment, setDatePayment] = useState(null);
     const [frequency, setFrequency] = useState('');
     const [price, setPrice] = useState(null);
-    const [currency, setCurrency] = useState(null);
+    const [currency, setCurrency] = useState('');
     const [freeTrial, setFreeTrial] = useState(null);
     const [dateEndTrial, setDateEndTrial] = useState(null);
     const [hasEnd, setHasEnd] = useState(null);
     const [dateEnd, setDateEnd] = useState(null);
-    const [url, setUrl] = useState(null);
+    const [url, setUrl] = useState('');
     const [startDate, setStartDate] = useState(null);
-    const [tags, setTags] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [imgSrc, setImgSrc] = useState(null);
+    const [tags, setTags] = useState('');
+    const [description, setDescription] = useState('');
+    const [imgSrc, setImgSrc] = useState('');
 
     const [imgSrcError, setImgSrcError] = useState('');
     const [freeTrialEndError, setFreeTrialEndError] = useState('');
@@ -155,7 +155,7 @@ const SubDetail = (props) => {
             data.append('price', price);
             data.append('charge_date', datePayment);
             data.append('url', url);
-            data.append('start_date', startDate); //se envia al backend bien, no devuelve updatedo
+            data.append('start_date', startDate); //el data es correcto, no devuelve updatedo
             data.append('description', description);
             data.append('tags', tags);
             data.append('image', imgSrc);
