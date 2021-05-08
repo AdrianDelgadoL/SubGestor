@@ -67,9 +67,12 @@ router.delete('/:id', auth, (req, res) => {
 router.put('/:id', auth, upload.single('image'), dateValidator, (req, res) => {
     const id = req.params.id;
     const img_src = (req.file) ? req.file.filename : "null"; //imagen por defecto si no hay imagen
-
+    const {name, charge_date, currency, frequency, price} = req.body;
     if(!id) return res.status(400).json({ msg: "No se ha seleccionado ninguna suscripción"});
-
+    if (!name || !charge_date || !currency || !frequency || !price) { return res.status(400).json({
+            msg: 'Completa todos los campos'
+        });
+    }
 
     Subscription.findById(id)
         .then(sub => {
@@ -82,7 +85,11 @@ router.put('/:id', auth, upload.single('image'), dateValidator, (req, res) => {
             for( var key in req.body) {  // por cada campo se comprueba si se ha modificado y se guarda en caso de que lo sea
                 if(req.body.hasOwnProperty(key) && substr.hasOwnProperty(key)) {
                     if(req.body[key] !== substr[key]) {
-                        sub[key] = req.body[key] !== "null" ? req.body[key] : undefined;
+                        if(key === 'charge_date' || key === 'end_date' || key === 'free_trial_end' || key === 'start_date')
+                            sub[key] = req.body[key] !== "null" ? req.body[key] : null;
+                        else
+                            sub[key] = req.body[key]
+
                         sub.markModified(key.toString());
                     }
                 }
