@@ -33,7 +33,7 @@ const SelectPlantilla = (props) => {
                     <div className="selectPlantilla-grid-container">
                         <div className="selectPlantilla-grid-area">
                             <a href="/home">
-                                <TemplateSub name={dt.img_src}/>
+                                <TemplateSub img_src={dt.img_src}/>
                             </a>
                         </div>
                     </div>
