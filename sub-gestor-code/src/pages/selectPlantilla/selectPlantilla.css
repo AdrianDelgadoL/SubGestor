@@ -86,31 +86,37 @@
     margin-top: 0%;
 }
 
-.selectPlantilla-grid-container {
+.selectPlantilla-container {
     display: flex;
-    /* display: grid;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    /*
     grid-template-areas: 'selectPlantilla-grid-amazon selectPlantilla-grid-apple selectPlantilla-grid-dazn' 
                          'selectPlantilla-grid-hbo selectPlantilla-grid-netflix selectPlantilla-grid-psn'
                          'selectPlantilla-grid-spotify selectPlantilla-grid-wow selectPlantilla-grid-xbox';
+    grid-gap: 5%;
     */
+    
     border-radius: 10px;
     text-align: center;
     background-color: whitesmoke;
-    width: 100%;
-    grid-gap: 5%;
     padding-left: 5%;
     padding-right: 5%;
     padding-bottom: 7%;
 }
 
-.selectPlantilla-grid-area {
+.selectPlantilla-area {
+    flex: 25%;
     background-color: #e5e5e5;
     border-radius: 10px;
     width: 100%;
+    margin-right: 5%;
 }
 
-.selectPlantilla-grid-area:hover{
+.selectPlantilla-area:hover{
     box-shadow: 0px 10px 50px #555;
+    border-radius: 10px;
 }
 
 .selectPlantilla-plantilla-img {
@@ -123,15 +129,18 @@
 
 /*Media query*/
 @media only screen and (max-width: 1200px) {
-    .selectPlantilla-grid-container {
+    /*
+    .selectPlantilla-container {
+        /*
         grid-template-areas:  
                 'selectPlantilla-grid-amazon selectPlantilla-grid-apple' 
                 'selectPlantilla-grid-dazn selectPlantilla-grid-hbo' 
                 'selectPlantilla-grid-netflix selectPlantilla-grid-psn'
                 'selectPlantilla-grid-spotify selectPlantilla-grid-wow' 
                 'selectPlantilla-grid-xbox none';
+        
     }
-
+    */
     .selectPlantilla-propia {
         margin-top: 5%;
         margin-bottom: 3%;
@@ -143,10 +152,19 @@
         margin-left: 25%;
         margin-right: 25%;
     }
+
+    .selectPlantilla-area {
+        flex: 33%;
+        margin-bottom: 3%;
+        /*Esto hace que la sub de mas abajo se mantenga de mismo tamaño que el resto*/
+        max-width: 45%;
+    }
 }
 
 @media only screen and (max-width: 700px){
-    .selectPlantilla-grid-container {
+    /*
+    .selectPlantilla-container {
+        /*
         grid-template-areas:  
                 'selectPlantilla-grid-amazon' 
                 'selectPlantilla-grid-apple' 
@@ -160,6 +178,7 @@
         grid-gap: 2%;
         padding-bottom: 7%;
     }
+    */
 
     .selectPlantilla-propia {
         margin-top: 5%;
@@ -171,5 +190,10 @@
     .selectPlantilla-tarjeta-button {
         margin-bottom: 3%;
     }
-
+    
+    .selectPlantilla-area {
+        flex: 50%;
+        margin-bottom: 5%;
+        max-width: 25;
+    }
 }

@@ -30,12 +30,10 @@ const SelectPlantilla = (props) => {
             response => {
                 console.log(response.data)
                 setTemplates(response.data.map(dt => (
-                    <div className="selectPlantilla-grid-container">
-                        <div className="selectPlantilla-grid-area">
-                            <a href="/home">
-                                <TemplateSub img_src={dt.img_src}/>
-                            </a>
-                        </div>
+                    <div className="selectPlantilla-area">
+                        <a href="/home">
+                            <TemplateSub img_src={dt.img_src} class="selectPlantilla-plantilla-img"/>
+                        </a>
                     </div>
                 )));
             }
@@ -44,19 +42,23 @@ const SelectPlantilla = (props) => {
 
 
     return (
-        <div className="selectPlantilla-propia">
-            <div className="selectPlantilla-tarjeta">
-                <h1 className="selectPlantilla-subtitulo">Crea tu propia plantilla</h1>
-                <form method="get" action="/createSub" className="homePage-form">
-                    <button className="selectPlantilla-tarjeta-button" type="submit">Empieza ya</button>
-                </form>
+        <div className="selectPlantilla-wrapper">
+            <div className="selectPlantilla-propia">
+                <div className="selectPlantilla-tarjeta">
+                    <h1 className="selectPlantilla-subtitulo">Crea tu propia plantilla</h1>
+                    <form method="get" action="/createSub" className="homePage-form">
+                        <button className="selectPlantilla-tarjeta-button" type="submit">Empieza ya</button>
+                    </form>
+                </div>
             </div>
-
-            <hr className="selectPlantilla-separator"/>
-            <div className="selectPlantilla-plantillas">
-                <h1 className="selectPlantilla-subtitulo">Utiliza una plantilla creada</h1>
-                {templates}
-            </div>
+                <hr className="selectPlantilla-separator"/>
+                <div className="selectPlantilla-plantillas">
+                    <h1 className="selectPlantilla-subtitulo">Utiliza una plantilla creada</h1>
+                    <div className="selectPlantilla-container">
+                        {templates}
+                    </div>
+                </div>
+            
         </div>
     );
 }
@@ -65,7 +67,6 @@ const selectPlantilla = (props) => {
 
     return(
         <div class="selectPlantilla-wrapper">
-
             <div class="selectPlantilla-propia">
                 <div class="selectPlantilla-tarjeta">
                     <h1 className="selectPlantilla-subtitulo">Crea tu propia plantilla</h1>
