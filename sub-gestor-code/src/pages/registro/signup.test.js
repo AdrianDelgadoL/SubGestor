@@ -1,5 +1,5 @@
 import React from 'react';
-import SignIn from "./signIn.component";
+import SignUp from "./signUp.component";
 import {AuthProvider} from '../../context/context';
 import axios from 'axios';
 import { render, fireEvent, waitFor} from "@testing-library/react";
@@ -26,7 +26,7 @@ afterAll(() => {
 })
 
 
-describe("Funcionamiento lògico del componente de login", () => { 
+describe("Funcionamiento lògico del componente de registro", () => { 
   afterEach(() => {
     jest.clearAllMocks();
   })
@@ -39,12 +39,12 @@ describe("Funcionamiento lògico del componente de login", () => {
     const utils = render(
       <AuthProvider>
         <Router>
-          <SignIn history={history}/>
+          <SignUp history={history}/>
         </Router>
       </AuthProvider>
     );
     const errorEsperado = "El formulario contiene errores"
-    const submitButton = utils.getByRole('button', {name: "Inicia sesión"});
+    const submitButton = utils.getByRole('button', {name: "Crear cuenta"});
     fireEvent.click(submitButton);
     expect(axios.post).toHaveBeenCalledTimes(0);
     utils.getByText(errorEsperado);
@@ -59,7 +59,7 @@ describe("Funcionamiento lògico del componente de login", () => {
     const utils = render(
       <AuthProvider>
         <Router>
-          <SignIn history={history}/>
+          <SignUp history={history}/>
         </Router>
       </AuthProvider>
     );
@@ -70,7 +70,7 @@ describe("Funcionamiento lògico del componente de login", () => {
     fireEvent.change(emailInput, { target: { value: 'e' } })
     utils.getByText(errorEmail);
     
-    const submitButton = utils.getByRole('button', {name: "Inicia sesión"});
+    const submitButton = utils.getByRole('button', {name: "Crear cuenta"});
     fireEvent.click(submitButton);
     expect(axios.post).toHaveBeenCalledTimes(0);
     utils.getByText(errorEsperado);
@@ -85,7 +85,7 @@ describe("Funcionamiento lògico del componente de login", () => {
     const utils = render(
       <AuthProvider>
         <Router>
-          <SignIn history={history}/>
+          <SignUp history={history}/>
         </Router>
       </AuthProvider>
     );
@@ -96,13 +96,13 @@ describe("Funcionamiento lògico del componente de login", () => {
     fireEvent.change(passwordInput, { target: { value: 'e' } })
     utils.getByText(errorPassword);
     
-    const submitButton = utils.getByRole('button', {name: "Inicia sesión"});
+    const submitButton = utils.getByRole('button', {name: "Crear cuenta"});
     fireEvent.click(submitButton);
     expect(axios.post).toHaveBeenCalledTimes(0);
     utils.getByText(errorEsperado);
   });
 
-  it("Usuario solo especifica un email y envía", async () => {   
+  it("Usuario pone dos contraseñas diferentes", async () => {   
     const history = []
 
     axios.post.mockResolvedValue([]); 
@@ -111,41 +111,46 @@ describe("Funcionamiento lògico del componente de login", () => {
     const utils = render(
       <AuthProvider>
         <Router>
-          <SignIn history={history}/>
+          <SignUp history={history}/>
         </Router>
       </AuthProvider>
     );
 
     const errorEsperado = "El formulario contiene errores"
-    const errorEmail = "Dirección de email incorrecta"
+    const repPasswordError = "Las contraseñas no coinciden"
     
-    const emailInput = utils.getByPlaceholderText('Introduce tu email')
-    fireEvent.change(emailInput, { target: { value: 'emilian@email.com' } })
-    expect(utils.queryByText(errorEmail)).toBeNull()
+    const passwordInput = utils.getByPlaceholderText('Introduce tu contraseña')
+    fireEvent.change(passwordInput, { target: { value: '1234Abcd' } })
     
-    const submitButton = utils.getByRole('button', {name: "Inicia sesión"});
+    const repPasswordInput = utils.getByPlaceholderText('Repite la contraseña')
+    fireEvent.change(repPasswordInput, { target: { value: '1234Abcf' } })
+
+    utils.getByText(repPasswordError);
+    
+    const submitButton = utils.getByRole('button', {name: "Crear cuenta"});
     fireEvent.click(submitButton);
     expect(axios.post).toHaveBeenCalledTimes(0);
     utils.getByText(errorEsperado);
   });
 
-  it("Usuario prueba de hacer login con un email inexistente", async () => {   
+  it("Usuario hace un registro con un mail ya registrado", async () => {   
     const history = []
-    const expectedPostBody = { userEmail: 'emilian@email.com', userPassword: '1234Abcd' }
-    axios.post.mockImplementation(() => Promise.reject({ status: 400, response: {data: { msg: "No existe un usuario con este correo"} }}));
+    const expectedPostBody = { email: 'emilian@email.com', password: '1234Abcd', conf_pwd: '1234Abcd' }
+    axios.post.mockImplementation(() => Promise.reject({ status: 400, response: {data: { msg: "Este usuario ya existe"} }}));
 
     /* Renderizado del componente, si necesitan acceder al token o al dispatch se encapsula con el componente AuthProvider */
     const utils = render(
       <AuthProvider>
         <Router>
-          <SignIn history={history}/>
+          <SignUp history={history}/>
         </Router>
       </AuthProvider>
     );
 
-    const errorEsperado = "No existe un usuario con este correo"
+    const errorEsperado = "Este usuario ya existe"
     const errorEmailNoEsperado = "Dirección de email incorrecta"
     const errorPasswordNoEsperado = "La contraseña tiene que contener una mayúscula y 8 o más carácteres"
+    const errorRepPasswordNoEsperado = "Las contraseñas no coinciden"
     
     const emailInput = utils.getByPlaceholderText('Introduce tu email')
     fireEvent.change(emailInput, { target: { value: 'emilian@email.com' } })
@@ -155,31 +160,37 @@ describe("Funcionamiento lògico del componente de login", () => {
     fireEvent.change(passwordInput, { target: { value: '1234Abcd' } })
     expect(utils.queryByText(errorPasswordNoEsperado)).toBeNull()
 
-    const submitButton = utils.getByRole('button', {name: "Inicia sesión"});
+    const repPasswordInput = utils.getByPlaceholderText('Repite la contraseña')
+    fireEvent.change(repPasswordInput, { target: { value: '1234Abcd' } })
+    expect(utils.queryByText(errorRepPasswordNoEsperado)).toBeNull()
+
+    const submitButton = utils.getByRole('button', {name: "Crear cuenta"});
     fireEvent.click(submitButton);
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
     utils.getByText(errorEsperado);
-    expect(axios.post.mock.calls[0][0]).toBe('http://localhost:4000/user/login');
-    expect(axios.post.mock.calls[0][1].userEmail).toBe(expectedPostBody.userEmail);
-    expect(axios.post.mock.calls[0][1].userPassword).toBe(expectedPostBody.userPassword);
+    expect(axios.post.mock.calls[0][0]).toBe('http://localhost:4000/user/create');
+    expect(axios.post.mock.calls[0][1].email).toBe(expectedPostBody.email);
+    expect(axios.post.mock.calls[0][1].password).toBe(expectedPostBody.password);
+    expect(axios.post.mock.calls[0][1].conf_pwd).toBe(expectedPostBody.conf_pwd);
   });
 
-  it("Usuario hace un login correcto", async () => {   
+  it("Usuario hace un registro válido", async () => {   
     const history = []
-    const expectedPostBody = { userEmail: 'emilian@email.com', userPassword: '1234Abcd' }
+    const expectedPostBody = { email: 'emilian@email.com', password: '1234Abcd', conf_pwd: '1234Abcd' }
     axios.post.mockImplementation(() => Promise.resolve({ status: 200, data: { token: "675das", user : {email: "emilian@email.com" }} }));
 
     /* Renderizado del componente, si necesitan acceder al token o al dispatch se encapsula con el componente AuthProvider */
     const utils = render(
       <AuthProvider>
         <Router>
-          <SignIn history={history}/>
+          <SignUp history={history}/>
         </Router>
       </AuthProvider>
     );
 
     const errorEmailNoEsperado = "Dirección de email incorrecta"
     const errorPasswordNoEsperado = "La contraseña tiene que contener una mayúscula y 8 o más carácteres"
+    const errorRepPasswordNoEsperado = "Las contraseñas no coinciden"
     
     const emailInput = utils.getByPlaceholderText('Introduce tu email')
     fireEvent.change(emailInput, { target: { value: 'emilian@email.com' } })
@@ -189,12 +200,17 @@ describe("Funcionamiento lògico del componente de login", () => {
     fireEvent.change(passwordInput, { target: { value: '1234Abcd' } })
     expect(utils.queryByText(errorPasswordNoEsperado)).toBeNull()
 
-    const submitButton = utils.getByRole('button', {name: "Inicia sesión"});
+    const repPasswordInput = utils.getByPlaceholderText('Repite la contraseña')
+    fireEvent.change(repPasswordInput, { target: { value: '1234Abcd' } })
+    expect(utils.queryByText(errorRepPasswordNoEsperado)).toBeNull()
+
+    const submitButton = utils.getByRole('button', {name: "Crear cuenta"});
     fireEvent.click(submitButton);
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post.mock.calls[0][0]).toBe('http://localhost:4000/user/login');
-    expect(axios.post.mock.calls[0][1].userEmail).toBe(expectedPostBody.userEmail);
-    expect(axios.post.mock.calls[0][1].userPassword).toBe(expectedPostBody.userPassword);
+    expect(axios.post.mock.calls[0][0]).toBe('http://localhost:4000/user/create');
+    expect(axios.post.mock.calls[0][1].email).toBe(expectedPostBody.email);
+    expect(axios.post.mock.calls[0][1].password).toBe(expectedPostBody.password);
+    expect(axios.post.mock.calls[0][1].conf_pwd).toBe(expectedPostBody.conf_pwd);
     expect(history[0]).toBe("/home");
     expect(localStorage.getItem("token")).toBe("\"675das\"")
   });
