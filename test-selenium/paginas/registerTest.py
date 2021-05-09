@@ -33,7 +33,6 @@ class RegisterTest(TestBase):
             print('\tEmail')
             to_test = ['aixo no es un email', 'aixo@tampoc']
             for email in to_test:
-                print('Provant: '+email)
                 res = TestBase.check_for_input_error(
                     self.driver,
                     input_email,
@@ -46,7 +45,6 @@ class RegisterTest(TestBase):
             print('\tPassword')
             to_test = ['curt', 'largonomajuscula', 'Majuscula', 'Acurt']
             for paswd in to_test:
-                print('Provant: '+paswd)
                 res = TestBase.check_for_input_error(
                     self.driver,
                     input_pass,

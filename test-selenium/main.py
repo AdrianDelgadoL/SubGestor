@@ -1,6 +1,6 @@
 from selenium import webdriver
 import time
-import os
+import os, sys
 
 TESTS_DIR = 'paginas'
 
@@ -39,7 +39,7 @@ if __name__ == "__main__":
         if test_class.run():
             print('[TEST SUCCESSFUL]::{}'.format(class_name))
         else:
-            print('[FAILED TEST]::{}'.format(class_name))
+            print('[FAILED TEST]::{}'.format(class_name),file=sys.stderr)
         test_class.clean_up()
 
     driver.close()

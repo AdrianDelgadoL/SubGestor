@@ -31,8 +31,19 @@ class TestBase(ABC):
         return True
 
     @staticmethod
+    def check_error_raiseup(d, input_e, input_text, error_class_name):
+        print('>>>Provant: ' + input_text)
+        input_e.send_keys(input_text)
+        sleep(0.5)
+        n_errs = len(d.find_elements_by_class_name(error_class_name))
+        input_e.clear()
+        if n_errs <= 0: print('[ERR] :: No se creo ningun mensage de error para el input:"{}"'.format(input_text))
+        return n_errs > 0
+
+    @staticmethod
     def check_for_input_error(d, input_e, input_text, xpath_error, err_msg):
 
+        print('>>>Provant: ' + input_text)
         input_e.send_keys(input_text)
         sleep(0.5)
         try:
@@ -54,6 +65,13 @@ class TestBase(ABC):
         return True
 
     @staticmethod
-    def check_for_valid_input(d, error_class_name):
-        return (len(d.find_elements_by_class_name(error_class_name)) == 0)
+    def check_for_valid_input(d,input_e, input_text, error_class_name):
+        print('Probando input valido: '+input_text)
+        input_e.send_keys(input_text)
+        sleep(0.5)
+        res = (len(d.find_elements_by_class_name(error_class_name)) == 0)
+        if not res: print('[ERR] :: Salio un error para el input:"{}"'.format(input_text))
+        input_e.clear()
+        return res
 
+    
