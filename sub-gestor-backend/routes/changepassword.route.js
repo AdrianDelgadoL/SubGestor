@@ -6,9 +6,31 @@ const emailValidator = require('email-validator');
 const nodemailer = require('nodemailer');
 const config = require('config');
 const crypto = require("crypto");
+const bcrypt = require('bcryptjs')
+const auth = require('../middleware/auth.middleware');
 
 
+/**
+ * En este fichero estan los endpoints referentes al path /change-pass.
+ * Tenemos:
+ *  - POST /        >>> Solicitar cambio de contrasena sin estar logeado
+ *  - PUT /         >>> Cambio de contrasena estando logeado
+ *  - POST /:token  >>> Cambio de contrasena por token
+ */
+
+
+/**
+ * @path /
+ * @method POST
+ * @requires email
+ * 
+ * Genera un toquen para el cambio de password y se lo envia al usuario
+ * en el correo especificado. Siempre y cuando el correo exista en la
+ * base de datos.
+ */
 router.post('/', (req, res) => {
+
+    // TODO: Si ya esxiste token hace update de este
 
     // Necesitamos el email
     const { email } = req.body;
@@ -67,5 +89,66 @@ router.post('/', (req, res) => {
     });
 });
 
+/**
+ * @path /
+ * @method PUT
+ * @requires x-auth-token Token de autentificacion valido
+ * @requires old_password Password actual de la cuenta
+ * @requires new_password Pasword propesto para el cambio
+ * @requires new_password_repeat Copia del nuevo password
+ * 
+ * Un usuario logeado propone un cambio de contrasena.
+ */
+router.put('/', auth, (req, res) => {
+
+    const userId = req.userId.id;
+
+    if (!userId)
+        return res.status(401).json({ msg: 'No se a proporcionado identificacion para el usuario.' });
+
+    const {
+        new_password,
+        old_password,
+        new_password_repeat
+    } = req.body;
+
+    if (!new_password || !old_password || !new_password_repeat)
+        return res.status(400).json({ msg: 'Por favor rellene todos los campos.' });
+
+    if (new_password !== new_password_repeat)
+        return res.status(400).json({ msg: 'Revise la contraseña nueva, los campos no coinciden.' });
+
+    User.findById(userId).then((user) => {
+
+        if (!user)
+            return res.status(401).json({ msg: 'Usuario no existente.' });
+
+        // Compara password old con actual
+        bcrypt.compare(old_password, user.passwd_hash, (err, result) => {
+            if (err)
+                throw err;
+
+            if (!result)
+                return res.status(400).json({ msg: 'Por favor revise la contraseña antigua.' });
+
+            if (new_password === old_password)
+                return res.status(400).json({msg:'No se puede cambiar una contraseña por la misma.'});
+            
+            // Cambia contrasenas
+            bcrypt.genSalt(10, (err, salt) => {
+                if (err)
+                    throw err;
+                bcrypt.hash(new_password, salt, (err, hash) => {
+                    if (err)
+                        throw err;
+
+                    user.passwd_hash = hash;
+                    user.save();
+                    return res.status(200).json({ msg: 'OK' });
+                });
+            });
+        });
+    });
+});
 
 module.exports = router;
