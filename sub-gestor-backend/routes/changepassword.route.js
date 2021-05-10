@@ -155,4 +155,67 @@ router.put('/', auth, (req, res) => {
     });
 });
 
+/**
+ * @method POST
+ * @path /:token
+ * @requires token Token valido para la modificacion del password
+ * @requires new_password Nueva contrasena para la cuenta
+ * @requires new_password_repeat Validacion de la nueva contrasena
+ * 
+ * Aqui se tendria que llegar diferido de un enlace en el correo electronico.
+ * Permita, dado un token valido, el cambio de contrasena de la cuenta
+ * sociada al token.
+ */
+router.post('/:token', (req, res) => {
+
+    const { token } = req.params;
+    const {
+        new_password,
+        new_password_repeat
+    } = req.body;
+
+    if (!token)
+        return res.status(400).json({ msg: 'El token no es valido o ha caducado.' });
+
+    if (!new_password || !new_password_repeat)
+        return res.status(400).json({ msg: 'Por favor rellene todos los campos.' });
+
+    if (new_password !== new_password_repeat)
+        return res.status(400).json({ msg: 'Las nuevas contraseñas no coinciden.' });
+
+    changePassToken.findOne({ token }).then(t => {
+
+        if (!t)
+            return res.status(400).json({ msg: 'El token no es valido o ha caducado.' });
+
+        // Cambia el password
+        bcrypt.genSalt(10, (err, salt) => {
+            if (err)
+                throw err;
+
+            bcrypt.hash(new_password, salt, (err, hash) => {
+                if (err)
+                    throw err;
+
+                User.findOne({ email: t.userEmail }).then((user) => {
+                    if (!user)
+                        return res.status(400).json({ msg: 'El usuario ya no existe.' });
+
+                    user.passwd_hash = hash;
+                    user.save();
+
+                    // Borra el token
+                    changePassToken.findByIdAndDelete(t._id, (e, doc)=>{
+                        if (e)
+                            console.log(e);
+                        else
+                            console.log('Borrado token: ', doc);
+                    });
+                    return res.status(200).json({ msg: 'OK' });
+                });
+            });
+        });
+    });
+});
+
 module.exports = router;
