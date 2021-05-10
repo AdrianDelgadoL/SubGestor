@@ -5,7 +5,10 @@ import {useAuthState, useAuthDispatch} from '../../context/context';
 import axios from "axios";
 const validateValue = require('validator');
 
-
+/*
+TODO: Gestionar el check del free trial y comprobar fechas cuando se solucione del backend
+---------------------------------------------------------------------------------------
+*/
 const SubDetail = (props) => { 
 
     const dispatch = useAuthDispatch();
@@ -14,14 +17,14 @@ const SubDetail = (props) => {
     //props.match.params.id -> id de consulta
     // /detail/:id
     const [name, setName] = useState('');
-    const [datePayment, setDatePayment] = useState(null);
-    const [frequency, setFrequency] = useState('');
-    const [price, setPrice] = useState(null);
-    const [currency, setCurrency] = useState('');
-    const [freeTrial, setFreeTrial] = useState(null);
+    const [datePayment, setDatePayment] = useState(null);//
+    const [frequency, setFrequency] = useState('');//
+    const [price, setPrice] = useState(null); //
+    const [currency, setCurrency] = useState('');//
+    const [freeTrial, setFreeTrial] = useState(null); //cuando esto, no se pueden modificar las de arriba
     const [dateEndTrial, setDateEndTrial] = useState(null);
-    const [hasEnd, setHasEnd] = useState(null);
-    const [dateEnd, setDateEnd] = useState(null);
+    const [hasEnd, setHasEnd] = useState(null);//
+    const [dateEnd, setDateEnd] = useState(null);//
     const [url, setUrl] = useState('');
     const [startDate, setStartDate] = useState(null);
     const [tags, setTags] = useState('');
@@ -43,13 +46,14 @@ const SubDetail = (props) => {
         .then(response => {
             setName(response.data.name);
             setImgSrc("/images/" + response.data.img_src);
-            setDatePayment(response.data.charge_date.substr(0, response.data.charge_date.indexOf('T')));
+            if(response.data.charge_date)
+                setDatePayment(response.data.charge_date.substr(0, response.data.charge_date.indexOf('T')));
             setFrequency(response.data.frequency);
             console.log(response.data.frequency)
             setPrice(response.data.price);
             setCurrency(response.data.currency);
             setFreeTrial(response.data.free_trial);
-            console.log("free trial: "+ response.data.free_trial);
+            console.log("free trial: " + response.data.free_trial);
             if(response.data.free_trial){
                 console.log(response.data.free_trial_end);
                 setDateEndTrial(response.data.free_trial_end.substr(0, response.data.free_trial_end.indexOf('T')));
@@ -61,17 +65,32 @@ const SubDetail = (props) => {
                 setDateEnd(response.data.end_date.substr(0, response.data.end_date.indexOf('T')));
             }
             setUrl(response.data.url);
-            console.log("data inici:");
-            console.log(response.data.start_date);
             if(response.data.start_date)
                 setStartDate(response.data.start_date.substr(0, response.data.start_date.indexOf('T')));
             setTags(response.data.tags);
             setDescription(response.data.description);
+
+            //console.log('charge_date original: ' + response.data.charge_date);
+            //console.log('url original: ' + response.data.url);
+            //console.log('tags original: ' + response.data.tags);
+            //console.log('start_date original: ' + response.data.start_date);
+            //console.log('description original: ' + response.data.description);
+            console.log('free trial original: ' + response.data.free_trial);
+            console.log('data free trial original: ' + response.data.free_trial_end);
+            console.log('end original: ' + response.data.end);
+            console.log('data end original: ' + response.data.end_date);
         })
-        .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
-            console.log(error);
-            if(error.response) {
-                //TODO: tractar si hi ha resposta d'error
+        .catch(function (err){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
+            console.log(err);
+            if(err.response) {
+                if (err.response.status === 401) {
+                    dispatch({ type: 'AUTH_ERROR', error: err.response.data })
+                    props.history.push('/signIn');
+                    return;
+                }
+                if (err.response) {
+                    setBackendError(err.response.data.msg);
+                }
             }
         })
     }, [])
@@ -122,12 +141,12 @@ const SubDetail = (props) => {
     const formValid = () => {
         // Valida que los errores esten vacios
         let valid = true;
-        console.log(freeTrialEndError)
-        console.log(endDateError)
-        console.log(priceError)
-        console.log(chargeDateError)
-        console.log(urlError)
-        console.log(imgSrcError)
+        console.log('free trial error: ' + freeTrialEndError)
+        console.log('end date error: ' + endDateError)
+        console.log('price error: ' + priceError)
+        console.log('charge date error: ' + chargeDateError)
+        console.log('url error: ' + urlError)
+        console.log('img error: ' + imgSrcError)
 
         let errorValues = [freeTrialEndError, endDateError, priceError, chargeDateError, urlError, imgSrcError];
         errorValues.forEach(value => {
@@ -146,9 +165,9 @@ const SubDetail = (props) => {
             let data = new FormData();
             data.append('name', name);
             data.append('active', true);
-            data.append('free_trial', !freeTrial); //no updatea bien
+            data.append('free_trial', freeTrial); //no updatea bien
             data.append('free_trial_end', dateEndTrial); //no updatea bien
-            data.append('end', !hasEnd); //no updatea bien
+            data.append('end', hasEnd); //no updatea bien
             data.append('end_date', dateEnd); //no updatea bien
             data.append('currency', currency);
             data.append('frequency', frequency);
@@ -159,7 +178,17 @@ const SubDetail = (props) => {
             data.append('description', description);
             data.append('tags', tags);
             data.append('image', imgSrc);
-            console.log(data.get('start_date'))
+
+            //console.log('chage_date modificada: ' + data.get('charge_date'));
+            //console.log('url modificada: ' + data.get('url'));
+            //console.log('tags modificada: ' + data.get('tags'));
+            //console.log('start_date modificada: ' + data.get('start_date'));
+            //console.log('description modificada: ' + data.get('description'));
+            console.log('free trial modificada: ' + data.get('free_trial'));
+            console.log('data free trial modificada: ' + data.get('free_trial_end'));
+            console.log('end modificada: ' + data.get('end'));
+            console.log('data end modificada: ' + data.get('end_date'));
+
             axios.put('http://localhost:4000/subscription/'+ props.match.params.id, data, {headers: 
             {
                 "x-auth-token": userDetails.token,
@@ -301,8 +330,12 @@ const SubDetail = (props) => {
                         <div className="frequency">
                             <label for="frequency">Frecuencia:</label><br />
                             <select id="frequency" value={frequency} onChange={handleChange} name="frequency">
-                                <option value="mensual">Mensual</option>
-                                <option value="anual">Anual</option>
+                                <option value="monthly"> Mensual</option>
+                                <option value="onetime">Una vez</option>
+                                <option value="annual"> Anual</option>
+                                <option value="bimonthly"> Bimensual</option>
+                                <option value="quarterly"> Trimestral</option>
+                                <option value="weekly">Semanal</option>
                             </select>
                         </div>
                         <div className="price">
@@ -332,9 +365,10 @@ const SubDetail = (props) => {
                             <label for="freeTrial"><input type="checkbox" id="freeTrial" defaultValue={freeTrial} onClick={changeFreeTrialEnd} name="free_trial"></input>Periodo de prueba</label><br />
                         </div>
                         <div className="dateEndTrial">
-                            <label disabled={freeTrial} for="dateEndTrial">Fecha de vencimiento:</label><br />
+                            <label  for="dateEndTrial">Fecha de vencimiento:</label><br />
                             <input 
                                 type="date" 
+                                disabled={!freeTrial}
                                 id="dateEndTrial" 
                                 defaultValue={dateEndTrial}
                                 onChange={handleChange}
@@ -350,12 +384,12 @@ const SubDetail = (props) => {
                         <div className="dateEnd">
                             <label for="dateEnd">Fecha de finalización:</label><br />
                             <input 
-                                disabled={hasEnd}
+                                disabled={!hasEnd && !freeTrial}
                                 type="date" 
                                 id="dateEnd" 
                                 defaultValue={dateEnd}
                                 onChange={handleChange}
-                                name="end"
+                                name="end_date"
                                 ></input>
                             {endDateError.length > 0 && (
                                 <span className="errorMessage">{endDateError}</span>
