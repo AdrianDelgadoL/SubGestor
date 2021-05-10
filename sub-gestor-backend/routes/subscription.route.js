@@ -73,25 +73,22 @@ router.put('/:id', auth, upload.single('image'), dateValidator, (req, res) => {
             msg: 'Completa todos los campos'
         });
     }
-
+    console.log(req.body)
     Subscription.findById(id)
         .then(sub => {
             if(!sub || sub.user_id !== req.userId.id) return res.status(404).json( {msg: "Suscripción no encontrada"});
             if(!sub.active) return res.status(400).json( {msg: "Error: la suscripción no está activa"});
 
             req.body = JSON.parse(JSON.stringify(req.body)); //hace falta esto para que se trague el hasOwnProperty()
-            const substr = JSON.parse(JSON.stringify(sub));
 
-            for( var key in req.body) {  // por cada campo se comprueba si se ha modificado y se guarda en caso de que lo sea
-                if(req.body.hasOwnProperty(key) && substr.hasOwnProperty(key)) {
-                    if(req.body[key] !== substr[key]) {
-                        if(key === 'charge_date' || key === 'end_date' || key === 'free_trial_end' || key === 'start_date')
-                            sub[key] = req.body[key] !== "null" ? req.body[key] : null;
-                        else
-                            sub[key] = req.body[key]
+            for( var key in req.body) {  // por cada campo se modifica
+                if(req.body.hasOwnProperty(key)) {
+                    if(key === 'charge_date' || key === 'end_date' || key === 'free_trial_end' || key === 'start_date')
+                        sub[key] = req.body[key] !== "null" ? req.body[key] : null;
+                    else
+                        sub[key] = req.body[key]
 
-                        sub.markModified(key.toString());
-                    }
+                    sub.markModified(key.toString());
                 }
             }
             if(img_src !== "null") {
