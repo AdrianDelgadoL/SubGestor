@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import { useAuthState, useAuthDispatch } from '../../context/context.js';
 import axios from 'axios';
 import './createSubscription.component.css'
@@ -6,7 +6,7 @@ const validateValue = require('validator');
 
 
 const CreateSubscription = (props) => {
-    const [nameSub, setName] = useState(null);
+    const [nameSub, setName] = useState('');
     const [free_trial, setFreeTrial] = useState(true);
     const [free_trial_end, setFreeTrialEnd] = useState(null);
     const [end, setEnd] = useState(true);
@@ -18,8 +18,10 @@ const CreateSubscription = (props) => {
     const [url, setUrl] = useState('');
     const [start_date, setStartDate] = useState(null);
     const [description, setDescription] = useState('');
-    const [img_src, setImgSrc] = useState(null);
-    const [tags, setTags] = useState(null);
+    const [img_src, setImgSrc] = useState('');
+    const [tags, setTags] = useState('');
+    // per saber si les dades venen una template
+    const [template, setTemplate] = useState(null);
 
     const [freeTrialEndError, setFreeTrialEndError] = useState('');
     const [endDateError, setEndDateError] = useState('');
@@ -32,6 +34,33 @@ const CreateSubscription = (props) => {
 
     const userToken = useAuthState().token;
     const dispatch = useAuthDispatch()
+
+    const subTemplate = useAuthState();
+    useEffect(() => {
+        console.log(props.match.params.id);
+        if(props.match.params.id) {
+            axios.get('http://localhost:4000/templates/' + props.match.params.id, {headers: {"x-auth-token": userToken}})
+                .then(response => {
+                    // name, price, url, frequency, img_src
+                    console.log(response);
+                    setName(response.data.name);
+                    setPrice(response.data.price);
+                    setUrl(response.data.url);
+                    setFrequency(response.data.frequency);
+                    // per especificar que la imatge ve d'una template
+                    setTemplate(true);
+                    setImgSrc(response.data.img_src);
+
+                    console.log("Dades recuperades del template: ")
+                    console.log("Nombre Template = " + nameSub);
+                    console.log("Precio Template = " + price);
+                    console.log("Url Template = " + url);
+                    console.log("Frequency Template = " + frequency);
+                    console.log("Img_src Template = " + img_src);
+                });
+        }
+    }, []);
+
 
     const changeImage = async (e) => {
         let img = e.target.files[0];
@@ -96,6 +125,7 @@ const CreateSubscription = (props) => {
         console.log("Frequencia = " + frequency);
         console.log("Divisa = " + currency);
         console.log("Preu = " + price);
+        console.log("Img_src = " + img_src);
         return valid;
     };
 
@@ -121,6 +151,9 @@ const CreateSubscription = (props) => {
             data.append('start_date', start_date);
             data.append('description', description);
             data.append('tags', tags);
+
+            // per controlar en backend si s'utilitza una template
+            data.append('template', template);
 
             // Imatge
             data.append('image', img_src)
@@ -223,7 +256,7 @@ const CreateSubscription = (props) => {
                     <div className="createSubscription-information">
                         <div className="createSubscription-name">
                             <label htmlFor="nameSub"> Nombre (*): </label> <br />
-                            <input type="text" placeholder="Introduce el nombre" name="nameSub" onChange={handleChange} required />
+                            <input type="text" defaultValue={nameSub} placeholder="Introduce el nombre" name="nameSub" onChange={handleChange} required />
                         </div>
                         <div className="createSubscription-free_trial">
                             <label htmlFor="free_trial"> Es una prueba gratuita: </label> <br />
@@ -259,16 +292,16 @@ const CreateSubscription = (props) => {
                         </div>
                         <div className="createSubscription-price">
                             <label htmlFor="price"> Precio (*): </label> <br />
-                            <input type="number" placeholder="Introduce el precio" name="price" required onChange={handleChange} />
+                            <input type="number" defaultValue={price} placeholder="Introduce el precio" name="price" required onChange={handleChange} />
                             {priceError.length > 0 && (
                                 <span className="errorMessage">{priceError}</span>
                             )}
                         </div>
                         <div className="createSubscription-frequency">
                             <label htmlFor="frequency"> Frecuencia (*): </label> <br />
-                            <select name="frequency" required onChange={handleChange} >
+                            <select value={frequency} name="frequency" required onChange={handleChange} >
                                 <option value="monthly"> Mensual</option>
-                                <option value="onetime">Una vez</option>
+                                <option value="onetime"> Una vez</option>
                                 <option value="annual"> Anual</option>
                                 <option value="bimonthly"> Bimensual</option>
                                 <option value="quarterly"> Trimestral</option>
@@ -287,7 +320,7 @@ const CreateSubscription = (props) => {
                     <div className="createSubscription-additional_information">
                         <div className="createSubscription-url">
                             <label htmlFor="url"> URL para desuscribirse: </label> <br />
-                            <input type="text" placeholder="Intorduce URL" name="url" onChange={handleChange} />
+                            <input type="text" defaultValue={url} placeholder="Intorduce URL" name="url" onChange={handleChange} />
                             {urlError.length > 0 && (
                                 <span className="errorMessage">{urlError}</span>
                             )}

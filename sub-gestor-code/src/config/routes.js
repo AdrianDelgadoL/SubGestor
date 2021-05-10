@@ -37,8 +37,14 @@ const routes =[
     {
       forUnlogged: false,
       isPrivate: false,
-      path:'/createSub',
+      path:'/createSub/:id',
       component: createSubscription
+    },
+    {
+        forUnlogged: false,
+        isPrivate: false,
+        path:'/createSub',
+        component: createSubscription
     },
     {
       forUnlogged: false,

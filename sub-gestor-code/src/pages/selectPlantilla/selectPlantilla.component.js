@@ -3,17 +3,6 @@ import {Link} from 'react-router-dom';
 import './selectPlantilla.css';
 import { useAuthState, useAuthDispatch } from '../../context/context';
 import axios from "axios";
-/*
-import amazon from '../../../public/images/amazon.png';
-import apple from '../assets/apple-music.jpg';
-import dazn from '../assets/dazn.jpg';
-import hbo from '../assets/hbo.png';
-import Netflix from '../../../public/images/netflix.png';
-import psn from '../assets/psn-plus.jpg';
-import spotify from '../../../public/images/spotify.png';
-import wow from '../assets/wow.jpg';
-import xbox from '../assets/xbox-live.jpg';
- */
 import TemplateSub from './TemplatesSub'
 
 const SelectPlantilla = (props) => {
@@ -31,9 +20,9 @@ const SelectPlantilla = (props) => {
                 console.log(response.data)
                 setTemplates(response.data.map(dt => (
                     <div className="selectPlantilla-area">
-                        <a href="/home">
+                        <Link to ={"/createSub/" + dt._id}>
                             <TemplateSub img_src={dt.img_src} class="selectPlantilla-plantilla-img"/>
-                        </a>
+                        </Link>
                     </div>
                 )));
             }
@@ -46,9 +35,11 @@ const SelectPlantilla = (props) => {
             <div className="selectPlantilla-propia">
                 <div className="selectPlantilla-tarjeta">
                     <h1 className="selectPlantilla-subtitulo">Crea tu propia plantilla</h1>
-                    <form method="get" action="/createSub" className="homePage-form">
-                        <button className="selectPlantilla-tarjeta-button" type="submit">Empieza ya</button>
-                    </form>
+                    <div className="selectPlantilla-button-default">
+                        <Link to="/createSub" className="selectPlantilla-tarjeta-button btn btn-block" >
+                            Empieza ya
+                        </Link>
+                    </div>
                 </div>
             </div>
                 <hr className="selectPlantilla-separator"/>

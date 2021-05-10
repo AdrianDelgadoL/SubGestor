@@ -53,8 +53,6 @@
     border-radius: 10px;
     margin-top: 5%;
     margin-bottom: 2%;
-    margin-left: 35%;
-    margin-right: 35%;
 }
 
 .selectPlantilla-tarjeta-button:hover {
@@ -120,6 +118,9 @@
     border: 1px solid black;
 }
 
+.selectPlantilla-button-default {
+    padding: 10px;
+}
 
 /*Media query*/
 @media only screen and (max-width: 1200px) {
@@ -138,11 +139,6 @@
     .selectPlantilla-propia {
         margin-top: 5%;
         margin-bottom: 3%;
-        margin-left: 25%;
-        margin-right: 25%;
-    }
-
-    .selectPlantilla-tarjeta-button {
         margin-left: 25%;
         margin-right: 25%;
     }
