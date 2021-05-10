@@ -47,6 +47,10 @@ router.post('/', (req, res) => {
         if (!user)
             return res.status(404).json({ msg: 'Email no encontrado.' });
 
+        // Comprueva si ya existe, en ese caso eliminala y cera una nueva
+        // sino simplemente crea una nueva
+        changePassToken.remove({ userEmail: email }, r => { });
+
         // Crea token
         const md5Hasher = crypto.createHmac("md5", config.get('jwtSecret'));
         const token = md5Hasher.update(
@@ -132,8 +136,8 @@ router.put('/', auth, (req, res) => {
                 return res.status(400).json({ msg: 'Por favor revise la contraseña antigua.' });
 
             if (new_password === old_password)
-                return res.status(400).json({msg:'No se puede cambiar una contraseña por la misma.'});
-            
+                return res.status(400).json({ msg: 'No se puede cambiar una contraseña por la misma.' });
+
             // Cambia contrasenas
             bcrypt.genSalt(10, (err, salt) => {
                 if (err)
