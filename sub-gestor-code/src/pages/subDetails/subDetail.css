@@ -224,3 +224,79 @@ input[type=number] {
         'description';
     }
   }
+
+  @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .grid-container{
+        grid-template-areas:
+        'header'
+        'price'
+        'extra'
+        'information';
+        text-align-last:center;
+    }
+
+    .grid-container-header{
+        grid-template-areas: 
+        'name'
+        'image'
+        'modButton'
+        'delButton'
+        ;
+        max-width: 100%;
+    }
+    .name{
+        margin-top: 15px;
+    }
+
+    input[type=file]{
+        max-width: 50%;
+    }
+
+    img{
+        max-width: 275px;
+    }
+
+    .deleteButton{
+        margin-bottom: 15px;
+    }
+
+    .grid-container-price{
+        border-radius: 0px;
+        grid-template-areas: 
+        'datePay'
+        'frequency'
+        'price'
+        'currency';
+    }
+
+    .currency{
+        margin-bottom: 15px;
+    }
+
+    .grid-container-extra{
+        grid-template-areas:
+            'freeTrial' 
+            'hasEnd'
+            'dateEndTrial' 
+            'dateEnd';
+        align-content: flex-start;
+    }
+
+    .dateEnd{
+        margin-bottom: 15px;
+    }
+
+    .grid-container-information{
+        grid-template-areas:
+        'url'
+        'startDate'
+        'tags'
+        'description';
+        align-content: flex-start;
+    }
+    textarea{
+        height: 4em;
+        width: 17em;
+    }
+  }

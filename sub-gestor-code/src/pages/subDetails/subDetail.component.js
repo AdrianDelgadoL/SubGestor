@@ -197,7 +197,7 @@ const SubDetail = (props) => {
             .then(
                 console.log("modificacion correcta")//al modificar la suscripcion 
             )
-            .catch( err => {
+            .catch( function (err) {
                 if (err.response.status === 401) {
                     dispatch({ type: 'AUTH_ERROR', error: err.response.data })
                     props.history.push('/signIn');
@@ -318,7 +318,8 @@ const SubDetail = (props) => {
                             <label for="datePayment">Fecha de pago: (mm/dd/yyyy)</label><br />
                             <input 
                                 type="date" 
-                                id="datePayment" 
+                                id="datePayment"
+                                disabled={freeTrial}
                                 defaultValue={datePayment}
                                 onChange={handleChange}
                                 name="charge_date"
@@ -329,7 +330,7 @@ const SubDetail = (props) => {
                         </div>
                         <div className="frequency">
                             <label for="frequency">Frecuencia:</label><br />
-                            <select id="frequency" value={frequency} onChange={handleChange} name="frequency">
+                            <select id="frequency" value={frequency} onChange={handleChange} name="frequency" disabled={freeTrial}>
                                 <option value="monthly"> Mensual</option>
                                 <option value="onetime">Una vez</option>
                                 <option value="annual"> Anual</option>
@@ -341,7 +342,8 @@ const SubDetail = (props) => {
                         <div className="price">
                             <label for="price">Precio:</label><br/>
                             <input 
-                                type="number" 
+                                type="number"
+                                disabled={freeTrial}
                                 id="price" 
                                 defaultValue={price}
                                 onChange={handleChange}
@@ -353,7 +355,7 @@ const SubDetail = (props) => {
                         </div>
                         <div className="currency">
                             <label for="currency">Divisa:</label><br />
-                            <select id="currency" value={currency} onChange={handleChange} name="currency">
+                            <select id="currency" value={currency} onChange={handleChange} name="currency" disabled={freeTrial}>
                                 <option value="EUR">EUR</option>
                                 <option value="USD">USD</option>
                                 <option value="GBP">GBP</option>
@@ -362,7 +364,7 @@ const SubDetail = (props) => {
                     </div>
                     <div className="grid-container-extra">
                         <div className="freeTrial">
-                            <label for="freeTrial"><input type="checkbox" id="freeTrial" defaultValue={freeTrial} onClick={changeFreeTrialEnd} name="free_trial"></input>Periodo de prueba</label><br />
+                            <label for="freeTrial"><input type="checkbox" id="freeTrial" checked={freeTrial} onClick={changeFreeTrialEnd} name="free_trial"></input>Periodo de prueba</label><br />
                         </div>
                         <div className="dateEndTrial">
                             <label  for="dateEndTrial">Fecha de vencimiento:</label><br />
@@ -379,12 +381,12 @@ const SubDetail = (props) => {
                             )}
                         </div>
                         <div className="hasEnd">
-                        <label for="hasEnd"><input type="checkbox" id="hasEnd" defaultValue={hasEnd} onClick={changeEndDate} name="end"></input>Fecha de finalización</label><br />
+                        <label for="hasEnd"><input type="checkbox" id="hasEnd" checked={hasEnd} onClick={changeEndDate} name="end"></input>Fecha de finalización</label><br />
                         </div>
                         <div className="dateEnd">
                             <label for="dateEnd">Fecha de finalización:</label><br />
                             <input 
-                                disabled={!hasEnd && !freeTrial}
+                                disabled={hasEnd==false || freeTrial==true}
                                 type="date" 
                                 id="dateEnd" 
                                 defaultValue={dateEnd}
