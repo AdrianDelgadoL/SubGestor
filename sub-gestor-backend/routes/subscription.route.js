@@ -36,7 +36,7 @@ router.get('/:id', auth, (req, res) => {
     const id = req.params.id;
     Subscription.findById(id)
         .then(subscription => {
-            if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
+            if(!subscription || subscription.user_id !== req.userId.id) return res.status(404).json({msg: 'Suscripción no encontrada'});
             if(subscription.active === true) return res.status(200).json(subscription);
             return res.status(404).json({msg: 'Suscripción no encontrada'});
         }).catch(err => {
@@ -56,7 +56,7 @@ router.delete('/:id', auth, (req, res) => {
     const id = req.params.id;
     Subscription.findByIdAndDelete(id)
         .then(subscription => {
-            if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
+            if(!subscription || subscription.user_id !== req.userId.id) return res.status(404).json({msg: 'Suscripción no encontrada'});
             if(subscription) return res.status(200).json({msg: "Suscripción eliminada"});
         }).catch(err => {
         console.log(err);
@@ -76,7 +76,7 @@ router.put('/:id', auth, upload.single('image'), dateValidator, (req, res) => {
 
     Subscription.findById(id)
         .then(sub => {
-            if(!sub) return res.status(404).json( {msg: "Suscripción no encontrada"});
+            if(!sub || sub.user_id !== req.userId.id) return res.status(404).json( {msg: "Suscripción no encontrada"});
             if(!sub.active) return res.status(400).json( {msg: "Error: la suscripción no está activa"});
 
             req.body = JSON.parse(JSON.stringify(req.body)); //hace falta esto para que se trague el hasOwnProperty()
