@@ -66,7 +66,7 @@ const Popup = (props) => {
                 setMensaje("Revisa tu bandeja de entrada");
             }).catch(err => {
                 setMensaje("");
-                setEmail("");
+                setEmail(null);
                 if (err.response.data.msg) {
                     setFormError(
                         err.response.data.msg
@@ -77,7 +77,7 @@ const Popup = (props) => {
             });
         } else {
             setMensaje("");
-            setEmail("");
+            setEmail(null);
             setFormError("El formulario contiene errores")
         }
 
