@@ -33,26 +33,26 @@ class RegisterTest(TestBase):
             print('\tEmail')
             to_test = ['aixo no es un email', 'aixo@tampoc']
             for email in to_test:
-                res = TestBase.check_for_input_error(
+                res = TestBase.check_error_raiseup(
                     self.driver,
                     input_email,
                     email,
-                    '/html/body/div/div/div/form/div[1]/span',
-                    'dirección de email incorrecta'
+                    'signUp-errorMessage'
                 )
                 if not res : return False
 
             print('\tPassword')
-            to_test = ['curt', 'largonomajuscula', 'Majuscula', 'Acurt']
+            input_email.send_keys('valid@valid.com')
+            to_test = ['curt', 'largonomajuscula', 'MAJUSCULA', 'Acurt']
             for paswd in to_test:
-                res = TestBase.check_for_input_error(
+                res = TestBase.check_error_raiseup(
                     self.driver,
                     input_pass,
                     paswd,
-                    '/html/body/div/div/div/form/div[2]/span',
-                    'la contraseña tiene que contener una mayúscula y 8 o más carácteres'
+                    'signUp-errorMessage'
                 )
                 if not res: return False
+            input_email.clear()
 
             print('[TEST] :: Errores Backend')
             print('\tCampos vacios')

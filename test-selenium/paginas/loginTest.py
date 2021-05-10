@@ -108,6 +108,7 @@ class LoginTest(TestBase):
         self.e_email.send_keys('noexiste@noexiste.com')
         self.e_password.send_keys('Abcd1234')
         self.e_submit.click()
+        sleep(1)
         if self.driver.current_url != url:
             print('[ERR] :: Ha logeado cuando no debia')
             return False
@@ -117,6 +118,7 @@ class LoginTest(TestBase):
         self.e_email.send_keys('paratest@test.com')
         self.e_password.send_keys('Test1234')
         self.e_submit.click()
+        sleep(1)
         if self.driver.current_url == url:
             print('[ERR] :: No ha loggeado con cuenta buena')
             return False
