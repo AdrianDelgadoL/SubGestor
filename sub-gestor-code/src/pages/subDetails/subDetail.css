@@ -212,8 +212,18 @@ input[type=number] {
         'image modButton'
         'image delButton';
     }
+
+    .name {
+        margin: 2%;
+    }
+
     .image{
         margin-left: 10%;
+    }
+
+    .deleteButton{
+        margin-bottom: 2%;
+        width: 100%;
     }
 
     .grid-container-information{
@@ -254,15 +264,15 @@ input[type=number] {
     }
 
     img{
-        max-width: 275px;
+        width:25%;
     }
 
     .deleteButton{
-        margin-bottom: 15px;
+        margin-bottom: 3%;
     }
 
     .grid-container-price{
-        border-radius: 0px;
+        border-radius: 10px;
         grid-template-areas: 
         'datePay'
         'frequency'
@@ -271,7 +281,7 @@ input[type=number] {
     }
 
     .currency{
-        margin-bottom: 15px;
+        margin-bottom: 3%;
     }
 
     .grid-container-extra{
@@ -284,7 +294,7 @@ input[type=number] {
     }
 
     .dateEnd{
-        margin-bottom: 15px;
+        margin-bottom: 3%;
     }
 
     .grid-container-information{
@@ -297,6 +307,90 @@ input[type=number] {
     }
     textarea{
         height: 4em;
-        width: 17em;
+        width: 80%;
     }
   }
+
+
+  @media only screen and (max-width: 550px) {
+    /* For mobile phones: */
+    .grid-container{
+        grid-template-areas:
+        'header'
+        'price'
+        'extra'
+        'information';
+        text-align-last:center;
+    }
+
+    .grid-container-header{
+        grid-template-areas: 
+        'name'
+        'image'
+        'modButton'
+        'delButton'
+        ;
+        width: 100%;
+    }
+
+    .name{
+        margin-top: 15px;
+        width: 100%;
+    }
+
+    .image {
+        width: 75%;
+    }
+
+    input[type=file]{
+        width: 75%;
+    }
+
+    img{
+        width:25%;
+    }
+
+    .deleteButton{
+        margin-bottom: 3%;
+    }
+
+    .grid-container-price{
+        border-radius: 10px;
+        grid-template-areas: 
+        'datePay'
+        'frequency'
+        'price'
+        'currency';
+    }
+
+    .currency{
+        margin-bottom: 3%;
+    }
+
+    .grid-container-extra{
+        grid-template-areas:
+            'freeTrial' 
+            'hasEnd'
+            'dateEndTrial' 
+            'dateEnd';
+        align-content: flex-start;
+    }
+
+    .dateEnd{
+        margin-bottom: 3%;
+    }
+
+    .grid-container-information{
+        grid-template-areas:
+        'url'
+        'startDate'
+        'tags'
+        'description';
+        align-content: flex-start;
+    }
+    textarea{
+        height: 4em;
+        width: 80%;
+    }
+  }
+
