@@ -1,5 +1,7 @@
 .modPerfil-wrapper {
     background-color: whitesmoke;
+    text-align: center;
+    width: 100%;
 }
 
 .modPerfil-container {
@@ -27,6 +29,8 @@
 .modPerfil-datos {
     padding-top: 5%;
     padding-bottom: 5%;
+    padding-right: 25%;
+    padding-left: 25%;
 }
 
 .modPerfil-separator {
@@ -52,8 +56,6 @@
     border-radius: 10px;
     margin-top: 5%;
     margin-bottom: 2%;
-    margin-left: 25%;
-    margin-right: 25%;
 }
 
 .modPerfil-datos-button:hover {
@@ -109,3 +111,25 @@
     border: 1px solid #e76f51;
 }
 
+/*Media query*/
+@media only screen and (max-width: 1400px) {
+    .modPerfil-container {
+        width: 50%;
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+}
+
+
+/*Media query*/
+@media only screen and (max-width: 900px) {
+    .modPerfil-container {
+        width: 75%;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}

@@ -8,6 +8,9 @@ const Perfil = (props) => {
     
     const userDetails = useAuthState();
     const dispatch = useAuthDispatch();
+    const [currency, setCurrency] = useState(null);
+    const [frequency, setFrequency] = useState(null);
+    
     
     /* Función para borrar el usuario */
     const eliminarPerfil = () => {
@@ -16,9 +19,38 @@ const Perfil = (props) => {
             console.log(response.data)
             dispatch({ type: 'LOGOUT' })
             props.history.push('/');
+        })  
+    }
+
+    /* Función para modificar el perfil */
+    const modificarPerfil = async (e) => {
+        e.preventDefault();
+        let data = new FormData();
+
+        //
+        data.append('currency', currency)
+        data.append('frequency', frequency)
+
+        //
+        axios.put('https://localhost:4000/user/configuration', {data: data,headers:{"x-auth-token": userDetails.token}})
+        .then(response => {
+            console.log(response.data)
+            dispatch({type: 'AUTH_ERROR'})
         })
     }
-    
+
+    const handleChange = async (e) => {
+        e.preventDefault();
+        const {name, value } = e.target;
+        switch(name){
+            case "currency":
+                setCurrency(value);
+                break;
+            case "frequency":
+                setFrequency(value);
+                break;
+        }
+    }
 
     return (
         <div className="modPerfil-wrapper">
@@ -28,24 +60,23 @@ const Perfil = (props) => {
                 <hr className="modPerfil-separator"/>
                 <div className="modPerfil-datos">
                     <p>Moneda por defecto:</p>
-                    <select className="modPerfil-select">
-                        <option>EUR</option>
-                        <option>USD</option>
-                        <option>GBP</option>
+                    <select name="currency" className="modPerfil-select" onChange={handleChange}>
+                        <option value="EUR">EUR</option>
+                        <option value="USD">USD</option>
+                        <option value="GBP">GBP</option>
                     </select>
                     <p>Frecuencia:</p>
-                    <select className="modPerfil-select">
-                        <option>Por defecto</option>
-                        <option>Anual</option>
-                        <option>Mensual</option>
+                    <select name="frequency" className="modPerfil-select" onChange={handleChange}>
+                        <option value="none">Por defecto</option>
+                        <option value="anual">Anual</option>
+                        <option value="monthly">Mensual</option>
                     </select>
-                    <form method="get" action="" className="homePage-form">
-                        <button className="modPerfil-datos-button" type="submit">Modificar perfil</button>
-                    </form>
+                    <button onClick={modificarPerfil} className="modPerfil-datos-button" type="submit">Modificar perfil</button>
                 </div>
                 <hr className="modPerfil-separator"/>
                 <div className="modPerfil-bottom">
                     <div className="modPerfil-bottom-pswbutton">
+                        {/*Enlazar boton con la pagina de cambiar contraseña*/}
                         <button className="modPerfil-bottom-psw" type="submit">Cambiar contraseña</button>
                     </div>
                     <div className="modPerfil-bottom-removebtn">
