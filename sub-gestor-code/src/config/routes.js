@@ -5,6 +5,7 @@ import HomePage from "../pages/homePage/homePage.component";
 import SubDetail from "../pages/subDetails/subDetail.component";
 import createSubscription from "../pages/createSubscription/createSubscription.component";
 import SubList from "../pages/subscriptions/SubList.components";
+import Perfil from "../pages/modPerfil/modPerfil.component";
 //import PageNotFound from "../pages/notFound" (Hacer redireccion o generar pageNotFound)
 
 const routes =[
@@ -38,6 +39,12 @@ const routes =[
       isPrivate: true,
       path:'/subDetail/:id',
       component: SubDetail
+    },
+    {
+      forUnlogged: false,
+      isPrivate: true,
+      path:'/perfil',
+      component: Perfil
     },
     // Esta deberia borrarse debido a que solo se puede entrar con el id ha esta ruta con el id.
     {
