@@ -118,6 +118,22 @@ router.post('/login', (req, res) => {
     }
 );
 
+router.put('/configuration', auth, (req, res) => {
+    const { id } = req.userId;
+    const {frequency, prefered_currency} = req.body
+    User.findById(id)
+    .then(user => {
+        user.prefered_currency = prefered_currency
+        user.frequency = frequency
+        user.markModified('prefered_currency')
+        user.markModified('frequency')
+        user.save()
+        .then(newUser => {
+            res.status(200).json({msg: "Configuración guardada correctamente"})
+        })
+    })
+})
+
 router.delete('/', auth, (req,res) => {
     const { id } = req.userId;
     Subscription.deleteMany({user_id: id})
