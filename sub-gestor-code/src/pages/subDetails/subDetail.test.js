@@ -39,7 +39,7 @@ describe("Detalle de componentes", () => {
         end: false,
         end_date: '2021-06-05T22:00:00.000Z',
         currency: 'EUR',
-        frequency: 'mensual',
+        frequency: 'monthly',
         url: 'www.google.es',
         charge_date: '2021-06-05T22:00:00.000Z',
         price: '9.75',
@@ -60,7 +60,7 @@ describe("Detalle de componentes", () => {
         end: false,
         end_date: null,
         currency: 'USD',
-        frequency: 'mensual',
+        frequency: 'monthly',
         url: '',
         charge_date: '2021-06-05T22:00:00.000Z',
         price: '14.75',
@@ -132,5 +132,13 @@ describe("Detalle de componentes", () => {
     await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
     const nameInput = utils.getByRole('textbox', {name: ""}); // Por alguna razon el input de name no tiene nombre
     expect(nameInput.value).toBe("prova");
+    const frequencyInput = utils.getByRole('combobox', {name: 'Frecuencia:'});
+    expect(frequencyInput.value).toBe('monthly');
+    const divisaInput = utils.getByRole('combobox', {name: 'Divisa:'});
+    expect(divisaInput.value).toBe('USD');
+    const chargeDateInput = utils.getByLabelText('Fecha de pago: (mm/dd/yyyy)');
+    expect(chargeDateInput.value).toBe('2021-06-05');
+    const PriceInput = utils.getByRole('spinbutton', {name: 'Precio:'});
+    expect(PriceInput.value).toBe('14.75');
   });
 })
