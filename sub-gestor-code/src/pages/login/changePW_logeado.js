@@ -36,13 +36,16 @@ const ChangePw=(props)=>{
       event.preventDefault();
       if (formPassValid()) {
        
-        axios.put('http://localhost:4000/change-pass',{headers:{"x-auth-token":userToken}},
+        axios.put('http://localhost:4000/change-pass',
         {
           old_password:password.password_vieja,
           new_password:password.password_1,
           new_password_repeat:password.pswrepeat
-        })
-            .then(response => { 
+        },
+        {
+          headers:{"x-auth-token":userToken}
+        }
+        ).then(response => { 
               console.log(response.data)
               
               setMensaje("Contraseña cambiada correctamente");
