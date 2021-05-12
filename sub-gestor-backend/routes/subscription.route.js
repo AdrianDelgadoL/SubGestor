@@ -127,10 +127,21 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
 
     const {
         name, active, end, free_trial, free_trial_end, start_date, end_date,
-        currency, frequency, url, price, description, charge_date
+        currency, frequency, url, price, description, charge_date, template,
+        image
     } = req.body;
 
-    const img_src = (req.file) ? req.file.filename : "default.jpg"; //imagen por defecto si no hay imagen
+    // per saber si la imatge ve de la template
+    let img_src = "";
+    if(template) {
+        img_src = image;
+        console.log("TEMPLATE =" + img_src);
+    }
+    if(!img_src) {
+        img_src = (req.file) ? req.file.filename : "default.jpg"; //imagen por defecto si no hay imagen
+        console.log("NO TEMPLATE = " + img_src);
+    }
+
     console.log(req.file);
     console.log(img_src);
 
@@ -196,6 +207,8 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
             console.log(err);
         });
 });
+
+
 
 
 module.exports = router;
