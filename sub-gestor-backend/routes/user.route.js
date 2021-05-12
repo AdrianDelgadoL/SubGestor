@@ -59,7 +59,9 @@ router.post('/create', (req, res) => {
                                         token,
                                         user: {
                                             email: user.email,
-                                            id: user.id
+                                            id: user.id,
+                                            prefered_currency: user.prefered_currency,
+                                            frequency: user.frequency
                                         }
                                     });
                                 }
@@ -108,6 +110,8 @@ router.post('/login', (req, res) => {
                                 token,
                                 user: {
                                     email: user.email,
+                                    prefered_currency: user.prefered_currency,
+                                    frequency: user.frequency
                                 }
                             });
                         }
