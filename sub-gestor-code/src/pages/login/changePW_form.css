@@ -1,0 +1,116 @@
+.changePW-wrapper {
+    width: 100%;
+    display: flex;
+    position:fixed;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    margin-top: 5%;
+  }
+
+  .changePW-form-wrapper{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 50px #555;
+    background-color: whitesmoke;
+  }
+  
+  form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  h1 {
+    text-align:center;
+    width: 100%;
+    color: #111;
+    font-weight: lighter;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  label {
+    font-size: 16px;
+    margin-bottom: 0.25em;
+    color: #222;
+    font-weight: lighter;
+  }
+  
+  input {
+    padding: 10px 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #cfcfcf;
+  }
+  
+  input::placeholder{
+    font-size: 1.2em;
+    font-weight: lighter;
+    color: #999;
+  }
+  
+  input::error{
+    border: 1px solid red;
+  }
+  
+  .changePW-errorMessage {
+    color: red;
+    font-size: 0.75em;
+    display: relative;
+  }
+  
+  .changePW-email, .changePW-password, .changePW-pswrepeat {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+      width: 100%
+  }
+    
+  .changePW-createAccount{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .changePW-createAccount button {
+    background-color: #519e8a;
+    color: #fff;
+    border: 2px solid #fff;
+    width: 100%;
+    margin-top: 1em;
+    padding: 8px 0px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+    border-radius: 10px;
+  }
+
+  .changePW-createAccount button:hover {
+    color: #519e8a;
+    background-color: #fff;
+    border: 2px solid #519e8a;
+  }
+
+  .changePW-createAccount small{
+    color: #999;
+    font-weight: lighter;
+  }
+
+
+  
+  @media only screen and (max-width: 1400px) {
+      .changePW-wrapper {
+        width: 100%;
+        padding: 5%;
+      }
+
+      .changePW-form-wrapper {
+        width: 100%;
+      }
+  }
