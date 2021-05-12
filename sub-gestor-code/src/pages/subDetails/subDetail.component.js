@@ -47,6 +47,13 @@ const SubDetail = (props) => {
                 setStartDate(response.data.start_date.substr(0, response.data.start_date.indexOf('T')));
             setTags(response.data.tags);
             setDescription(response.data.description);
+
+            console.log("NOM TEMPLATE = " + name);
+            console.log("PREU TEMPALTE =" + price);
+            console.log("IMAGE TEMPLATE = " + imgSrc);
+            console.log("URL TEMPLATE = " + url);
+            console.log("FREQUENCIA TEMPLATE = " + frequency);
+
         })
         .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
             console.log(error);
