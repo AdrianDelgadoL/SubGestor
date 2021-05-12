@@ -59,7 +59,14 @@ export const AuthReducer = (initialState, action) => {
         user: "",
         token: null
       };
-
+    case "CHANGE_PROFILE":
+      localStorage.setItem('prefered_currency', JSON.stringify(action.payload.prefered_currency))
+      localStorage.setItem('frequency', JSON.stringify(action.payload.frequency))
+      return {
+        ...initialState,
+        prefered_currency: action.payload.prefered_currency,
+        frequency: action.payload.frequency
+      };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

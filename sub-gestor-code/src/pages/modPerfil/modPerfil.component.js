@@ -52,7 +52,7 @@ const Perfil = (props) => {
             console.log(response.data);
             console.log(userDetails.prefered_currency);
             console.log(userDetails.frequency);
-            // dispatch({type: }); crear un dispatch nuevo para actulizar el localstorage
+            dispatch({type: "CHANGE_PROFILE", payload: {frequency: frequency, prefered_currency: currency}});
         })
         .catch(err => { // El response devuelve otra cosa distinta a 2xx, hay error, 401 error de token
             if (err.response.status === 401) {
