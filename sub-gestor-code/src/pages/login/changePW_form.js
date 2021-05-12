@@ -9,14 +9,14 @@ const passwordRegex = RegExp(
   
 const ChangePw=(props)=>{
 
-    const [password,setPassword]=useState(({
+    const [password,setPassword]=useState({
       password_1:'',
       pswrepeat:''
-    }));
+    });
     const [passwordError, setPasswordError] = useState('');
     const [formError, setFormError] = useState('');
     const [mensaje,setMensaje]=useState('');
-
+    const [ backendError, setBackendError ] = useState('');
 
     
 
@@ -32,17 +32,21 @@ const ChangePw=(props)=>{
       event.preventDefault();
       if (formPassValid()) {
        
-        axios.post('http://localhost:4000'+window.location.pathname, {password:password.password_1,password_repeat:password.pswrepeat})
+        axios.post('http://localhost:4000'+window.location.pathname,
+        {
+          new_password:password.password_1,
+          new_password_repeat:password.pswrepeat
+        })
             .then(response => { 
               console.log(response.data)
               
               setMensaje("Contraseña cambiada correctamente");
-               setFormError("")
+              setFormError("")
               props.history.push('/');
             })
-            .catch(function (error){ 
-              setFormError(error.response.data.msg);
-              setPassword("")
+            .catch(function (error){
+              setBackendError(error.response.data.msg)
+              setFormError("");
               setPasswordError("");
             })
       } else {
@@ -56,11 +60,8 @@ const ChangePw=(props)=>{
     const handleChange = e => {
         e.preventDefault();
         const { name, value } = e.target;
-        setPassword(prevPassword=>({
-          ...prevPassword,
-          [name]:value
-        }))
-  
+        var auxiliar = {...password}
+
         switch (name) {
           case "password":
             
@@ -70,13 +71,16 @@ const ChangePw=(props)=>{
               setPasswordError("la contraseña tiene que contener una mayúscula y 8 o más carácteres");
               setMensaje("");
             }
-            setPassword(value);
-
-            
+            auxiliar.password_1 = value;
+            break;
+          case "pswrepeat":
+            auxiliar.pswrepeat = value;
             break;
           default:
             break;
         }
+
+        setPassword(auxiliar);
       };
 
 
@@ -118,7 +122,8 @@ return(
                   {passwordError.length > 0 && (<span className="popup-errorMessage">{passwordError}</span>)}
                     {formError.length > 0 && (
                         <span className="popup-errorMessage">{formError}</span>
-                    )}    
+                    )}
+                    {backendError.length > 0 && (<span className="popup-errorMessage">{backendError}</span>)}
            </form>   
            {mensaje.length > 0 && (<p className="popup-exitoso">{mensaje}</p>)}     
           </div>
