@@ -34,17 +34,17 @@ describe("Detalle de componentes", () => {
         name: 'netflix',
         active: true,
         free_trial: false,
-        free_trial_end: '2021-06-05T22:00:00.000Z',
-        start_date: '2021-06-05T22:00:00.000Z',
+        free_trial_end: '',
+        start_date: '2021-05-05T22:00:00.000Z',
         end: false,
-        end_date: '2021-06-05T22:00:00.000Z',
+        end_date: '',
         currency: 'EUR',
-        frequency: 'monthly',
-        url: 'www.google.es',
+        frequency: 'onetime',
+        url: 'www.test.es/desuscribir',
         charge_date: '2021-06-05T22:00:00.000Z',
         price: '9.75',
         description: 'testing',
-        img_src: '',
+        img_src: 'logo192.png',
         tags: ['tag1', 'tag2'],
         user_id: '1'
       }
@@ -114,7 +114,7 @@ describe("Detalle de componentes", () => {
 
   });
 
-  it("Mostrar suscripción básica", async () =>{
+  it("TC_Detalle_1", async () =>{
     const match = {
       params : { 
           id : 2 //any id you want to set
@@ -138,7 +138,44 @@ describe("Detalle de componentes", () => {
     expect(divisaInput.value).toBe('USD');
     const chargeDateInput = utils.getByLabelText('Fecha de pago: (mm/dd/yyyy)');
     expect(chargeDateInput.value).toBe('2021-06-05');
-    const PriceInput = utils.getByRole('spinbutton', {name: 'Precio:'});
-    expect(PriceInput.value).toBe('14.75');
+    const priceInput = utils.getByRole('spinbutton', {name: 'Precio:'});
+    expect(priceInput.value).toBe('14.75');
+  });
+
+  it("TC_Detalle_2", async () =>{
+    const match = {
+      params : { 
+          id : 1 //any id you want to set
+        }
+     }
+    const history = []
+
+    axios.get.mockResolvedValue(response);
+    const utils = render(
+      <AuthProvider>
+        <SubDetail match={match} history={history}/>
+      </AuthProvider>
+    );
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
+    const nameInput = utils.getByRole('textbox', {name: ""}); // Por alguna razon el input de name no tiene nombre
+    expect(nameInput.value).toBe("netflix");
+    const frequencyInput = utils.getByRole('combobox', {name: 'Frecuencia:'});
+    expect(frequencyInput.value).toBe('onetime');
+    const divisaInput = utils.getByRole('combobox', {name: 'Divisa:'});
+    expect(divisaInput.value).toBe('EUR');
+    const chargeDateInput = utils.getByLabelText('Fecha de pago: (mm/dd/yyyy)');
+    expect(chargeDateInput.value).toBe('2021-06-05');
+    const priceInput = utils.getByRole('spinbutton', {name: 'Precio:'});
+    expect(priceInput.value).toBe('9.75');
+    const imgInput = utils.getByRole('img', {name: 'imagen aleatoria'});
+    expect(imgInput.value).toBe('/pages/assets/crear-sub.png');
+    const startDateInput = utils.getByLabelText('Fecha de inicio:');
+    expect(startDateInput.value).toBe('2021-05-05');
+    const urlInput = utils.getByRole('textbox', {name: 'URL para desuscribirse:'});
+    expect(urlInput.value).toBe('www.test.es/desuscribir');
+    const tagInput = utils.getByRole('textbox', {name: 'Tags (separados por una coma):'});
+    expect(tagInput.value).toBe(['tag1', 'tag2']);
+    const descriptionInput = utils.getByRole('textbox', {name: 'Descripción:'});
+    expect(descriptionInput.value).toBe('testing');
   });
 })
