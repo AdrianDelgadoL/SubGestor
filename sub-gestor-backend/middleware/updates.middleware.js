@@ -2,13 +2,12 @@ const Subscription = require('../models/subscription.model');
 
 function updates(req, res, next) {
     const { id } = req.userId;
-
-
+    
     Subscription.find({user_id: id, active: true})
         .then(subscriptions => {
-
-            if(!subscriptions) return res.status(404).json({msg: "No se han encontrado suscripciones"});
-
+            if(subscriptions.length === 0) {
+                return res.status(404).json({msg: "No se han encontrado suscripciones"});
+            } 
             subscriptions.forEach(sub => {
                 if(sub.active) {
                     while (Date.now() > sub.charge_date) {
@@ -41,15 +40,17 @@ function updates(req, res, next) {
                                 console.log("ta bien " + sub2);
                                 }
                             )
+
                             .catch((err) => {
                             if(err) console.log(err);
                         })
                     }
                 }
             });
-            res.status(200).send(subscriptions);
+            res.locals.subscriptions = subscriptions;
+            //res.status(200).send(subscriptions);
+            next();
         });
-    next();
 }
 
 module.exports = updates;

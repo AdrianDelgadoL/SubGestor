@@ -6,6 +6,14 @@ const User = require('../models/user.model');
 const mongoose = require('mongoose');
 const upload = require('../middleware/upload.middleware');
 const updates = require('../middleware/updates.middleware');
+const {Cashify} = require('cashify');
+
+const rates = {
+	GBP: 0.86,
+	EUR: 1.00,
+	USD: 1.21
+};
+
 /*
 Endpoints for subscriptions
 GET /subscription (obtener todos las suscripciones activas)
@@ -23,7 +31,18 @@ GET /subscription/templates/:id (Obtener la información de una plantilla)
  * auth: authentication middleware.
  * updates: middleware for charge_date automatic updating.
  */
-router.get('/', auth, updates, (req, res) => {});
+router.get('/', auth, updates, async (req, res) => {
+    const subscriptions = res.locals.subscriptions;
+    const { id } = req.userId;
+    const user = await User.findById(id)
+    let currency = user.prefered_currency;
+    const cashify = new Cashify({base: 'EUR', rates});
+    for (const sub of subscriptions) {
+        const new_currency = cashify.convert(sub.price, {from: sub.currency, to: currency});
+        sub.price = new_currency.toFixed(2)
+    }
+    return res.status(200).send(subscriptions);
+});
 
 /**
  * /:id: The path to access the endpoint and the sub id to look for.

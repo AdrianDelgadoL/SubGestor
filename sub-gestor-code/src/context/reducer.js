@@ -59,7 +59,7 @@ export const AuthReducer = (initialState, action) => {
         user: "",
         token: null
       };
-
+    
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
