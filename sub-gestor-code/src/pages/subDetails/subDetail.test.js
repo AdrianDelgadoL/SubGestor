@@ -71,6 +71,48 @@ describe("Detalle de componentes", () => {
       }
     }
 
+    const response4 = {
+      data: {
+        name: 'freetrial',
+        active: true,
+        free_trial: true,
+        free_trial_end: '2021-06-05T22:00:00.000Z',
+        start_date: '2021-05-05T22:00:00.000Z',
+        end: false,
+        end_date: '',
+        currency: 'EUR',
+        frequency: 'monthly',
+        url: '',
+        charge_date: '',
+        price: '9.75',
+        description: '',
+        img_src: '',
+        tags: '',
+        user_id: '4'
+      }
+    }
+
+    const response5 = {
+      data: {
+        name: 'hasEnd',
+        active: true,
+        free_trial: false,
+        free_trial_end: '',
+        start_date: '2021-05-05T22:00:00.000Z',
+        end: true,
+        end_date: '2021-06-05T22:00:00.000Z',
+        currency: 'EUR',
+        frequency: 'monthly',
+        url: '',
+        charge_date: '',
+        price: '9.75',
+        description: '',
+        img_src: '',
+        tags: '',
+        user_id: '5'
+      }
+    }
+
   
   it("Carga detalle con mock", async () => {
     /* Informacion que se le pasa al componente, en este caso el match para poder cojer el id de la URL y el history para poder hacer push*/
@@ -177,5 +219,57 @@ describe("Detalle de componentes", () => {
     expect(tagInput.value).toBe('tag1,tag2');
     const descriptionInput = utils.getByRole('textbox', {name: 'Descripción:'});
     expect(descriptionInput.value).toBe('testing');
+  });
+  //TODO
+  it("TC_Detalle_3", async () => {
+
+  });
+
+  it("TC_Detalle_4", async () => {
+    const match = {
+      params : { 
+          id : 4 //any id you want to set
+        }
+     }
+    const history = []
+
+    axios.get.mockResolvedValue(response4);
+    const utils = render(
+      <AuthProvider>
+        <SubDetail match={match} history={history}/>
+      </AuthProvider>
+    );
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
+    const nameInput = utils.getByRole('textbox', {name: ""}); // Por alguna razon el input de name no tiene nombre
+    expect(nameInput.value).toBe("freetrial");
+    const freeTrialInput = utils.getByRole('checkbox', {name: 'Periodo de prueba'});
+    expect(freeTrialInput.checked).toBe(true);
+    const hasEndInput = utils.getByRole('checkbox', {name: 'Fecha de finalización'});
+    expect(hasEndInput.checked).toBe(false);
+    const startDateInput = utils.getByLabelText('Fecha de vencimiento:');
+    expect(startDateInput.value).toBe('2021-06-05');
+  });
+
+  it("TC_Detalle_5", async() => {
+    const match = {
+      params : { 
+          id : 5 //any id you want to set
+        }
+     }
+    const history = []
+
+    axios.get.mockResolvedValue(response5);
+    const utils = render(
+      <AuthProvider>
+        <SubDetail match={match} history={history}/>
+      </AuthProvider>
+    );
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
+    const nameInput = utils.getByRole('textbox', {name: ""}); // Por alguna razon el input de name no tiene nombre
+    expect(nameInput.value).toBe("hasEnd");
+    const hasEndInput = utils.getByRole('checkbox', {name: 'Fecha de finalización'});
+    expect(hasEndInput.checked).toBe(true);
+    const startDateInput = utils.getByLabelText('Fecha de finalización:');
+    expect(startDateInput.value).toBe('2021-06-05');
   });
 })
