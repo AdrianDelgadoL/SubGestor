@@ -44,7 +44,7 @@ describe("Detalle de componentes", () => {
         charge_date: '2021-06-05T22:00:00.000Z',
         price: '9.75',
         description: 'testing',
-        img_src: 'logo192.png',
+        img_src: 'amazon.png',
         tags: ['tag1', 'tag2'],
         user_id: '1'
       }
@@ -167,14 +167,14 @@ describe("Detalle de componentes", () => {
     expect(chargeDateInput.value).toBe('2021-06-05');
     const priceInput = utils.getByRole('spinbutton', {name: 'Precio:'});
     expect(priceInput.value).toBe('9.75');
-    const imgInput = utils.getByRole('img', {name: 'imagen aleatoria'});
-    expect(imgInput.value).toBe('/pages/assets/crear-sub.png');
+    const imgInput = utils.getByAltText(/imagen aleatoria/i);
+    expect(imgInput.src).toBe('http://localhost/images/amazon.png');
     const startDateInput = utils.getByLabelText('Fecha de inicio:');
     expect(startDateInput.value).toBe('2021-05-05');
     const urlInput = utils.getByRole('textbox', {name: 'URL para desuscribirse:'});
     expect(urlInput.value).toBe('www.test.es/desuscribir');
     const tagInput = utils.getByRole('textbox', {name: 'Tags (separados por una coma):'});
-    expect(tagInput.value).toBe(['tag1', 'tag2']);
+    expect(tagInput.value).toBe('tag1,tag2');
     const descriptionInput = utils.getByRole('textbox', {name: 'Descripción:'});
     expect(descriptionInput.value).toBe('testing');
   });
