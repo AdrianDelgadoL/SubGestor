@@ -40,6 +40,7 @@ router.get('/', auth, updates, async (req, res) => {
     for (const sub of subscriptions) {
         const new_currency = cashify.convert(sub.price, {from: sub.currency, to: currency});
         sub.price = new_currency.toFixed(2)
+        sub.currency = currency
     }
     return res.status(200).send(subscriptions);
 });
