@@ -5,9 +5,9 @@ function updates(req, res, next) {
     
     Subscription.find({user_id: id, active: true})
         .then(subscriptions => {
-            if(subscriptions.length === 0) {
-                return res.status(404).json({msg: "No se han encontrado suscripciones"});
-            } 
+
+            if(subscriptions.length === 0) return res.status(404).json({msg: "No se han encontrado suscripciones"});
+
             subscriptions.forEach(sub => {
                 if(sub.active) {
                     while (Date.now() > sub.charge_date) {
