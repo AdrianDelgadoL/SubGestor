@@ -3,7 +3,7 @@ import './Subscription.component.css'
 import {Link} from 'react-router-dom';
 import moment from 'moment'
 
-function Subscription({title,imageSource,card_price,payment_type, charge_date, sub_id, url}){
+function Subscription({title,imageSource,card_price,payment_type, charge_date, sub_id, url, period}){
     const detailLink = "/subDetail/" + sub_id
     function selectCurrency() {
         switch(payment_type) {
@@ -15,6 +15,18 @@ function Subscription({title,imageSource,card_price,payment_type, charge_date, s
             return ""
         }
     }
+
+    function selectPeriod() {
+        if(period == "año")
+            return "año"
+        return "mes"
+    }
+
+    function price() {
+        if(period == "año")
+            return card_price*12
+        return card_price
+    }
     
     return(
     <div class="Subscription-card-container">
@@ -23,7 +35,7 @@ function Subscription({title,imageSource,card_price,payment_type, charge_date, s
         </div>
         <div class="Subscription-text-col text-col">
             <h3 className="Subscription-titulo">{title}</h3>
-            <p className="Subscription-precio" >{card_price}{selectCurrency()}</p>
+            <p className="Subscription-precio" >{price()}{selectCurrency()}/{selectPeriod()}</p>
             <p className="Subscription-charge_date" >Próximo cobro: {moment(charge_date).format("DD/MM/YYYY")}</p>
             <Link to ={detailLink} className="btn btn-outline-secondary border-0" >Consultar suscripción</Link>
             {url.length == 0 && (

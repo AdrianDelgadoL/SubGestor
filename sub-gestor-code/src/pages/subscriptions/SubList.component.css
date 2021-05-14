@@ -6,6 +6,30 @@
     align-content: center;
 }
 
+.subList-selector{
+    text-align: right;
+    padding: 10px;
+}
+
+.subList-selector select{
+    background-color: #519e8a;
+    border: 2px solid white;
+    color: white;
+
+}
+
+.subList-selector select:hover{
+    background-color: white;
+    border: 2px solid #519e8a;
+    color: #519e8a;
+}
+
+.subList-selector select option{
+    background-color: white;
+    border: 2px solid #519e8a;
+    color: #519e8a;
+}
+
 .subList-createSubscription{
     width: 100%;
     display: flex;
