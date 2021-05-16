@@ -1,0 +1,191 @@
+.selectPlantilla-wrapper {
+    background-color: whitesmoke;
+}
+
+.selectPlantilla-propia {
+    margin-top: 5%;
+    margin-bottom: 3%;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.selectPlantilla-plantillas {
+    background-color: whitesmoke;
+}
+
+.selectPlantilla-tarjeta {
+    background-color: #e5e5e5;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.selectPlantilla-subtitulo{
+   padding: 5%;
+   margin-bottom: 0%;
+}
+
+.selectPlantilla-tarjeta:hover {
+    background-color: whitesmoke;
+    box-shadow: 0px 10px 50px #555;
+}
+
+.selectPlantilla-form {
+    width: 100%;
+}
+
+.selectPlantilla-img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.selectPlantilla-tarjeta-button {
+    background-color: #519e8a;
+    color: #fff;
+    border: 1px solid #519e8a;
+    width: 100%;
+    margin-top: 1em;
+    padding: 8px 0px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+    border-radius: 10px;
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
+
+.selectPlantilla-tarjeta-button:hover {
+    color: #519e8a;
+    background-color: #fff;
+    border: 1px solid #519e8a;
+}
+
+.selectPlantilla-textomedio {
+    margin: 5%;
+    text-align: center;
+}
+
+.selectPlantilla-separator {
+    color: black;
+    background-color: black;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 1%;
+}
+
+.selectPlantilla-subtitulo {
+    padding: 3%;
+}
+
+
+.selectPlantilla-plantillas {
+    width: 100%;
+    margin-top: 0%;
+}
+
+.selectPlantilla-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    text-align: center;
+    background-color: whitesmoke;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 7%;
+}
+
+.selectPlantilla-area {
+    flex: 25%;
+    background-color: #e5e5e5;
+    border-radius: 10px;
+    width: 100%;
+    margin-right: 3%;
+    margin-left: 3%;
+    margin-bottom: 3%;
+}
+
+.selectPlantilla-area:hover{
+    box-shadow: 0px 10px 50px #555;
+    border-radius: 10px;
+}
+
+.selectPlantilla-plantilla-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.selectPlantilla-button-default {
+    padding: 10px;
+}
+
+/*Media query*/
+@media only screen and (max-width: 1200px) {
+    /*
+    .selectPlantilla-container {
+        /*
+        grid-template-areas:  
+                'selectPlantilla-grid-amazon selectPlantilla-grid-apple' 
+                'selectPlantilla-grid-dazn selectPlantilla-grid-hbo' 
+                'selectPlantilla-grid-netflix selectPlantilla-grid-psn'
+                'selectPlantilla-grid-spotify selectPlantilla-grid-wow' 
+                'selectPlantilla-grid-xbox none';
+        
+    }
+    */
+    .selectPlantilla-propia {
+        margin-top: 5%;
+        margin-bottom: 3%;
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+
+    .selectPlantilla-area {
+        flex: 33%;
+        margin-bottom: 3%;
+        /*Esto hace que la sub de mas abajo se mantenga de mismo tamaño que el resto*/
+        max-width: 45%;
+    }
+}
+
+@media only screen and (max-width: 700px){
+    /*
+    .selectPlantilla-container {
+        /*
+        grid-template-areas:  
+                'selectPlantilla-grid-amazon' 
+                'selectPlantilla-grid-apple' 
+                'selectPlantilla-grid-dazn' 
+                'selectPlantilla-grid-hbo' 
+                'selectPlantilla-grid-netflix' 
+                'selectPlantilla-grid-psn'
+                'selectPlantilla-grid-spotify'
+                'selectPlantilla-grid-wow' 
+                'selectPlantilla-grid-xbox';
+        grid-gap: 2%;
+        padding-bottom: 7%;
+    }
+    */
+
+    .selectPlantilla-propia {
+        margin-top: 5%;
+        margin-bottom: 3%;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .selectPlantilla-tarjeta-button {
+        margin-bottom: 3%;
+    }
+    
+    .selectPlantilla-area {
+        flex: 50%;
+        margin-bottom: 5%;
+        max-width: 25;
+        margin-right: 1%;
+        margin-left: 2%;
+    }
+}

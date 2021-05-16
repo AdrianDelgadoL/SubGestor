@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs')
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const emailValidator = require('email-validator');
+const auth = require('../middleware/auth.middleware');
+const Subscription = require('../models/subscription.model');
 
 
 // POST /user/create (registro) X
@@ -26,9 +28,9 @@ router.post('/create', (req, res) => {
     const {email, password, conf_pwd} = req.body;
     //validation for password and email
     if( !email || !password || !conf_pwd) return res.status(400).json({ msg: 'Completa todos los campos' });
-    if(password != conf_pwd) return res.status(400).json( { msg: 'Las contraseñas no coinciden' })
+    if(password !== conf_pwd) return res.status(400).json( { msg: 'Las contraseñas no coinciden' })
     if(!emailValidator.validate(email)) {
-        return res.status(400).json ( {msg: 'El formato de correo es inválido'})
+        return res.status(400).json ( {msg: 'El formato de correo es inválido'});
     }
 
     User.findOne({ email })
@@ -62,6 +64,10 @@ router.post('/create', (req, res) => {
                                     });
                                 }
                             )
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            return res.status(500).json({ msg: "Error al crear usuario"});
                         });
                 })
             })
@@ -116,7 +122,24 @@ router.post('/login', (req, res) => {
     }
 );
 
-
+router.delete('/', auth, (req,res) => {
+    const { id } = req.userId;
+    Subscription.deleteMany({user_id: id})
+    .then(() => {
+        User.deleteOne({_id: id})
+        .then(() => {
+            return res.status(200).json( {msg : "Eliminado con exito"});
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(500).json( {msg : "Algo ha ocurrido con el servidor"});
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        return res.status(500).json( {msg : "Algo ha ocurrido con el servidor"});
+    })
+})
 
 
 module.exports = router;

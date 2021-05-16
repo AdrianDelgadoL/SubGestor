@@ -24,6 +24,7 @@ const SignUp = (props) => {
   const [emailError, setEmailError] = useState(''); 
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
+  const [repPasswordError, setRepPasswordError] = useState('');
 
   //Cargamos el dispatch para poder usarlo después para avisar al reducer. Esto nos permite guardar el token y el usuario
   //en el contexto creado en el fichero context. Para usarlo solo tenemos que llamar a dispatch() y pasarle un objeto JSON
@@ -34,7 +35,7 @@ const SignUp = (props) => {
 
   const formValid = () => {
     // Valida que los errores esten vacios
-    if (emailError.length > 0 || passwordError.length > 0) return false
+    if (emailError.length > 0 || passwordError.length > 0 || repPasswordError.length > 0) return false
     if (email.length === 0 || password.length === 0 || repPassword.length === 0) return false
     return true
   };
@@ -78,7 +79,7 @@ const SignUp = (props) => {
         if(emailRegex.test(value)) {
           setEmailError("");
         } else {
-          setEmailError("dirección de email incorrecta");
+          setEmailError("Dirección de email incorrecta");
         }
         setEmail(value);
         break;
@@ -86,11 +87,21 @@ const SignUp = (props) => {
         if(passwordRegex.test(value)) {
           setPasswordError("");
         } else {
-          setPasswordError("la contraseña tiene que contener una mayúscula y 8 o más carácteres");
+          setPasswordError("La contraseña tiene que contener una mayúscula y 8 o más carácteres");
+        }
+        if(value !== repPassword) {
+          setRepPasswordError("Las contraseñas no coinciden");
+        } else {
+          setRepPasswordError("");
         }
         setPassword(value)
         break;
       case "pswrepeat":
+        if(value !== password) {
+          setRepPasswordError("Las contraseñas no coinciden");
+        } else {
+          setRepPasswordError("");
+        }
         setRepPassword(value)
         break;
       default:
@@ -146,6 +157,9 @@ const SignUp = (props) => {
                           onChange={handleChange}
                           pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z].{6,})"
                       />
+                      {repPasswordError.length > 0 && (
+                      <span className="signUp-errorMessage">{repPasswordError}</span>
+                    )}
                   </div>
                   {formError.length > 0 && (
                       <span className="signUp-errorMessage">{formError}</span>
