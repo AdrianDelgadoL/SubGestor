@@ -6,7 +6,6 @@ function updates(req, res, next) {
 
     Subscription.find({user_id: id, active: true})
         .then(subscriptions => {
-
             if(!subscriptions) return res.status(404).json({msg: "No se han encontrado suscripciones"});
 
             subscriptions.forEach(sub => {
@@ -47,6 +46,21 @@ function updates(req, res, next) {
                         })
                     }
                 }
+            });
+
+
+            console.log("Antes del sort" + subscriptions);
+            subscriptions.sort(function(sub1, sub2) {
+                if(sub1.charge_date > sub2.charge_date || sub1.charge_date === undefined) {
+                    return 1;
+                } else if(sub1.charge_date < sub2.charge_date || sub2.charge_date === undefined) {
+                    return -1;
+                }
+                return 0;
+            });
+            console.log("Despues del sort: ");
+            subscriptions.forEach(sub => {
+                console.log("sub_date " + sub.charge_date + " sub_name " + sub.name);
             });
 
             res.status(200).send(subscriptions);
