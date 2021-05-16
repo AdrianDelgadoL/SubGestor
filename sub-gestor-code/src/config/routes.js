@@ -5,6 +5,8 @@ import HomePage from "../pages/homePage/homePage.component";
 import SubDetail from "../pages/subDetails/subDetail.component";
 import createSubscription from "../pages/createSubscription/createSubscription.component";
 import SubList from "../pages/subscriptions/SubList.components";
+import Recuperacion from "../pages/login/changePW_form";
+import RecuperacionLogeado from "../pages/login/changePW_logeado";
 import selectPlantilla from "../pages/selectPlantilla/selectPlantilla.component";
 //import PageNotFound from "../pages/notFound" (Hacer redireccion o generar pageNotFound)
 
@@ -39,6 +41,18 @@ const routes =[
       isPrivate: false,
       path:'/createSub/:id',
       component: createSubscription
+    },
+    {
+      forUnlogged:false,
+      isPrivate:false,
+      path:'/change-pass',
+      component:Recuperacion
+    },
+    {
+      forUnlogged:false,
+      isPrivate:true,
+      path:'/change-password',
+      component:RecuperacionLogeado
     },
     {
         forUnlogged: false,

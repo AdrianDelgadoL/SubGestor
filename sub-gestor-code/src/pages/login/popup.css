@@ -1,0 +1,62 @@
+.popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0, 0, 0, 0.2);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-inner{
+    position: relative;
+    padding: 32px;
+    width: 100%;
+    max-width: 640px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 50px #555;
+    background-color: whitesmoke;
+}
+
+.popup-close-btn{
+    position: absolute;
+    top:16px;
+    right: 16px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.popup-close-btn:hover{
+    font-weight: bold;
+    color:red;
+}
+
+.popup-exitoso{
+    text-align: center;
+    margin: 10px;
+    width:100%;
+    height: 100%;
+    font-size: 25px;
+    font-weight: bold;
+    color:chartreuse;
+    
+}
+
+.popup-formulario{
+    align-items: center;
+    text-align: center;
+   justify-content: center;
+   
+}
+
+
+.popup-errorMessage{
+    width: 100%;
+    margin:5px;
+    color: red;
+    font-size: 0.8em;
+}
+
