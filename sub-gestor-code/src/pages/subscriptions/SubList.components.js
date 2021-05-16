@@ -41,7 +41,7 @@ const SubList = (props) => {
                 {tarjetas}                
             </div>
             <div className="subList-createSubscription">
-                <Link to ="/createSub">Crear nueva suscripcion</Link>
+                <Link to="/selectPlantilla">Crear nueva suscripcion</Link>
             </div>
         </div>
     )

@@ -43,11 +43,17 @@ function updates(req, res, next) {
                             )
                             .catch((err) => {
                             if(err) console.log(err);
+                            return res.status(500).json({msg: "Error al modificar la suscripcion"});
                         })
                     }
                 }
             });
+
             res.status(200).send(subscriptions);
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({msg: "Error al buscar suscripciones"} );
         });
     next();
 }
