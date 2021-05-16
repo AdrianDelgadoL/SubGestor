@@ -6,6 +6,7 @@ const User = require('../models/user.model');
 const mongoose = require('mongoose');
 const upload = require('../middleware/upload.middleware');
 const updates = require('../middleware/updates.middleware');
+const dateValidator = require('../middleware/dateValidator.middleware');
 /*
 Endpoints for subscriptions
 GET /subscription (obtener todos las suscripciones activas)
@@ -35,11 +36,12 @@ router.get('/:id', auth, (req, res) => {
     const id = req.params.id;
     Subscription.findById(id)
         .then(subscription => {
-            if(!subscription) return res.status(404).json({msg: 'Suscripción no encontrada'});
-            if(subscription) return res.status(200).json(subscription);
+            if(!subscription || subscription.user_id !== req.userId.id) return res.status(404).json({msg: 'Suscripción no encontrada'});
+            if(subscription.active === true) return res.status(200).json(subscription);
+            return res.status(404).json({msg: 'Suscripción no encontrada'});
         }).catch(err => {
             console.log(err);
-            return res.status(404).json({msg: 'Suscripción no encontrada'});
+            return res.status(500).json({msg: 'Error al buscar la suscripcion'});
         });
 });
 
@@ -68,8 +70,55 @@ router.delete('/:id', auth, (req, res) => {
                 });
         }).catch(err => {
         console.log(err);
-        return res.status(404).json({msg: 'Suscripción no encontrada'});
+        return res.status(500).json({msg: 'Error al eliminar la suscripcion'});
     });
+})
+
+router.put('/:id', auth, upload.single('image'), dateValidator, (req, res) => {
+    const id = req.params.id;
+    const img_src = (req.file) ? req.file.filename : "null"; //imagen por defecto si no hay imagen
+    const {name, charge_date, currency, frequency, price} = req.body;
+    if(!id) return res.status(400).json({ msg: "No se ha seleccionado ninguna suscripción"});
+    if (!name || !charge_date || !currency || !frequency || !price) { return res.status(400).json({
+            msg: 'Completa todos los campos'
+        });
+    }
+    console.log(req.body)
+    Subscription.findById(id)
+        .then(sub => {
+            if(!sub || sub.user_id !== req.userId.id) return res.status(404).json( {msg: "Suscripción no encontrada"});
+            if(!sub.active) return res.status(400).json( {msg: "Error: la suscripción no está activa"});
+
+            req.body = JSON.parse(JSON.stringify(req.body)); //hace falta esto para que se trague el hasOwnProperty()
+
+            for( var key in req.body) {  // por cada campo se modifica
+                if(req.body.hasOwnProperty(key)) {
+                    if(key === 'charge_date' || key === 'end_date' || key === 'free_trial_end' || key === 'start_date')
+                        sub[key] = req.body[key] !== "null" ? req.body[key] : null;
+                    else
+                        sub[key] = req.body[key]
+
+                    sub.markModified(key.toString());
+                }
+            }
+            if(img_src !== "null") {
+                sub.img_src = img_src;
+                sub.markModified('img_src');
+            }
+            sub.save()
+                .then(sub => {
+                    return res.status(200).json({msg: "Suscripción modificada"});
+                    }
+                )
+                .catch(err => {
+                    console.log(err);
+                    return res.status(500).json({msg: "Error al modificar la suscripción."})
+                })
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json( {msg: "Error al buscar la suscripción"})
+        });
 })
 
 /**
@@ -78,7 +127,7 @@ router.delete('/:id', auth, (req, res) => {
  * req: Request received. Contains the information required to create a new subscription.
  * res: Response to the front-end.
  */
-router.post('/', auth, upload.single('image'), (req, res) => {
+router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
 
     // TODO: Tags por añadir ya para el 7
     console.log('Endpoint: /subscriptions ;; Method: POST');
@@ -88,10 +137,21 @@ router.post('/', auth, upload.single('image'), (req, res) => {
 
     const {
         name, active, end, free_trial, free_trial_end, start_date, end_date,
-        currency, frequency, url, price, description, charge_date
+        currency, frequency, url, price, description, charge_date, template,
+        image
     } = req.body;
 
-    const img_src = (req.file) ? req.file.filename : "default.jpg"; //imagen por defecto si no hay imagen
+    // per saber si la imatge ve de la template
+    let img_src = "";
+    if(template) {
+        img_src = image;
+        console.log("TEMPLATE =" + img_src);
+    }
+    if(!img_src) {
+        img_src = (req.file) ? req.file.filename : "default.jpg"; //imagen por defecto si no hay imagen
+        console.log("NO TEMPLATE = " + img_src);
+    }
+
     console.log(req.file);
     console.log(img_src);
 
@@ -114,25 +174,6 @@ router.post('/', auth, upload.single('image'), (req, res) => {
                 return res.status(400).json({
                     msg: 'Completa todos los campos'
                 });
-            }
-
-            // Comprobar formato fechas si estan puestas
-            if (start_date !== "null") {
-                if (isNaN(Date.parse(start_date))) return res.status(400).json({
-                    msg : 'El formato de la fecha es incorrecto'
-                });
-            }
-            if (end_date !== "null") {
-                if (isNaN(Date.parse(end_date))) return res.status(400).json({
-                    msg : 'El formato de la fecha es incorrecto'
-                });
-            }
-
-            if (charge_date !== "null"){
-                if (isNaN(Date.parse(charge_date))) return res.status(400).json({
-                    msg : 'El formato de la fecha es incorrecto'
-                });
-                console.log(charge_date);
             }
 
             // Meterlo en la base de datos
@@ -165,12 +206,19 @@ router.post('/', auth, upload.single('image'), (req, res) => {
                     msg: 'La suscripción se ha creado correctamente',
                     subscription_id: new_sub._id
                 });
-            });
+
+            })
+                .catch(err => {
+                    console.log(err);
+                    return res.status(500).json({msg: "Error al guardar la suscripción"});
+                })
         })
         .catch(err => {
             console.log(err);
         });
 });
+
+
 
 
 module.exports = router;
