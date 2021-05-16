@@ -59,7 +59,9 @@ router.post('/create', (req, res) => {
                                         token,
                                         user: {
                                             email: user.email,
-                                            id: user.id
+                                            id: user.id,
+                                            prefered_currency: user.prefered_currency,
+                                            frequency: user.frequency
                                         }
                                     });
                                 }
@@ -112,6 +114,8 @@ router.post('/login', (req, res) => {
                                 token,
                                 user: {
                                     email: user.email,
+                                    prefered_currency: user.prefered_currency,
+                                    frequency: user.frequency
                                 }
                             });
                         }
@@ -121,6 +125,22 @@ router.post('/login', (req, res) => {
         );
     }
 );
+
+router.put('/configuration', auth, (req, res) => {
+    const { id } = req.userId;
+    const {frequency, prefered_currency} = req.body;
+    User.findById(id)
+    .then(user => {
+        user.prefered_currency = prefered_currency;
+        user.frequency = frequency;
+        user.markModified('prefered_currency');
+        user.markModified('frequency');
+        user.save()
+        .then(newUser => {
+            return res.status(200).json({msg: "Configuración guardada correctamente"})
+        })
+    })
+})
 
 router.delete('/', auth, (req,res) => {
     const { id } = req.userId;

@@ -35,6 +35,11 @@ const Navbar = (props) => {
                     </li>
                     {isLogged && (
                         <li class="nav-item">
+                            <Link to ="/perfil" class="nav-link">Perfil</Link>
+                        </li>
+                    )}
+                    {isLogged && (
+                        <li class="nav-item">
                             <Link to ="/" onClick={logout} class="nav-link">Logout</Link>
                         </li>
                     )}

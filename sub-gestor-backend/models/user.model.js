@@ -18,6 +18,10 @@ const usersSchema = new Schema({
     prefered_currency: {
         type: String,
         default: 'EUR'
+    },
+    frequency: {
+        type: String,
+        default: 'none'
     }
 });
 

@@ -2,11 +2,11 @@ const Subscription = require('../models/subscription.model');
 
 function updates(req, res, next) {
     const { id } = req.userId;
-
-
+    
     Subscription.find({user_id: id, active: true})
         .then(subscriptions => {
-            if(!subscriptions) return res.status(404).json({msg: "No se han encontrado suscripciones"});
+
+            if(subscriptions.length === 0) return res.status(404).json({msg: "No se han encontrado suscripciones"});
 
             subscriptions.forEach(sub => {
                 if(sub.active) {
@@ -40,6 +40,7 @@ function updates(req, res, next) {
                                 console.log("ta bien " + sub2);
                                 }
                             )
+
                             .catch((err) => {
                             if(err) console.log(err);
                             return res.status(500).json({msg: "Error al modificar la suscripcion"});
@@ -47,8 +48,6 @@ function updates(req, res, next) {
                     }
                 }
             });
-
-
             console.log("Antes del sort" + subscriptions);
             subscriptions.sort(function(sub1, sub2) {
                 if(sub1.charge_date > sub2.charge_date || sub1.charge_date === undefined) {
@@ -62,14 +61,14 @@ function updates(req, res, next) {
             subscriptions.forEach(sub => {
                 console.log("sub_date " + sub.charge_date + " sub_name " + sub.name);
             });
-
-            res.status(200).send(subscriptions);
+            res.locals.subscriptions = subscriptions;
+            //res.status(200).send(subscriptions);
+            next();
         })
         .catch(err => {
             console.log(err);
             return res.status(500).json({msg: "Error al buscar suscripciones"} );
         });
-    next();
 }
 
 module.exports = updates;

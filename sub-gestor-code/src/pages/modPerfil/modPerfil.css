@@ -1,0 +1,135 @@
+.modPerfil-wrapper {
+    background-color: whitesmoke;
+    text-align: center;
+    width: 100%;
+}
+
+.modPerfil-container {
+    background-color: whitesmoke;
+    border-radius: 10px;
+    box-shadow: 0px 10px 50px #555;
+    margin-right: 35%;
+    margin-left: 35%;
+    text-align: center;
+}
+
+.modPerfil-email {
+    padding-top: 5%;
+}
+
+.modPerfil-container p {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.modPerfil-select {
+    font-weight: bold;
+}
+
+.modPerfil-datos {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-right: 25%;
+    padding-left: 25%;
+}
+
+.modPerfil-separator {
+    color: black;
+    background-color: black;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 1%;
+    margin-top: 0%;
+}
+
+.modPerfil-datos-button {
+    background-color: #519e8a;
+    color: #fff;
+    border: 1px solid #519e8a;
+    width: 100%;
+    margin-top: 1em;
+    padding: 8px 0px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+    border-radius: 10px;
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
+
+.modPerfil-datos-button:hover {
+    color: #519e8a;
+    background-color: #fff;
+    border: 1px solid #519e8a;
+}
+
+.modPerfil-bottom {
+    padding-left: 25%;
+    padding-right: 25%;
+    padding-bottom: 3%;
+}
+
+.modPerfil-bottom-psw {
+    background-color: #518c9e;
+    color: #fff;
+    border: 1px solid #518c9e;
+    width: 100%;
+    margin-top: 1em;
+    padding: 8px 0px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+    border-radius: 10px;
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
+
+.modPerfil-bottom-psw:hover {
+    color: #518c9e;
+    background-color: #fff;
+    border: 1px solid #518c9e;
+}
+
+.modPerfil-bottom-remove {
+    background-color: #e76f51;
+    color: #fff;
+    border: 1px solid #e76f51;
+    width: 100%;
+    margin-top: 1em;
+    padding: 8px 0px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    border-radius: 10px;
+}
+
+.modPerfil-bottom-remove:hover {
+    color: #e76f51;
+    background-color: #fff;
+    border: 1px solid #e76f51;
+}
+
+/*Media query*/
+@media only screen and (max-width: 1400px) {
+    .modPerfil-container {
+        width: 50%;
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+}
+
+
+/*Media query*/
+@media only screen and (max-width: 900px) {
+    .modPerfil-container {
+        width: 75%;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
