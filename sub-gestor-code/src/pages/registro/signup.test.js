@@ -6,6 +6,8 @@ import { render, fireEvent, waitFor} from "@testing-library/react";
 import 'regenerator-runtime/runtime'
 import { async } from 'regenerator-runtime/runtime';
 import { BrowserRouter as Router } from 'react-router-dom';
+require('dotenv').config()
+
 
 jest.mock('axios');
 
