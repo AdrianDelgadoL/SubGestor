@@ -11,17 +11,17 @@
 
 
 .Subscription-card-container img{
-    height: 120px;
-    width: 200px;
+    height: 100%;
+    width: 100%;
     border: black 1px solid;
     margin: 20px;
     border-radius: 10px;
+    margin: 3px;
 }
 
 .Subscription-text-col{
     padding: 1px;
-    width: 200px;
-    
+    width: 60%;   
 }
 
 .Subscription-card-container:hover{
