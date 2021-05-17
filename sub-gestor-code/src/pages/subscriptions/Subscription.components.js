@@ -39,9 +39,9 @@ function Subscription({title,imageSource,card_price,payment_type, charge_date, s
         }
     }
     return(
-    <div class="Subscription-card-container">
-        <div class="img-col">
-            <img src={imageSource} alt=""></img>
+    <div className="Subscription-card-container">
+        <div className="img-col">
+            <img src={imageSource} className="Subscription-img" alt=""></img>
         </div>
         <div class="Subscription-text-col text-col">
             <h3 className="Subscription-titulo">{title}</h3>
