@@ -204,7 +204,7 @@ const SubDetail = (props) => {
                 "Content-Type": "multipart/form-data"
             }})
             .then(
-                console.log("modificacion correcta")//al modificar la suscripcion 
+                window.location.reload()
             )
             .catch( function (err) {
                 if (err.response.status === 401) {
