@@ -116,9 +116,12 @@ const SubDetail = (props) => {
 
     const changeFreeTrialEnd = async (e) => {
         console.log("free trial cambiado")
-        if (!freeTrial) {
+        if (freeTrial) {
             setDateEndTrial(null);
             setFreeTrialEndError('');
+        } else {
+            setFrequency("onetime");
+            setPrice(0);
         }
         setFreeTrial(!freeTrial);
     };
@@ -163,6 +166,12 @@ const SubDetail = (props) => {
         e.preventDefault();
         if(formValid()) {
             let data = new FormData();
+            let charge_date_aux = null
+            if(freeTrial) {
+                charge_date_aux = dateEndTrial
+            } else {
+                charge_date_aux = datePayment
+            }
             data.append('name', name);
             data.append('active', true);
             data.append('free_trial', freeTrial); //no updatea bien
@@ -172,7 +181,7 @@ const SubDetail = (props) => {
             data.append('currency', currency);
             data.append('frequency', frequency);
             data.append('price', price);
-            data.append('charge_date', datePayment);
+            data.append('charge_date', charge_date_aux);
             data.append('url', url);
             data.append('start_date', startDate); //el data es correcto, no devuelve updatedo
             data.append('description', description);

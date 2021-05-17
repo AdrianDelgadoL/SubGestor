@@ -7,7 +7,7 @@ const validateValue = require('validator');
 
 const CreateSubscription = (props) => {
     const [nameSub, setName] = useState('');
-    const [free_trial, setFreeTrial] = useState(true);
+    const [free_trial, setFreeTrial] = useState(false);
     const [free_trial_end, setFreeTrialEnd] = useState(null);
     const [end, setEnd] = useState(true);
     const [end_date, setEndDate] = useState(null);
@@ -83,12 +83,18 @@ const CreateSubscription = (props) => {
 
     const changeFreeTrialEnd = async (e) => {
         // elimina el valor de free_trial_end si se desactiva la opcion (disabled == true)
-        if (!free_trial) {
+        console.log(free_trial)
+        if (free_trial) {
+            console.log("aqui no")
             setFreeTrialEnd(null);
             setFreeTrialEndError('');
             console.log(free_trial_end);
+        } else {
+            setFrequency("onetime");
+            setPrice(0);
         }
         setFreeTrial(!free_trial);
+        console.log(free_trial)
     };
 
     const changeEndDate = async (e) => {
@@ -112,13 +118,23 @@ const CreateSubscription = (props) => {
                 valid = false;
             }
         })
-        // Valida que els camps obligatoris estan plens
         if (nameSub == null) {
             valid = false;
             setFormError("ERROR: faltan campos obligatiorios por completar");
-        } else if (nameSub.length === 0 || price == null || charge_date == null) {
+        }
+        console.log(free_trial)
+        if(free_trial) {
+            if(free_trial_end == null) {
+                valid = false;
+                setFormError("ERROR: faltan campos obligatiorios por completar");
+            }
+        } else {
+        // Valida que els camps obligatoris estan plens
+        
+         if (nameSub.length === 0 || price == null || charge_date == null) {
             valid = false;
             setFormError("ERROR: faltan campos obligatiorios por completar");
+            }
         }
         console.log("DADES ENVIADES")
         console.log("Name = " + nameSub);
@@ -136,18 +152,24 @@ const CreateSubscription = (props) => {
         if (formValid()) {
             console.log("FORM VALID");
             let data = new FormData();
+            let charge_date_aux = null
+            if(free_trial) {
+                charge_date_aux = free_trial_end
+            } else {
+                charge_date_aux = charge_date
+            }
 
             // Valors base
             data.append('name', nameSub);
             data.append('active', true);
-            data.append('free_trial', (!free_trial));
+            data.append('free_trial', (free_trial));
             data.append('free_trial_end', free_trial_end);
             data.append('end', (!end));
             data.append('end_date', end_date);
             data.append('currency', currency);
             data.append('frequency', frequency);
             data.append('price', price);
-            data.append('charge_date', charge_date);
+            data.append('charge_date', charge_date_aux);
             data.append('url', url);
             data.append('start_date', start_date);
             data.append('description', description);
@@ -157,8 +179,8 @@ const CreateSubscription = (props) => {
             data.append('template', template);
 
             // Imatge
-            data.append('image', img_src)
-
+            data.append('image', img_src);
+            
             axios({
                 method: "post",
                 url: "http://localhost:4000/subscription",
@@ -261,11 +283,11 @@ const CreateSubscription = (props) => {
                         </div>
                         <div className="createSubscription-free_trial">
                             <label htmlFor="free_trial"> Es una prueba gratuita: </label> <br />
-                            <input type="checkbox" name="free_trial" onClick={changeFreeTrialEnd} />
+                            <input type="checkbox" name="free_trial" onClick={changeFreeTrialEnd} value={free_trial}/>
                         </div>
                         <div className="createSubscription-free_trial_end">
                             <label htmlFor="free_trial_end"> Finalización prueba gratuita: </label> <br />
-                            <input disabled={free_trial} type="date" name="free_trial_end" onChange={handleChange} />
+                            <input disabled={!free_trial} type="date" name="free_trial_end" onChange={handleChange}/>
                             {freeTrialEndError.length > 0 && (
                                 <span className="errorMessage">{freeTrialEndError}</span>
                             )}
@@ -286,21 +308,21 @@ const CreateSubscription = (props) => {
                     <div className="createSubscription-price_information">
                         <div className="createSubscription-charge_date">
                             <label htmlFor="charge_date"> Fecha del pago: </label> <br />
-                            <input type="date" name="charge_date" required onChange={handleChange} />
+                            <input value={charge_date} disabled={free_trial} type="date" name="charge_date" required onChange={handleChange} />
                             {chargeDateError.length > 0 && (
                                 <span className="errorMessage">{chargeDateError}</span>
                             )}
                         </div>
                         <div className="createSubscription-price">
                             <label htmlFor="price"> Precio (*): </label> <br />
-                            <input type="number" defaultValue={price} placeholder="Introduce el precio" name="price" required onChange={handleChange} />
+                            <input value={price} disabled={free_trial} type="number" placeholder="Introduce el precio" name="price" required onChange={handleChange} />
                             {priceError.length > 0 && (
                                 <span className="errorMessage">{priceError}</span>
                             )}
                         </div>
                         <div className="createSubscription-frequency">
                             <label htmlFor="frequency"> Frecuencia (*): </label> <br />
-                            <select value={frequency} name="frequency" required onChange={handleChange} >
+                            <select disabled={free_trial} value={frequency} name="frequency" required onChange={handleChange} >
                                 <option value="monthly"> Mensual</option>
                                 <option value="onetime"> Una vez</option>
                                 <option value="annual"> Anual</option>
@@ -311,9 +333,10 @@ const CreateSubscription = (props) => {
                         </div>
                         <div className="createSubscription-currency">
                             <label htmlFor="currency"> Divisa (*): </label> <br />
-                            <select name="currency" required onChange={handleChange}>
-                                <option value="EUR"> EURO (€)</option>
-                                <option value="Dolars"> DOLAR ($)</option>
+                            <select disabled={free_trial} name="currency" required onChange={handleChange}>
+                                <option value="EUR">EUR</option>
+                                <option value="USD">USD</option>
+                                <option value="GBP">GBP</option>
                             </select>
                         </div>
                     </div>
