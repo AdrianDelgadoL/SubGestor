@@ -4,6 +4,7 @@ import './signIn.css';
 import POPUP from './popup'
 import {useAuthDispatch} from '../../context/context';
 import axios from "axios";
+import GoogleLogin from 'react-google-login';
 
 
 // Form cogido de este código
@@ -26,6 +27,9 @@ const SignIn = (props) => {
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
   const [buttonPopUp,setButtonPopup]=useState(false);
+
+  const [emailGoogle, setEmailGoogle]=useState('');
+
   
   
 
@@ -45,7 +49,7 @@ const SignIn = (props) => {
     // o muestra error
     if (formValid()) {
       dispatch({ type: 'REQUEST_LOGIN' });
-      axios.post('http://localhost:4000/user/login', {userEmail: email, userPassword: password})
+      axios.post(process.env.REACT_APP_SERVER_URL+'/user/login', {userEmail: email, userPassword: password})
         .then(response => { //El response devuelve un 2xx
           console.log(response.data)
           dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
@@ -93,7 +97,14 @@ const SignIn = (props) => {
         break;
     }
   };
-
+  const responseGoogle=(response)=>{
+    console.log(response); //se muestra el token
+    console.log(response.profileObj); //se muestran los datos del usuario correspondientes a su cuenta de google
+    setEmailGoogle(response.profileObj.email);
+    console.log(response.tokenId);
+                                      
+    
+  }
   
   return (
     
@@ -140,8 +151,19 @@ const SignIn = (props) => {
                       <button type="submit" onClick={handleSubmit}>Inicia sesión</button>
                       <small>Todavía no tienes cuenta?</small> 
                       <Link to ="/signUp" className="nav-link">Regístrate</Link>
-                  </div>   
+                      
+                  </div>  
+                  <GoogleLogin
+                  className="signIn-ButtonGoogle"
+                  clientId="106101082248-1okqtrdaajb9d1m2p4g7k84fbgl8cmjm.apps.googleusercontent.com"
+                  buttonText="Sign In with Google"
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                  cookiePolicy={'single_host_origin'}
+                /> 
               </form>
+              
+              
               <div className="signIn-forget-pw">
                       <small className="signIn-pregunta">Has olvidado tu contraseña?</small> 
                       <button onClick={()=>setButtonPopup(true)}className="signIn-recuperar">Recuperar Contraseña</button>
