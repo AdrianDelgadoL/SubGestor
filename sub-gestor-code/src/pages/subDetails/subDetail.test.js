@@ -23,97 +23,96 @@ afterAll(() => {
   console.error = originalError
 })
 
+const response = {
+  data: {
+    name: 'netflix',
+    active: true,
+    free_trial: false,
+    free_trial_end: '',
+    start_date: '2021-05-05T22:00:00.000Z',
+    end: false,
+    end_date: '',
+    currency: 'EUR',
+    frequency: 'onetime',
+    url: 'www.test.es/desuscribir',
+    charge_date: '2021-06-05T22:00:00.000Z',
+    price: '9.75',
+    description: 'testing',
+    img_src: 'amazon.png',
+    tags: ['tag1', 'tag2'],
+    user_id: '1'
+  }
+}
+
+const response2 = {
+  data: {
+    name: 'prova',
+    active: true,
+    free_trial: false,
+    free_trial_end: null,
+    start_date: null,
+    end: false,
+    end_date: null,
+    currency: 'USD',
+    frequency: 'monthly',
+    url: '',
+    charge_date: '2021-06-05T22:00:00.000Z',
+    price: '14.75',
+    description: '',
+    img_src: '',
+    tags: '',
+    user_id: '2'
+  }
+}
+
+const response4 = {
+  data: {
+    name: 'freetrial',
+    active: true,
+    free_trial: true,
+    free_trial_end: '2021-06-05T22:00:00.000Z',
+    start_date: '2021-05-05T22:00:00.000Z',
+    end: false,
+    end_date: '',
+    currency: 'EUR',
+    frequency: 'monthly',
+    url: '',
+    charge_date: '',
+    price: '9.75',
+    description: '',
+    img_src: '',
+    tags: '',
+    user_id: '4'
+  }
+}
+
+const response5 = {
+  data: {
+    name: 'hasEnd',
+    active: true,
+    free_trial: false,
+    free_trial_end: '',
+    start_date: '2021-05-05T22:00:00.000Z',
+    end: true,
+    end_date: '2021-06-05T22:00:00.000Z',
+    currency: 'EUR',
+    frequency: 'monthly',
+    url: '',
+    charge_date: '',
+    price: '9.75',
+    description: '',
+    img_src: '',
+    tags: '',
+    user_id: '5'
+  }
+}
+
 
 describe("Detalle de componentes", () => {
     afterEach(() => {
         jest.clearAllMocks();
     })
 
-    const response = {
-      data: {
-        name: 'netflix',
-        active: true,
-        free_trial: false,
-        free_trial_end: '',
-        start_date: '2021-05-05T22:00:00.000Z',
-        end: false,
-        end_date: '',
-        currency: 'EUR',
-        frequency: 'onetime',
-        url: 'www.test.es/desuscribir',
-        charge_date: '2021-06-05T22:00:00.000Z',
-        price: '9.75',
-        description: 'testing',
-        img_src: 'amazon.png',
-        tags: ['tag1', 'tag2'],
-        user_id: '1'
-      }
-    }
-
-    const response2 = {
-      data: {
-        name: 'prova',
-        active: true,
-        free_trial: false,
-        free_trial_end: null,
-        start_date: null,
-        end: false,
-        end_date: null,
-        currency: 'USD',
-        frequency: 'monthly',
-        url: '',
-        charge_date: '2021-06-05T22:00:00.000Z',
-        price: '14.75',
-        description: '',
-        img_src: '',
-        tags: '',
-        user_id: '2'
-      }
-    }
-
-    const response4 = {
-      data: {
-        name: 'freetrial',
-        active: true,
-        free_trial: true,
-        free_trial_end: '2021-06-05T22:00:00.000Z',
-        start_date: '2021-05-05T22:00:00.000Z',
-        end: false,
-        end_date: '',
-        currency: 'EUR',
-        frequency: 'monthly',
-        url: '',
-        charge_date: '',
-        price: '9.75',
-        description: '',
-        img_src: '',
-        tags: '',
-        user_id: '4'
-      }
-    }
-
-    const response5 = {
-      data: {
-        name: 'hasEnd',
-        active: true,
-        free_trial: false,
-        free_trial_end: '',
-        start_date: '2021-05-05T22:00:00.000Z',
-        end: true,
-        end_date: '2021-06-05T22:00:00.000Z',
-        currency: 'EUR',
-        frequency: 'monthly',
-        url: '',
-        charge_date: '',
-        price: '9.75',
-        description: '',
-        img_src: '',
-        tags: '',
-        user_id: '5'
-      }
-    }
-
-  
   it("Carga detalle con mock", async () => {
     /* Informacion que se le pasa al componente, en este caso el match para poder cojer el id de la URL y el history para poder hacer push*/
     const match = {
@@ -271,5 +270,55 @@ describe("Detalle de componentes", () => {
     expect(hasEndInput.checked).toBe(true);
     const startDateInput = utils.getByLabelText('Fecha de finalización:');
     expect(startDateInput.value).toBe('2021-06-05');
+  });
+})
+
+describe("Modificacion de suscripcion", () =>{
+  afterEach(() => {
+    jest.clearAllMocks();
+  })
+
+  it("TC_Modificacion_suscripcion_1", async() =>{
+    const match = {
+      params : { 
+          id : 1 //any id you want to set
+        }
+     }
+    const history = []
+  
+  const expectedPostBody = { name: 'modificado', frequency: 'monthly', divisa: 'USD', charge_date: '2021-06-06', price: '10'};
+  axios.put.mockResolvedValue([]);
+  axios.put.mockImplementation(() => Promise.resolve({ status: 200, data: {msg: 'Suscripción modificada'} }));
+
+  axios.get.mockResolvedValue(response);
+    const utils = render(
+      <AuthProvider>
+        <SubDetail match={match} history={history}/>
+      </AuthProvider>
+    );
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
+    
+    const nameInput = utils.getByRole('textbox', {name: ""});
+    fireEvent.change(nameInput, { target: { value: 'modificado'}});
+    expect(nameInput.value).toBe("modificado");
+    const frequencyInput = utils.getByRole('combobox', {name: 'Frecuencia:'});
+    fireEvent.change(frequencyInput, { target: { value: 'monthly'}})
+    const divisaInput = utils.getByRole('combobox', {name: 'Divisa:'});
+    fireEvent.change(divisaInput, { target: { value: 'USD'}});
+    const chargeDateInput = utils.getByLabelText('Fecha de pago: (mm/dd/yyyy)');
+    fireEvent.change(chargeDateInput, { target: { value: '2021-06-06'}});
+    const priceInput = utils.getByRole('spinbutton', {name: 'Precio:'});
+    fireEvent.change(priceInput, { target: { value: '10'}});
+
+    const submitInput = utils.getByRole('button', {name: "Guardar cambios"});
+    fireEvent.click(submitInput);
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
+    expect(axios.put.mock.calls[0][0]).toBe('http://localhost:4000/subscription/1');
+    console.log(axios.put.mock.calls[0]);
+    expect(axios.put.mock.calls[0][1].name).toBe(expectedPostBody.name);
+    expect(axios.put.mock.calls[0][1].frequency).toBe(expectedPostBody.frequency);
+    expect(axios.put.mock.calls[0][1].currency).toBe(expectedPostBody.divisa);
+    expect(axios.put.mock.calls[0][1].charge_date).toBe(expectedPostBody.charge_date);
+    expect(axios.put.mock.calls[0][1].price).toBe(expectedPostBody.price);
   });
 })
