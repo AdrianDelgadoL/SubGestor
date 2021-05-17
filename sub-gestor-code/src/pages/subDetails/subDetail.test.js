@@ -5,7 +5,7 @@ import axios from 'axios';
 import { render, fireEvent, waitFor} from "@testing-library/react";
 import 'regenerator-runtime/runtime'
 import { async } from 'regenerator-runtime/runtime';
-
+require('dotenv').config()
 jest.mock('axios');
 
 /* Esto nos sirve para borrar un mensaje de Warning que aparece siempre */
@@ -314,11 +314,11 @@ describe("Modificacion de suscripcion", () =>{
     fireEvent.click(submitInput);
     await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
     expect(axios.put.mock.calls[0][0]).toBe('http://localhost:4000/subscription/1');
-    console.log(axios.put.mock.calls[0]);
-    expect(axios.put.mock.calls[0][1].name).toBe(expectedPostBody.name);
-    expect(axios.put.mock.calls[0][1].frequency).toBe(expectedPostBody.frequency);
-    expect(axios.put.mock.calls[0][1].currency).toBe(expectedPostBody.divisa);
-    expect(axios.put.mock.calls[0][1].charge_date).toBe(expectedPostBody.charge_date);
-    expect(axios.put.mock.calls[0][1].price).toBe(expectedPostBody.price);
+    console.log(axios.put.mock.calls[0][1].get("name"));
+    expect(axios.put.mock.calls[0][1].get("name")).toBe(expectedPostBody.name);
+    expect(axios.put.mock.calls[0][1].get("frequency")).toBe(expectedPostBody.frequency);
+    expect(axios.put.mock.calls[0][1].get("currency")).toBe(expectedPostBody.divisa);
+    expect(axios.put.mock.calls[0][1].get("charge_date")).toBe(expectedPostBody.charge_date);
+    expect(axios.put.mock.calls[0][1].get("price")).toBe(expectedPostBody.price);
   });
 })
