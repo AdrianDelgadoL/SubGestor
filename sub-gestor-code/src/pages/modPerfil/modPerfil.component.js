@@ -3,6 +3,7 @@ import './modPerfil.css';
 import axios from "axios";
 import {useAuthState} from '../../context/context';
 import {useAuthDispatch} from '../../context/context';
+import { Link } from 'react-router-dom';
 
 const Perfil = (props) => { 
     
@@ -108,8 +109,10 @@ const Perfil = (props) => {
                 <hr className="modPerfil-separator"/>
                 <div className="modPerfil-bottom">
                     <div className="modPerfil-bottom-pswbutton">
-                        {/*Enlazar boton con la pagina de cambiar contraseña /change-password*/}
-                        <button className="modPerfil-bottom-psw" type="submit">Cambiar contraseña</button>
+                        {/*Enlazar boton con la pagina de cambiar contraseña /change-password
+                        <button className="modPerfil-bottom-psw" type="submit">Cambiar contraseña</button>*/}
+                        <Link className="modPerfil-bottom-psw btn btn-block" to="/change-password">Cambiar contraseña</Link>
+                        
                     </div>
                     <div className="modPerfil-bottom-removebtn">
                         <button onClick={eliminarPerfil} className="modPerfil-bottom-remove">Eliminar perfil</button>
