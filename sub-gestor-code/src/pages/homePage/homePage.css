@@ -195,3 +195,20 @@
     }
 
   }
+@media only screen and (max-width: 350px){
+.homePage_subtit {
+    margin-top: 0%;
+    font-size: xx-small;
+    display: inline-block;
+    vertical-align: center;
+    }
+}
+
+@media only screen and (max-width: 250px){
+.homePage_subtit {
+    margin-top: 0%;
+    font-size: 40%;
+    display: inline-block;
+    vertical-align: center;
+    }
+}

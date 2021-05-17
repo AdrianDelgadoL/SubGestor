@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './homePage.css'
 import foto1 from '../assets/funcionamiento-1.PNG'
 import foto2 from '../assets/quienes-somos.jpg'
-import logo from '../assets/logo.png'
 
 export default class HomePage extends Component {
     render() {
