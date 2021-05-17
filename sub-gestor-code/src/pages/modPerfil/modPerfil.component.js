@@ -25,7 +25,7 @@ const Perfil = (props) => {
     
     // Función para borrar el usuario 
     const eliminarPerfil = () => {
-        axios.delete('http://localhost:4000/user', {headers: {"x-auth-token": userDetails.token}})
+        axios.delete(process.env.REACT_APP_SERVER_URL+'/user', {headers: {"x-auth-token": userDetails.token}})
         .then(response => { // 2xx OK 
             console.log(response.data)
             dispatch({ type: 'LOGOUT' })
@@ -48,7 +48,7 @@ const Perfil = (props) => {
         let newData = {frequency: frequency, prefered_currency: currency,};
         console.log(newData);
         // Actualizar los valores
-        axios.put('http://localhost:4000/user/configuration', newData, {headers:{"x-auth-token": userDetails.token}})
+        axios.put(process.env.REACT_APP_SERVER_URL+'/user/configuration', newData, {headers:{"x-auth-token": userDetails.token}})
         .then(response => {
             console.log(response.data);
             console.log(userDetails.prefered_currency);

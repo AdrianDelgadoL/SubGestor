@@ -60,7 +60,7 @@ const Popup = (props) => {
 
         if (formValid()) {
             axios.post(
-                'http://localhost:4000/change-pass',
+                process.env.REACT_APP_SERVER_URL+'/change-pass',
                 { email }
             ).then(res => {
                 setMensaje("Revisa tu bandeja de entrada");

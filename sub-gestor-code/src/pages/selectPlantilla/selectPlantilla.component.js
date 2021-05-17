@@ -15,7 +15,7 @@ const SelectPlantilla = (props) => {
     const imageRoute = "/images/"
 
     useEffect(() => {
-        axios.get('http://localhost:4000/templates/', {headers: {"x-auth-token": userToken}}).then(
+        axios.get(process.env.REACT_APP_SERVER_URL+'/templates/', {headers: {"x-auth-token": userToken}}).then(
             response => {
                 console.log(response.data)
                 setTemplates(response.data.map(dt => (

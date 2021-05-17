@@ -42,7 +42,7 @@ const SubDetail = (props) => {
 
     useEffect(() => {
         console.log(props.match.params.id);
-        axios.get('http://localhost:4000/subscription/'+ props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
+        axios.get(process.env.REACT_APP_SERVER_URL+'/subscription/'+ props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
         .then(response => {
             setName(response.data.name);
             setImgSrc("/images/" + response.data.img_src);
@@ -135,7 +135,7 @@ const SubDetail = (props) => {
     };
 
     const eliminar = () => {
-        axios.delete('http://localhost:4000/subscription/' + props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
+        axios.delete(process.env.REACT_APP_SERVER_URL+'/subscription/' + props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
         .then(response => {
             props.history.push('/home');
         })
@@ -198,7 +198,7 @@ const SubDetail = (props) => {
             console.log('end modificada: ' + data.get('end'));
             console.log('data end modificada: ' + data.get('end_date'));
 
-            axios.put('http://localhost:4000/subscription/'+ props.match.params.id, data, {headers: 
+            axios.put(process.env.REACT_APP_SERVER_URL+'/subscription/'+ props.match.params.id, data, {headers: 
             {
                 "x-auth-token": userDetails.token,
                 "Content-Type": "multipart/form-data"

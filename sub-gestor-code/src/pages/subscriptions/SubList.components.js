@@ -15,7 +15,7 @@ const SubList = (props) => {
     const imageRoute = "/images/"
 
     useEffect(() => {
-        axios.get('http://localhost:4000/subscription/', {headers: {"x-auth-token": userToken}})
+        axios.get(process.env.REACT_APP_SERVER_URL+'/subscription/', {headers: {"x-auth-token": userToken}})
             .then(response => {
 
                     setTarjetas(response.data.map(tarjeta => (                   

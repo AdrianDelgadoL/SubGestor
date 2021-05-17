@@ -46,7 +46,7 @@ const SignUp = (props) => {
     // o muestra error
     if (formValid()) {
       dispatch({ type: 'REQUEST_LOGIN' });
-      axios.post('http://localhost:4000/user/create', {email, password, conf_pwd: repPassword})
+      axios.post(process.env.REACT_APP_SERVER_URL+'/user/create', {email, password, conf_pwd: repPassword})
           .then(response => { //El response devuelve un 2xx
             console.log(response.data)
             dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });

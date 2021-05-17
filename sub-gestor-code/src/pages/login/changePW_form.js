@@ -32,7 +32,7 @@ const ChangePw=(props)=>{
       event.preventDefault();
       if (formPassValid()) {
        
-        axios.post('http://localhost:4000'+window.location.pathname,
+        axios.post(process.env.REACT_APP_SERVER_URL+window.location.pathname,
         {
           new_password:password.password_1,
           new_password_repeat:password.pswrepeat

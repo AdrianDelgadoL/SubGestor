@@ -39,7 +39,7 @@ const CreateSubscription = (props) => {
     useEffect(() => {
         console.log(props.match.params.id);
         if(props.match.params.id) {
-            axios.get('http://localhost:4000/templates/' + props.match.params.id, {headers: {"x-auth-token": userToken}})
+            axios.get(process.env.REACT_APP_SERVER_URL+'/templates/' + props.match.params.id, {headers: {"x-auth-token": userToken}})
                 .then(response => {
                     // name, price, url, frequency, img_src
                     console.log(response);
@@ -183,7 +183,7 @@ const CreateSubscription = (props) => {
             
             axios({
                 method: "post",
-                url: "http://localhost:4000/subscription",
+                url: process.env.REACT_APP_SERVER_URL+'/subscription',
                 data: data,
                 headers: {
                     'x-auth-token': userToken,

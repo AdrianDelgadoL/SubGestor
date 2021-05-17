@@ -36,7 +36,7 @@ const ChangePw=(props)=>{
       event.preventDefault();
       if (formPassValid()) {
        
-        axios.put('http://localhost:4000/change-pass',
+        axios.put(process.env.REACT_APP_SERVER_URL+'/change-pass',
         {
           old_password:password.password_vieja,
           new_password:password.password_1,
