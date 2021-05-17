@@ -62,7 +62,10 @@ router.post('/', (req, res) => {
             token: token,
             userEmail: email
         });
-        new_token.save();
+        new_token.save()
+        .catch(err => {
+            console.log(err)
+        });
 
         // Envia correo
         var transporter = nodemailer.createTransport({
