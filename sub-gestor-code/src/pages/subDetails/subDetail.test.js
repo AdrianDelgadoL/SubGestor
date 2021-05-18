@@ -286,11 +286,11 @@ describe("Modificacion de suscripcion", () =>{
      }
     const history = []
   
-  const expectedPostBody = { name: 'modificado', frequency: 'monthly', divisa: 'USD', charge_date: '2021-06-06', price: '10'};
-  axios.put.mockResolvedValue([]);
-  axios.put.mockImplementation(() => Promise.resolve({ status: 200, data: {msg: 'Suscripción modificada'} }));
+    const expectedPostBody = { name: 'modificado', frequency: 'monthly', divisa: 'USD', charge_date: '2021-06-06', price: '10'};
+    axios.put.mockResolvedValue([]);
+    axios.put.mockImplementation(() => Promise.resolve({ status: 200, data: {msg: 'Suscripción modificada'} }));
 
-  axios.get.mockResolvedValue(response);
+    axios.get.mockResolvedValue(response);
     const utils = render(
       <AuthProvider>
         <SubDetail match={match} history={history}/>
@@ -321,4 +321,122 @@ describe("Modificacion de suscripcion", () =>{
     expect(axios.put.mock.calls[0][1].get("charge_date")).toBe(expectedPostBody.charge_date);
     expect(axios.put.mock.calls[0][1].get("price")).toBe(expectedPostBody.price);
   });
+  it("TC_Modificacion_suscripcion_2", async() =>{
+    const match = {
+      params : { 
+          id : 1 //any id you want to set
+        }
+     }
+    const history = []
+
+    axios.get.mockResolvedValue(response);
+
+    const utils = render(
+      <AuthProvider>
+        <SubDetail match={match} history={history}/>
+      </AuthProvider>
+    );
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
+    
+    const freeTrialInput = utils.getByRole('checkbox', {name: 'Periodo de prueba'});
+    fireEvent.change(freeTrialInput, { target: { checked: true}});
+    expect(freeTrialInput.checked).toBe(true);
+    const dateTrialInput = utils.getByLabelText('Fecha de vencimiento:');
+    fireEvent.change(dateTrialInput, { target: { value: '2021-07-05'}});
+    expect(dateTrialInput.value).toBe('2021-07-05');
+    const hasEndInput = utils.getByLabelText('Fecha de finalización:');
+    expect(hasEndInput.disabled).toBe(true);
+  });
+  it("TC_Modificacion_suscripcion_3", async() =>{
+    const match = {
+      params : { 
+          id : 1 //any id you want to set
+        }
+     }
+    const history = []
+
+    axios.delete.mockResolvedValue([]);
+
+    axios.get.mockResolvedValue(response);
+    const utils = render(
+      <AuthProvider>
+        <SubDetail match={match} history={history}/>
+      </AuthProvider>
+    );
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
+
+    const deleteInput = utils.getByRole('button', {name: "Eliminar suscripción"});
+    fireEvent.click(deleteInput);
+    await waitFor(() => expect(axios.delete).toHaveBeenCalledTimes(1));
+    expect(axios.delete.mock.calls[0][0]).toBe('http://localhost:4000/subscription/1');
+  });
+
+  it("TC_Modificacion_suscripcion_4", async() =>{
+    const expectedPostBody = { 
+      name: 'modificado', 
+      frequency: 'monthly', 
+      divisa: 'USD', 
+      charge_date: '2021-06-06',
+      price: '10',
+      img_src: '/images/amazon.png',
+      start_date: '2021-05-05',
+      url: 'www.test.com',
+      tags: 'tag1',
+      description: 'testing'
+    };
+
+    const match = {
+      params : { 
+          id : 1 //any id you want to set
+        }
+     }
+    const history = []
+    axios.get.mockResolvedValue(response);
+    axios.put.mockResolvedValue([]);
+    const utils = render(
+      <AuthProvider>
+        <SubDetail match={match} history={history}/>
+      </AuthProvider>
+    );
+    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
+
+    const nameInput = utils.getByRole('textbox', {name: ""});
+    fireEvent.change(nameInput, { target: { value: 'modificado'}});
+    expect(nameInput.value).toBe("modificado");
+    const frequencyInput = utils.getByRole('combobox', {name: 'Frecuencia:'});
+    fireEvent.change(frequencyInput, { target: { value: 'monthly'}})
+    const divisaInput = utils.getByRole('combobox', {name: 'Divisa:'});
+    fireEvent.change(divisaInput, { target: { value: 'USD'}});
+    const chargeDateInput = utils.getByLabelText('Fecha de pago: (mm/dd/yyyy)');
+    fireEvent.change(chargeDateInput, { target: { value: '2021-06-06'}});
+    const priceInput = utils.getByRole('spinbutton', {name: 'Precio:'});
+    fireEvent.change(priceInput, { target: { value: '10'}});
+    const imgInput = utils.getByAltText(/imagen aleatoria/i);
+    fireEvent.change(imgInput, { target: { src: '/amazon.png'}});
+    const startDateInput = utils.getByLabelText('Fecha de inicio:');
+    fireEvent.change(startDateInput, { target: { value: '2021-05-05'}});
+    const urlInput = utils.getByRole('textbox', {name: 'URL para desuscribirse:'});
+    fireEvent.change(urlInput, { target: { value: 'www.test.com'}});
+    const tagInput = utils.getByRole('textbox', {name: 'Tags (separados por una coma):'});
+    fireEvent.change(tagInput, { target: { value: 'tag1'}});
+    const descriptionInput = utils.getByRole('textbox', {name: 'Descripción:'});
+    fireEvent.change(descriptionInput, { target: { value: 'testing'}});
+
+    const submitInput = utils.getByRole('button', {name: "Guardar cambios"});
+    fireEvent.click(submitInput);
+    await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
+    expect(axios.put.mock.calls[0][0]).toBe('http://localhost:4000/subscription/1');
+    console.log(axios.put.mock.calls[0][1].get("name"));
+    expect(axios.put.mock.calls[0][1].get("name")).toBe(expectedPostBody.name);
+    expect(axios.put.mock.calls[0][1].get("frequency")).toBe(expectedPostBody.frequency);
+    expect(axios.put.mock.calls[0][1].get("currency")).toBe(expectedPostBody.divisa);
+    expect(axios.put.mock.calls[0][1].get("charge_date")).toBe(expectedPostBody.charge_date);
+    expect(axios.put.mock.calls[0][1].get("price")).toBe(expectedPostBody.price);
+    expect(axios.put.mock.calls[0][1].get("image")).toBe(expectedPostBody.img_src);
+    expect(axios.put.mock.calls[0][1].get("start_date")).toBe(expectedPostBody.start_date);
+    expect(axios.put.mock.calls[0][1].get("url")).toBe(expectedPostBody.url);
+    expect(axios.put.mock.calls[0][1].get("tags")).toBe(expectedPostBody.tags);
+    expect(axios.put.mock.calls[0][1].get("description")).toBe(expectedPostBody.description);
+
+    });
 })

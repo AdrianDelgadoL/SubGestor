@@ -5,10 +5,7 @@ import {useAuthState, useAuthDispatch} from '../../context/context';
 import axios from "axios";
 const validateValue = require('validator');
 
-/*
-TODO: Gestionar el check del free trial y comprobar fechas cuando se solucione del backend
----------------------------------------------------------------------------------------
-*/
+
 const SubDetail = (props) => { 
 
     const dispatch = useAuthDispatch();
