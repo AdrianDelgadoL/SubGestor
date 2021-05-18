@@ -43,7 +43,8 @@ const subscriptionsSchema = new Schema({
     user_id: {
         type: String,
         required: true
-    }
+    },
+    canceled_date: Date
 });
 
 

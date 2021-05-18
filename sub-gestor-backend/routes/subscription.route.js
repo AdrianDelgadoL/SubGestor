@@ -24,8 +24,6 @@ PUT /subscription/:id (Modificar una suscripción)
 DELETE /subscription/:id (Eliminar una suscripcion)
 GET /subscription/old (obtener todos las suscripciones eliminadas)
 GET /subscription/old/:id (obtener detalle de una suscripción eliminada)
-GET /subscription/templates (Obtener todas las plantillas disponibles)
-GET /subscription/templates/:id (Obtener la información de una plantilla)
  */
 /**
  * /: The path to access the endpoint to get user's subscriptions.
@@ -80,6 +78,10 @@ router.delete('/:id', auth, (req, res) => {
             //Para contarla como eliminada se desactiva en la base de datos, se guarda para el historico
             subscription.active = false;
             subscription.markModified("active");
+            // Para saber la fecha de cancelación de una suscripcion: canceled_date
+            subscription.canceled_date = Date.now();
+            subscription.markModified("canceled_date");
+
             subscription.save()
                 .then(sub => {
                     if(sub) return res.status(200).json({msg: "Suscripción eliminada"});
@@ -237,8 +239,5 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
             console.log(err);
         });
 });
-
-
-
 
 module.exports = router;
