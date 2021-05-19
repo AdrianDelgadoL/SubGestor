@@ -221,6 +221,20 @@ describe("Detalle de componentes", () => {
   });
   //TODO
   it("TC_Detalle_3", async () => {
+    const match = {
+      params : { 
+          id : 3 //any id you want to set
+        }
+     }
+    const history = []
+
+    axios.get.mockResolvedValue(response);
+    const utils = render(
+      <AuthProvider>
+        <SubDetail match={match} history={history}/>
+      </AuthProvider>
+    );
+    //TODO
 
   });
 
