@@ -6,7 +6,7 @@ import { useAuthState, useAuthDispatch } from '../../context/context'
 import axios from "axios";
 
 
-const SubList = (props) => {
+const SubCanceladas = (props) => {
 
     const userDetails = useAuthState()
     const dispatch = useAuthDispatch()
@@ -35,20 +35,9 @@ const SubList = (props) => {
     }, [dispatch, props.history, userToken])
 
     return(
-        <div>
-            <h2>Tus suscripciones</h2>
-            <div className="subList-container container">             
-                {tarjetas}                
-            </div>
-            <div className="subList-createSubscription">
-                <Link to="/selectPlantilla">Crear nueva suscripcion</Link>
-            </div>
-            <div className="subList-canceladas">
-                <a href="/canceladas">Suscripciones canceladas</a>
-            </div>
-        </div>
+        <p>Canceladas</p>
     )
 }
 
 
-export default SubList;
+export default SubCanceladas;
