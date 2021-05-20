@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import moment from 'moment'
 
 function Subscription({title,imageSource,card_price,payment_type, sub_id, canceled_date, free}){
-    const detailLink = "/subDetail/" + sub_id
+    const detailLink = "/subDetailCancelada/" + sub_id
     function selectCurrency() {
         switch(payment_type) {
         case "EUR":

@@ -10,6 +10,7 @@ import RecuperacionLogeado from "../pages/login/changePW_logeado";
 import selectPlantilla from "../pages/selectPlantilla/selectPlantilla.component";
 import Perfil from "../pages/modPerfil/modPerfil.component";
 import SubCanceladas from "../pages/subscriptions/subcanceladas.component";
+import SubDetailCancelada from "../pages/subDetails/subDetailCancelada.component";
 //import PageNotFound from "../pages/notFound" (Hacer redireccion o generar pageNotFound)
 
 const routes =[
@@ -67,6 +68,12 @@ const routes =[
       isPrivate: true,
       path:'/subDetail/:id',
       component: SubDetail
+    },
+    {
+      forUnlogged: false,
+      isPrivate: true,
+      path:'/subDetailCancelada/:id',
+      component: SubDetailCancelada
     },
     {
       forUnlogged: false,
