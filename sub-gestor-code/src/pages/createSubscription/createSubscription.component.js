@@ -51,12 +51,12 @@ const CreateSubscription = (props) => {
                     setTemplate(true);
                     setImgSrc(response.data.img_src);
 
-                    console.log("Dades recuperades del template: ")
-                    console.log("Nombre Template = " + nameSub);
-                    console.log("Precio Template = " + price);
-                    console.log("Url Template = " + url);
-                    console.log("Frequency Template = " + frequency);
-                    console.log("Img_src Template = " + img_src);
+                    //console.log("Dades recuperades del template: ")
+                    //console.log("Nombre Template = " + nameSub);
+                    //console.log("Precio Template = " + price);
+                    //console.log("Url Template = " + url);
+                    //console.log("Frequency Template = " + frequency);
+                    //console.log("Img_src Template = " + img_src);
                 });
         }
     }, []);
@@ -83,23 +83,23 @@ const CreateSubscription = (props) => {
 
     const changeFreeTrialEnd = async (e) => {
         // elimina el valor de free_trial_end si se desactiva la opcion (disabled == true)
-        console.log('free trial ' + free_trial)
+        //console.log('free trial ' + free_trial)
         if (free_trial) {
-            console.log("aqui no")
+            //console.log("aqui no")
             setFreeTrialEnd(null);
             setFreeTrialEndError('');
-            console.log(free_trial_end);
+            //console.log(free_trial_end);
         } else {
             setFrequency("onetime");
             setPrice(0);
         }
         setFreeTrial(!free_trial);
-        console.log(free_trial)
+        //console.log(free_trial)
     };
 
     const changeEndDate = async (e) => {
         // elimina el valor de end_date si se desactiva la opcion (disabled == true)
-        console.log(end_date)
+        //console.log(end_date)
         if (!end) {
             setEndDate(null);
             setEndDateError('');
@@ -122,7 +122,7 @@ const CreateSubscription = (props) => {
             valid = false;
             setFormError("ERROR: faltan campos obligatiorios por completar");
         }
-        console.log(free_trial)
+        //console.log(free_trial)
         if(free_trial) {
             if(free_trial_end == null) {
                 valid = false;
@@ -136,13 +136,13 @@ const CreateSubscription = (props) => {
             setFormError("ERROR: faltan campos obligatiorios por completar");
             }
         }
-        console.log("DADES ENVIADES")
-        console.log("Name = " + nameSub);
-        console.log("Frequencia = " + frequency);
-        console.log("Divisa = " + currency);
-        console.log("Preu = " + price);
-        console.log("Charge date =" + charge_date);
-        console.log("Img_src = " + img_src);
+        //console.log("DADES ENVIADES")
+        //console.log("Name = " + nameSub);
+        //console.log("Frequencia = " + frequency);
+        //console.log("Divisa = " + currency);
+        //console.log("Preu = " + price);
+        //console.log("Charge date =" + charge_date);
+        //console.log("Img_src = " + img_src);
         return valid;
     };
 
@@ -150,7 +150,7 @@ const CreateSubscription = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (formValid()) {
-            console.log("FORM VALID");
+            //console.log("FORM VALID");
             let data = new FormData();
             let charge_date_aux = null
             if(free_trial) {
@@ -181,15 +181,7 @@ const CreateSubscription = (props) => {
             // Imatge
             data.append('image', img_src);
             
-            axios({
-                method: "post",
-                url: process.env.REACT_APP_SERVER_URL+'/subscription',
-                data: data,
-                headers: {
-                    'x-auth-token': userToken,
-                    "Content-Type": "multipart/form-data"
-                }
-            })
+            axios.post(process.env.REACT_APP_SERVER_URL+'/subscription', data, {headers: {'x-auth-token': userToken, "Content-Type": "multipart/form-data"}})
             .then(res => {
                 // Vuelve al home una vez creada
                 props.history.push('/home');
@@ -206,7 +198,7 @@ const CreateSubscription = (props) => {
                 }
             });
         } else {
-            console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+            //console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
     };
 
