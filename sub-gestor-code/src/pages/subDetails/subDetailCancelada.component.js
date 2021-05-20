@@ -285,7 +285,7 @@ const SubDetail = (props) => {
             <h2>Información detallada de la suscripción</h2>
             <form enctype="multipart/form-data" noValidate>
                 <div className="grid-container">
-                    <div className="grid-container-header">
+                    <div className="grid-container-header-cancel">
                         <div className="image">
                             <img id="logo" alt="imagen aleatoria" src={imgSrc}></img>
                             <input id="chooseFile" type="file" name="img_src" onChange={changeImage} />
@@ -300,25 +300,6 @@ const SubDetail = (props) => {
                                 defaultValue={name}
                                 onChange={handleChange}
                                 name="nameSub"
-                                ></input>
-                        </div>
-                        <div className="modifyButton">
-                            {backendError.length > 0 && (
-                                <span className="errorMessage">{backendError}</span>
-                            )}
-                            <input 
-                                type="button"  
-                                id="modifyButton"
-                                value="Guardar cambios"
-                                onClick={handleSubmit}
-                                ></input>
-                        </div>
-                        <div className="deleteButton">
-                            <input 
-                                onClick={eliminar} 
-                                type="button" 
-                                id="deleteButton" 
-                                value="Eliminar suscripción"
                                 ></input>
                         </div>
                     </div>

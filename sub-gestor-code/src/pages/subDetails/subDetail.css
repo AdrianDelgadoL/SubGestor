@@ -7,6 +7,17 @@
     border-radius: 10px;
 }
 
+.grid-container-header-cancel {
+    grid-area: header;
+    display: grid;
+    grid-template-areas: 'image name';
+    background-color: #e5e5e5;
+    border-radius: 10px;
+}
+
+.name {
+    margin: 5%;
+}
 .image{
     grid-area: image;
     align-content: center;
@@ -14,7 +25,7 @@
     width: auto;
 }
 
-.grid-container-header img{
+.grid-container-header img, .grid-container-header-cancel img{
     border: 1px solid black;
     border-radius: 10px;
 }
