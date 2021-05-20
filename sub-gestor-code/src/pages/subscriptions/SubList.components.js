@@ -17,7 +17,7 @@ const SubList = (props) => {
     useEffect(() => {
         axios.get('http://localhost:4000/subscription/', {headers: {"x-auth-token": userToken}})
             .then(response => {
-
+                console.log(response.data);
                     setTarjetas(response.data.map(tarjeta => (                   
                         <div className="row-md-2" key={tarjeta._id}>
                             <Subscription title={tarjeta.name} imageSource={imageRoute + tarjeta.img_src} card_price={tarjeta.price} payment_type={tarjeta.currency} charge_date={tarjeta.charge_date} sub_id={tarjeta._id} url={tarjeta.url} free={tarjeta.free_trial}/>
