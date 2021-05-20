@@ -38,6 +38,8 @@
 
 .subList-canceladas {
     text-align: center;
+    font-size: 18px;
+    margin-bottom: 10%;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -84,6 +86,7 @@
     }
 
     .subList-createSubscription a {
-        width: 50%;
+        width:70%;
     }
+
 }

@@ -44,6 +44,9 @@ const SubCanceladas = (props) => {
             <div className="subList-container container">             
                 {tarjetas}                
             </div>
+            <div className="subList-canceladas">
+                <a href="/home">Volver a inicio</a>
+            </div>
         </div>
     )
 }
