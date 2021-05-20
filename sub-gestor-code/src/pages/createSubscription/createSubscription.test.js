@@ -153,9 +153,7 @@ describe("Creación de suscripción", () => {
     };
 
     axios.post.mockImplementation(() => Promise.resolve({ status: 200, data: expectedPostBody }));
-    
-    
-    
+
     const match = {
         params : { 
           }
@@ -186,6 +184,8 @@ describe("Creación de suscripción", () => {
     fireEvent.change(nameInput[1], { target: { value: 'www.test.com'}});
     fireEvent.change(nameInput[2], { target: { value: 'testing'}});
     fireEvent.change(nameInput[3], { target: { value: 'tag1'}});
+    const startDateInput = utils.getByLabelText('Fecha de inicio:');
+    fireEvent.change(startDateInput, { target: { value: '2021-05-05'}});
     //const imgInput = utils.getByAltText('Imagen');
     //fireEvent.change(imgInput, { target: { src: '/amazon.png'}});
 

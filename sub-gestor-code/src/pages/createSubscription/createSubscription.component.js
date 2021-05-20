@@ -342,8 +342,8 @@ const CreateSubscription = (props) => {
                             )}
                         </div>
                         <div className="createSubscription-start_date">
-                            <label htmlFor="start_date"> Fecha de inicio: </label> <br />
-                            <input type="date" name="start_date" onChange={handleChange} />
+                            <label for="start_date"> Fecha de inicio: </label> <br />
+                            <input id="start_date" type="date" name="start_date" onChange={handleChange} />
                         </div>
                         <div className="createSubscription-description">
                             <label htmlFor="description"> Descripción: </label> <br />
