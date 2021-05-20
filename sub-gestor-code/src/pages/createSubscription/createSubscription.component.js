@@ -83,7 +83,7 @@ const CreateSubscription = (props) => {
 
     const changeFreeTrialEnd = async (e) => {
         // elimina el valor de free_trial_end si se desactiva la opcion (disabled == true)
-        console.log(free_trial)
+        console.log('free trial ' + free_trial)
         if (free_trial) {
             console.log("aqui no")
             setFreeTrialEnd(null);

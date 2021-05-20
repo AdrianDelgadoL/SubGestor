@@ -2,6 +2,7 @@ import React from 'react';
 import {AuthProvider} from '../../context/context';
 import axios from 'axios';
 import { render, fireEvent, waitFor} from "@testing-library/react";
+import {toBeDisabled} from "@testing-library/jest-dom"
 import 'regenerator-runtime/runtime'
 import { BrowserRouter as Router } from 'react-router-dom';
 import { async } from 'regenerator-runtime/runtime';
@@ -187,9 +188,17 @@ describe("Creación de suscripción", () => {
         </AuthProvider>
       );
 
-    const checkboxInput = utils.getByRole('checkbox', {name: ''}); 
-    fireEvent.change(checkboxInput[0], { target: { checked: true}});
-    expect(checkboxInput[1].disabled).toBe(true);
+    const checkboxInput = utils.getAllByRole('checkbox', {name: ''}); 
+    await waitFor(() => fireEvent.click(checkboxInput[0]));
+    expect(checkboxInput[0].value).toBe("true");
+    const frequencyInput = utils.getAllByRole('combobox', {name: ''});
+    const priceInput = utils.getByRole('spinbutton', {name: ''}); 
+    const chargeDateInput = utils.getByLabelText('Fecha del pago:');
+    expect(chargeDateInput).toBeDisabled();
+    expect(priceInput).toBeDisabled();
+    expect(frequencyInput[1]).toBeDisabled();
+    expect(frequencyInput[0]).toBeDisabled();
+
   });
 
   it('TC_Creacion_6', async() =>{
@@ -200,13 +209,15 @@ describe("Creación de suscripción", () => {
        }
     
     const response = { 
-        name: 'modificado', 
-        frequency: 'monthly', 
-        divisa: 'USD', 
-        charge_date: '2021-06-06',
-        price: '10',
+        data: {
+            name: 'modificado', 
+            frequency: 'monthly', 
+            divisa: 'USD', 
+            url: 'www.test.com',
+            price: '10',
+            img_src: '/amazon.png'
+        }
       };
-    axios.get.mockResolvedValue(response);
     const history = [];
     const utils = render(
         <AuthProvider>
@@ -215,15 +226,14 @@ describe("Creación de suscripción", () => {
           </Router>
         </AuthProvider>
       );
+      axios.get.mockResolvedValue(response);
 
     await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
     const nameInput = utils.getAllByRole('textbox', {name: ""});
     expect(nameInput[0].value).toBe("modificado");
     const frequencyInput = utils.getAllByRole('combobox', {name: ''});
     expect(frequencyInput[0].value).toBe("monthly");
-    expect(frequencyInput[1].value).toBe("USD");
-    const chargeDateInput = utils.getByLabelText('Fecha del pago:');
-    expect(chargeDateInput.value).toBe("2021-06-06");
+    expect(nameInput[1].value).toBe('www.test.com');
     const priceInput = utils.getByRole('spinbutton', {name: ''});
     expect(priceInput.value).toBe("10");
   });

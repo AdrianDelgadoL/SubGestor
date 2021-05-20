@@ -5,6 +5,7 @@ import axios from 'axios';
 import { render, fireEvent, waitFor} from "@testing-library/react";
 import 'regenerator-runtime/runtime'
 import { async } from 'regenerator-runtime/runtime';
+import {toBeDisabled} from "@testing-library/jest-dom"
 require('dotenv').config()
 jest.mock('axios');
 
@@ -353,13 +354,22 @@ describe("Modificacion de suscripcion", () =>{
     await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
     
     const freeTrialInput = utils.getByRole('checkbox', {name: 'Periodo de prueba'});
-    fireEvent.change(freeTrialInput, { target: { checked: true}});
+    fireEvent.click(freeTrialInput);
     expect(freeTrialInput.checked).toBe(true);
     const dateTrialInput = utils.getByLabelText('Fecha de vencimiento:');
     fireEvent.change(dateTrialInput, { target: { value: '2021-07-05'}});
     expect(dateTrialInput.value).toBe('2021-07-05');
     const hasEndInput = utils.getByLabelText('Fecha de finalización:');
-    expect(hasEndInput.disabled).toBe(true);
+    expect(hasEndInput).toBeDisabled();
+    const frequencyInput = utils.getByRole('combobox', {name: 'Frecuencia:'});
+    const divisaInput = utils.getByRole('combobox', {name: 'Divisa:'});
+    const chargeDateInput = utils.getByLabelText('Fecha de pago: (mm/dd/yyyy)');
+    const priceInput = utils.getByRole('spinbutton', {name: 'Precio:'});
+    expect(frequencyInput).toBeDisabled();
+    expect(divisaInput).toBeDisabled();
+    expect(chargeDateInput).toBeDisabled();
+    expect(priceInput).toBeDisabled();
+
   });
   it("TC_Modificacion_suscripcion_3", async() =>{
     const match = {
