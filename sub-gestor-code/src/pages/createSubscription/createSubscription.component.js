@@ -363,7 +363,7 @@ const CreateSubscription = (props) => {
                         </div>
                         <div className="createSubscription-img_src">
                             <label htmlFor="img_src"> Selecciona una imagen: </label> <br />
-                            <input id="select" type="file" name="img_src" onChange={changeImage} />
+                            <input id="select" type="file" name="img_src" onChange={changeImage} alt='Imagen'/>
                             {imgSrcError.length > 0 && (
                                 <span className="errorMessage">{imgSrcError}</span>
                             )}
