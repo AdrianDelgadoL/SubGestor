@@ -11,8 +11,8 @@
 
 
 .Subscription-card-container img{
-    height: 120px;
-    width: 200px;
+    height: 160px;
+    width: 256px;
     border: black 1px solid;
     margin: 20px;
     border-radius: 10px;
@@ -20,7 +20,7 @@
 
 .Subscription-text-col{
     padding: 1px;
-    width: 200px;
+    width: 60%;
     
 }
 
@@ -29,4 +29,13 @@
     box-shadow: 0px 10px 50px #555;
 }
 
-
+.Subscription-titulo {
+    font-size: 22px;
+}
+/*Media query*/
+@media only screen and (max-width: 500px) {
+    .Subscription-card-container img {
+        height: 100px;
+        width: 150px;
+    }
+}

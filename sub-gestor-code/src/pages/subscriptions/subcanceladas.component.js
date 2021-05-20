@@ -24,7 +24,7 @@ const SubCanceladas = (props) => {
                 // Hasta aquí bien
                 setTarjetas(response.data.map(tarjeta => (                   
                     <div className="row-md-2" key={tarjeta._id}>
-                        <Subscription title={tarjeta.name} imageSource={imageRoute + tarjeta.img_src} card_price={tarjeta.price} payment_type={tarjeta.currency} canceled_date={tarjeta.canceled_date} charge_date={tarjeta.charge_date} sub_id={tarjeta._id}/>
+                        <Subscription title={tarjeta.name} imageSource={imageRoute + tarjeta.img_src} card_price={tarjeta.price} payment_type={tarjeta.currency} canceled_date={tarjeta.canceled_date} sub_id={tarjeta._id}/>
                     </div>
                 )))
             }).catch(err => { // El response devuelve otra cosa distinta a 2xx

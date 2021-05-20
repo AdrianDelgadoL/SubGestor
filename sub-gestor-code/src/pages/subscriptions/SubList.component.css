@@ -39,3 +39,51 @@
 .subList-canceladas {
     text-align: center;
 }
+
+@media only screen and (max-width: 1200px) {
+    .subList-wrapper {
+        width: 100%;
+    }
+
+    .subList-container{
+        width: 100%;
+    }
+    
+    .subList-createSubscription {
+        width: 100%;
+    }
+
+    .subList-createSubscription a {
+        width: 25%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .subList-container {
+        width: 100%;
+    }
+    
+    .subList-createSubscription {
+        width: 100%;
+    }
+
+    .subList-createSubscription a {
+        width: 50%;
+    }
+}
+
+
+@media only screen and (max-width: 500px) {
+    .subList-container {
+        width: 100%;
+        padding: 10%;
+    }
+    
+    .subList-createSubscription {
+        width: 100%;
+    }
+
+    .subList-createSubscription a {
+        width: 50%;
+    }
+}

@@ -35,13 +35,13 @@ const SubList = (props) => {
     }, [dispatch, props.history, userToken])
 
     return(
-        <div>
+        <div className="subList-wrapper">
             <h2>Tus suscripciones</h2>
-            <div className="subList-container container">             
+            <div className="subList-container">             
                 {tarjetas}                
             </div>
             <div className="subList-createSubscription">
-                <Link to="/selectPlantilla">Crear nueva suscripcion</Link>
+                <Link to="/selectPlantilla">Nueva suscripcion</Link>
             </div>
             <div className="subList-canceladas">
                 <a href="/canceladas">Suscripciones canceladas</a>
