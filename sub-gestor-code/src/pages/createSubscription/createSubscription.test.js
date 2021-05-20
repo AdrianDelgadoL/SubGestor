@@ -57,7 +57,37 @@ describe("Creación de suscripción", () => {
     expect(axios.post).toHaveBeenCalledTimes(0);
   })
 
-  it('TC_Creacion_2', async() =>{
+  it('TC_Creacion_2', () =>{
+    const match = {
+        params : { 
+          }
+       }
+    const utils = render(
+        <AuthProvider>
+          <Router>
+            <CreateSubscription match={match}/>
+          </Router>
+        </AuthProvider>
+      );
+
+    const nameInput = utils.getAllByRole('textbox', {name: ""});
+    fireEvent.change(nameInput[0], { target: { value: 'modificado'}});
+    expect(nameInput[0].value).toBe("modificado");
+    const frequencyInput = utils.getAllByRole('combobox', {name: ''});
+    fireEvent.change(frequencyInput[0], { target: { value: 'monthly'}})
+    fireEvent.change(frequencyInput[1], { target: { value: 'USD'}});
+    expect(frequencyInput[0].value).toBe('monthly');
+    expect(frequencyInput[1].value).toBe('USD');
+    const priceInput = utils.getByRole('spinbutton', {name: ''}); 
+    fireEvent.change(priceInput, { target: { value: '10'}});
+    //se deja por poner la fecha
+
+    const submitButton = utils.getByRole('button', {name: "Crear suscripción"});
+    fireEvent.click(submitButton);
+    expect(axios.post).toHaveBeenCalledTimes(0);
+  })
+
+  it('TC_Creacion_3', async() =>{
     const expectedPostBody = { 
         name: 'modificado', 
         frequency: 'monthly', 
