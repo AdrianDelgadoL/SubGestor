@@ -39,3 +39,17 @@
         width: 150px;
     }
 }
+
+@media only screen and (max-width: 350px) {
+    .Subscription-card-container img {
+        height: 100px;
+        width: 120px;
+    }
+}
+
+@media only screen and (max-width: 280px) {
+    .Subscription-card-container img {
+        height: 70px;
+        width: 80px;
+    }
+}
