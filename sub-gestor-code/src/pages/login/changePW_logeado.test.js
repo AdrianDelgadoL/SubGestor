@@ -43,8 +43,7 @@ describe("Modificación de contraseña", () => {
         params : { 
           }
        }
-    axios.put.mockResolvedValue([]);
-    axios.put.mockImplementation(() => Promise.reject({ status: 400, data: { msg: "mala contraseña"} }));
+    axios.put.mockImplementation(() => Promise.reject({ status: 400, response : {data: { msg: "mala contraseña"} }}));
     const utils = render(
         <AuthProvider>
           <Router>
