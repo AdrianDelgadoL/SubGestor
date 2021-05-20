@@ -307,8 +307,8 @@ const CreateSubscription = (props) => {
                     <p id="price_information"> Información sobre el precio</p>
                     <div className="createSubscription-price_information">
                         <div className="createSubscription-charge_date">
-                            <label htmlFor="charge_date"> Fecha del pago: </label> <br />
-                            <input value={charge_date} disabled={free_trial} type="date" name="charge_date" required onChange={handleChange} />
+                            <label for="charge_date">Fecha del pago:</label> <br />
+                            <input id="charge_date" value={charge_date} disabled={free_trial} type="date" name="charge_date" required onChange={handleChange} />
                             {chargeDateError.length > 0 && (
                                 <span className="errorMessage">{chargeDateError}</span>
                             )}
