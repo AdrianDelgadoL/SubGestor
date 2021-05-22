@@ -9,7 +9,7 @@ const validateValue = require('validator');
 TODO: Gestionar el check del free trial y comprobar fechas cuando se solucione del backend
 ---------------------------------------------------------------------------------------
 */
-const SubDetail = (props) => { 
+const SubDetail = (props) => {
 
     const dispatch = useAuthDispatch();
     //useAuthState en header (x-auth-token)
@@ -42,57 +42,57 @@ const SubDetail = (props) => {
 
     useEffect(() => {
         console.log(props.match.params.id);
-        axios.get('http://localhost:4000/canceled-sub/old/'+ props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
-        .then(response => {
-            setName(response.data.name);
-            setImgSrc("/images/" + response.data.img_src);
-            if(response.data.charge_date)
-                setDatePayment(response.data.charge_date.substr(0, response.data.charge_date.indexOf('T')));
-            setFrequency(response.data.frequency);
-            console.log(response.data.frequency)
-            setPrice(response.data.price);
-            setCurrency(response.data.currency);
-            setFreeTrial(response.data.free_trial);
-            console.log("free trial: " + response.data.free_trial);
-            if(response.data.free_trial){
-                console.log(response.data.free_trial_end);
-                setDateEndTrial(response.data.free_trial_end.substr(0, response.data.free_trial_end.indexOf('T')));
-            }
-            setHasEnd(response.data.end);
-            console.log("final: " + response.data.end);
-            if(response.data.end){
-                console.log(response.data.end_date);
-                setDateEnd(response.data.end_date.substr(0, response.data.end_date.indexOf('T')));
-            }
-            setUrl(response.data.url);
-            if(response.data.start_date)
-                setStartDate(response.data.start_date.substr(0, response.data.start_date.indexOf('T')));
-            setTags(response.data.tags);
-            setDescription(response.data.description);
+        axios.get(process.env.REACT_APP_SERVER_URL+ '/canceled-sub/'+ props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
+            .then(response => {
+                setName(response.data.name);
+                setImgSrc("/images/" + response.data.img_src);
+                if(response.data.charge_date)
+                    setDatePayment(response.data.charge_date.substr(0, response.data.charge_date.indexOf('T')));
+                setFrequency(response.data.frequency);
+                console.log(response.data.frequency)
+                setPrice(response.data.price);
+                setCurrency(response.data.currency);
+                setFreeTrial(response.data.free_trial);
+                console.log("free trial: " + response.data.free_trial);
+                if(response.data.free_trial){
+                    console.log(response.data.free_trial_end);
+                    setDateEndTrial(response.data.free_trial_end.substr(0, response.data.free_trial_end.indexOf('T')));
+                }
+                setHasEnd(response.data.end);
+                console.log("final: " + response.data.end);
+                if(response.data.end){
+                    console.log(response.data.end_date);
+                    setDateEnd(response.data.end_date.substr(0, response.data.end_date.indexOf('T')));
+                }
+                setUrl(response.data.url);
+                if(response.data.start_date)
+                    setStartDate(response.data.start_date.substr(0, response.data.start_date.indexOf('T')));
+                setTags(response.data.tags);
+                setDescription(response.data.description);
 
-            //console.log('charge_date original: ' + response.data.charge_date);
-            //console.log('url original: ' + response.data.url);
-            //console.log('tags original: ' + response.data.tags);
-            //console.log('start_date original: ' + response.data.start_date);
-            //console.log('description original: ' + response.data.description);
-            console.log('free trial original: ' + response.data.free_trial);
-            console.log('data free trial original: ' + response.data.free_trial_end);
-            console.log('end original: ' + response.data.end);
-            console.log('data end original: ' + response.data.end_date);
-        })
-        .catch(function (err){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
-            console.log(err);
-            if(err.response) {
-                if (err.response.status === 401) {
-                    dispatch({ type: 'AUTH_ERROR', error: err.response.data })
-                    props.history.push('/signIn');
-                    return;
+                //console.log('charge_date original: ' + response.data.charge_date);
+                //console.log('url original: ' + response.data.url);
+                //console.log('tags original: ' + response.data.tags);
+                //console.log('start_date original: ' + response.data.start_date);
+                //console.log('description original: ' + response.data.description);
+                console.log('free trial original: ' + response.data.free_trial);
+                console.log('data free trial original: ' + response.data.free_trial_end);
+                console.log('end original: ' + response.data.end);
+                console.log('data end original: ' + response.data.end_date);
+            })
+            .catch(function (err){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
+                console.log(err);
+                if(err.response) {
+                    if (err.response.status === 401) {
+                        dispatch({ type: 'AUTH_ERROR', error: err.response.data })
+                        props.history.push('/signIn');
+                        return;
+                    }
+                    if (err.response) {
+                        setBackendError(err.response.data.msg);
+                    }
                 }
-                if (err.response) {
-                    setBackendError(err.response.data.msg);
-                }
-            }
-        })
+            })
     }, [])
 
     const changeImage = async (e) => {
@@ -136,9 +136,9 @@ const SubDetail = (props) => {
 
     const eliminar = () => {
         axios.delete('http://localhost:4000/canceled-sub/old/' + props.match.params.id, {headers: {"x-auth-token": userDetails.token}})
-        .then(response => {
-            props.history.push('/home');
-        })
+            .then(response => {
+                props.history.push('/home');
+            })
     }
 
     const formValid = () => {
@@ -198,24 +198,24 @@ const SubDetail = (props) => {
             console.log('end modificada: ' + data.get('end'));
             console.log('data end modificada: ' + data.get('end_date'));
 
-            axios.put('http://localhost:4000/subscription/'+ props.match.params.id, data, {headers: 
-            {
-                "x-auth-token": userDetails.token,
-                "Content-Type": "multipart/form-data"
-            }})
-            .then(
-                console.log("modificacion correcta")//al modificar la suscripcion 
-            )
-            .catch( function (err) {
-                if (err.response.status === 401) {
-                    dispatch({ type: 'AUTH_ERROR', error: err.response.data })
-                    props.history.push('/signIn');
-                    return;
-                }
-                if (err.response) {
-                    setBackendError(err.response.data.msg);
-                }
-            });
+            axios.put('http://localhost:4000/subscription/'+ props.match.params.id, data, {headers:
+                    {
+                        "x-auth-token": userDetails.token,
+                        "Content-Type": "multipart/form-data"
+                    }})
+                .then(
+                    console.log("modificacion correcta")//al modificar la suscripcion
+                )
+                .catch( function (err) {
+                    if (err.response.status === 401) {
+                        dispatch({ type: 'AUTH_ERROR', error: err.response.data })
+                        props.history.push('/signIn');
+                        return;
+                    }
+                    if (err.response) {
+                        setBackendError(err.response.data.msg);
+                    }
+                });
         }
     }
 
@@ -294,26 +294,26 @@ const SubDetail = (props) => {
                             )}
                         </div>
                         <div className="name">
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 id="name"
                                 defaultValue={name}
                                 onChange={handleChange}
                                 name="nameSub"
-                                ></input>
+                            ></input>
                         </div>
                     </div>
                     <div className="grid-container-price">
                         <div className="datePayment">
                             <label for="datePayment">Fecha de pago: (mm/dd/yyyy)</label><br />
-                            <input 
-                                type="date" 
+                            <input
+                                type="date"
                                 id="datePayment"
                                 disabled={freeTrial}
                                 defaultValue={datePayment}
                                 onChange={handleChange}
                                 name="charge_date"
-                                ></input>
+                            ></input>
                             {chargeDateError.length > 0 && (
                                 <span className="errorMessage">{chargeDateError}</span>
                             )}
@@ -331,14 +331,14 @@ const SubDetail = (props) => {
                         </div>
                         <div className="price">
                             <label for="price">Precio:</label><br/>
-                            <input 
+                            <input
                                 type="number"
                                 disabled={freeTrial}
-                                id="price" 
+                                id="price"
                                 defaultValue={price}
                                 onChange={handleChange}
                                 name="price"
-                                ></input>
+                            ></input>
                             {priceError.length > 0 && (
                                 <span className="errorMessage">{priceError}</span>
                             )}
@@ -358,31 +358,31 @@ const SubDetail = (props) => {
                         </div>
                         <div className="dateEndTrial">
                             <label  for="dateEndTrial">Fecha de vencimiento:</label><br />
-                            <input 
-                                type="date" 
+                            <input
+                                type="date"
                                 disabled={!freeTrial}
-                                id="dateEndTrial" 
+                                id="dateEndTrial"
                                 defaultValue={dateEndTrial}
                                 onChange={handleChange}
                                 name="free_trial_end"
-                                ></input>
+                            ></input>
                             {freeTrialEndError.length > 0 && (
                                 <span className="errorMessage">{freeTrialEndError}</span>
                             )}
                         </div>
                         <div className="hasEnd">
-                        <label for="hasEnd"><input type="checkbox" id="hasEnd" checked={hasEnd} onClick={changeEndDate} name="end"></input>Fecha de finalización</label><br />
+                            <label for="hasEnd"><input type="checkbox" id="hasEnd" checked={hasEnd} onClick={changeEndDate} name="end"></input>Fecha de finalización</label><br />
                         </div>
                         <div className="dateEnd">
                             <label for="dateEnd">Fecha de finalización:</label><br />
-                            <input 
+                            <input
                                 disabled={hasEnd==false || freeTrial==true}
-                                type="date" 
-                                id="dateEnd" 
+                                type="date"
+                                id="dateEnd"
                                 defaultValue={dateEnd}
                                 onChange={handleChange}
                                 name="end_date"
-                                ></input>
+                            ></input>
                             {endDateError.length > 0 && (
                                 <span className="errorMessage">{endDateError}</span>
                             )}
@@ -391,46 +391,46 @@ const SubDetail = (props) => {
                     <div className="grid-container-information">
                         <div className="url">
                             <label for="url">URL para desuscribirse:</label><br />
-                            <input 
-                                type="url" 
-                                id="url" 
+                            <input
+                                type="url"
+                                id="url"
                                 defaultValue={url}
                                 onChange={handleChange}
                                 name="url"
-                                ></input>
+                            ></input>
                             {urlError.length > 0 && (
                                 <span className="errorMessage">{urlError}</span>
                             )}
                         </div>
                         <div className="startDate">
                             <label for="startDate">Fecha de inicio:</label><br />
-                            <input 
-                                type="date" 
-                                id="startDate" 
+                            <input
+                                type="date"
+                                id="startDate"
                                 defaultValue={startDate}
                                 onChange={handleChange}
                                 name="start_date"
-                                ></input>
-                            
+                            ></input>
+
                         </div>
                         <div className="tags">
                             <label for="tags">Tags (separados por una coma):</label><br />
-                            <input 
-                                type="text" 
-                                id="tags" 
+                            <input
+                                type="text"
+                                id="tags"
                                 defaultValue={tags}
                                 onChange={handleChange}
                                 name="tags"
-                                ></input>
+                            ></input>
                         </div>
                         <div className="description">
                             <label for="description">Descripción:</label><br />
-                            <textarea 
-                                rows="4" 
-                                cols="50" 
-                                id="description" 
-                                form="" 
-                                defaultValue={description} 
+                            <textarea
+                                rows="4"
+                                cols="50"
+                                id="description"
+                                form=""
+                                defaultValue={description}
                                 onChange={handleChange}
                                 name="description">
                             </textarea>
@@ -439,7 +439,7 @@ const SubDetail = (props) => {
                 </div>
             </form>
         </div>
-        
+
     )
 }
 

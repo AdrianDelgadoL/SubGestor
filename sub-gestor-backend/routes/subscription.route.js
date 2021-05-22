@@ -160,7 +160,7 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
     const {
         name, active, end, free_trial, free_trial_end, start_date, end_date,
         currency, frequency, url, price, description, charge_date, template,
-        image
+        image, tags
     } = req.body;
 
     // per saber si la imatge ve de la template
@@ -198,6 +198,9 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
                 });
             }
 
+            if(tags) {
+                var tagsSepared = tags.split(",");
+            }
             // Meterlo en la base de datos
             const newSubscription = new Subscription({
                 name: name,
@@ -215,21 +218,22 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
                 url: url,
                 price: price,
                 img_src: img_src,
+                tags: tagsSepared,
                 description: description,
                 charge_date:
                     (charge_date !== "null") ? new Date(charge_date) : undefined,
                 user_id: user._id // Cambio de ultima hora
             });
             newSubscription.save()
-            .then(new_sub => {
-                // console.log(new_sub);
-                // Devoler estado de salida
-                return res.status(200).json({
-                    msg: 'La suscripción se ha creado correctamente',
-                    subscription_id: new_sub._id
-                });
+                .then(new_sub => {
+                    // console.log(new_sub);
+                    // Devoler estado de salida
+                    return res.status(200).json({
+                        msg: 'La suscripción se ha creado correctamente',
+                        subscription_id: new_sub._id
+                    });
 
-            })
+                })
                 .catch(err => {
                     console.log(err);
                     return res.status(500).json({msg: "Error al guardar la suscripción"});

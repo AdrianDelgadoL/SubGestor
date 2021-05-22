@@ -4,7 +4,7 @@ const Subscription = require('../models/subscription.model');
 function canceledSub(req, res, next) {
     const { id } = req.userId;
 
-    Subscription.find({user_id: id, active: false}, {"charge_date": 1, "name":1, "price":1, "frequency":1, "canceled_date":1, "img_src": 1, "currency":1})
+    Subscription.find({user_id: id, active: false}, {"charge_date": 1, "name":1, "price":1, "frequency":1, "canceled_date":1, "img_src": 1, "currency":1, "tags":1})
         .then(subscriptions => {
 
             if(subscriptions.length === 0) return res.status(404).json({msg: "No se han encontrado suscripciones"});
@@ -26,8 +26,8 @@ function canceledSub(req, res, next) {
                             sub.charge_date.setDate(sub.charge_date.getDate() + 7);
                             break;
                         case "annual":
-                             sub.charge_date.setMonth(sub.charge_date.getMonth()+12);
-                             break;
+                            sub.charge_date.setMonth(sub.charge_date.getMonth()+12);
+                            break;
                         case "onetime":
                             sub.active = false;
                             sub.charge_date = null;
@@ -37,8 +37,8 @@ function canceledSub(req, res, next) {
                     sub.markModified("charge_date");
                     sub.save()
                         .then(sub2 =>{
-                            console.log("ta bien " + sub2);
-                        }
+                                console.log("ta bien " + sub2);
+                            }
                         )
                         .catch((err) => {
                             if(err) console.log(err);

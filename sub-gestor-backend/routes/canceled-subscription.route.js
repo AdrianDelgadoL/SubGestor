@@ -18,7 +18,7 @@ const rates = {
  */
 
 // recuperar suscripciones canceladas ordenadas por fecha de cancelación
-router.get('/old', auth, canceledSub, async (req, res) => {
+router.get('/', auth, canceledSub, async (req, res) => {
     const subscriptions = res.locals.subscriptions;
     const { id } = req.userId;
     const user = await User.findById(id);
@@ -33,7 +33,7 @@ router.get('/old', auth, canceledSub, async (req, res) => {
 });
 
 // recuperar información suscripcion cancelada
-router.get('/old/:id', auth, (req, res) => {
+router.get('/:id', auth, (req, res) => {
     const id = req.params.id;
     Subscription.findById(id)
         .then(subscription => {
