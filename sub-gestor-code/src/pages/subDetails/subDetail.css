@@ -18,6 +18,7 @@
 .name {
     margin: 5%;
 }
+
 .image{
     grid-area: image;
     align-content: center;

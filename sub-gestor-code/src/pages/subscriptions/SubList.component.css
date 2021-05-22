@@ -40,6 +40,31 @@
     text-align: center;
     font-size: 18px;
     margin-bottom: 10%;
+    margin-top: 3%;
+}
+
+.subList-canceladas a:hover {
+    background-color: #fff;
+    border: 2px solid #519e8a;
+    color: #519e8a;
+    text-decoration: none;
+}
+
+.subList-canceladas a {
+    background-color: #519e8a;
+    border: 2px solid #fff;
+    width: 40%;
+    padding: 8px 0px;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+    border-radius: 10px;
+    height: 50px;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    margin: 1%;
 }
 
 @media only screen and (max-width: 1200px) {
