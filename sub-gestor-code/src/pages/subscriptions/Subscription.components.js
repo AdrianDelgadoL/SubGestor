@@ -40,13 +40,13 @@ function Subscription({title,imageSource,card_price,payment_type, charge_date, s
     }
     return(
     <div className="Subscription-card-container">
-        <div className="img-col">
+        <div className="Subscription-img-col">
             <img src={imageSource} className="Subscription-img" alt=""></img>
         </div>
-        <div class="Subscription-text-col text-col">
-            <h3 className="Subscription-titulo">{title}</h3>
+        <h3 className="Subscription-titulo">{title}</h3>
+        <div class="Subscription-info-col">
             {freeTrial()}
-            <Link to ={detailLink} className="btn btn-outline-secondary border-0" >Consultar suscripción</Link>
+            <div><Link to ={detailLink} className="btn btn-outline-secondary border-0" >Consultar suscripción</Link></div>
             {url.length !== 0 && (
                 <a href={url}>Cancelar suscripción</a>
             )}

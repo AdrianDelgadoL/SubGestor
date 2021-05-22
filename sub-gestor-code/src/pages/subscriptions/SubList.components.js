@@ -18,11 +18,9 @@ const SubList = (props) => {
         axios.get(process.env.REACT_APP_SERVER_URL+'/subscription/', {headers: {"x-auth-token": userToken}})
             .then(response => {
 
-                    setTarjetas(response.data.map(tarjeta => (                   
-                        <div className="row-md-2" key={tarjeta._id}>
-                            <Subscription title={tarjeta.name} imageSource={imageRoute + tarjeta.img_src} card_price={tarjeta.price} payment_type={tarjeta.currency} charge_date={tarjeta.charge_date} sub_id={tarjeta._id} url={tarjeta.url} free={tarjeta.free_trial}/>
-                        </div>
-                    )))
+                setTarjetas(response.data.map(tarjeta => (                   
+                    <Subscription title={tarjeta.name} imageSource={imageRoute + tarjeta.img_src} card_price={tarjeta.price} payment_type={tarjeta.currency} charge_date={tarjeta.charge_date} sub_id={tarjeta._id} url={tarjeta.url} free={tarjeta.free_trial}/>
+                )))
                 
             }).catch(error => {
                 if(error.response.status == 404) {
@@ -37,7 +35,7 @@ const SubList = (props) => {
     return(
         <div>
             <h2>Tus suscripciones</h2>
-            <div className="subList-container container">             
+            <div className="subList-container">             
                 {tarjetas}                
             </div>
             <div className="subList-createSubscription">
