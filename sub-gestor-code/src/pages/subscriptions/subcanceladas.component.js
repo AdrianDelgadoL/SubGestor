@@ -44,7 +44,7 @@ const SubCanceladas = (props) => {
             <div className="subList-container container">             
                 {tarjetas}                
             </div>
-            <div className="subList-canceladas">
+            <div className="subList-canceladas-b">
                 <a href="/home">Volver a inicio</a>
             </div>
         </div>
