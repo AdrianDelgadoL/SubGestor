@@ -220,26 +220,8 @@ describe("Detalle de componentes", () => {
     const descriptionInput = utils.getByRole('textbox', {name: 'Descripción:'});
     expect(descriptionInput.value).toBe('testing');
   });
-  //TODO
+  
   it("TC_Detalle_3", async () => {
-    const match = {
-      params : { 
-          id : 3 //any id you want to set
-        }
-     }
-    const history = []
-
-    axios.get.mockResolvedValue(response);
-    const utils = render(
-      <AuthProvider>
-        <SubDetail match={match} history={history}/>
-      </AuthProvider>
-    );
-    //TODO
-
-  });
-
-  it("TC_Detalle_4", async () => {
     const match = {
       params : { 
           id : 4 //any id you want to set
@@ -264,7 +246,7 @@ describe("Detalle de componentes", () => {
     expect(startDateInput.value).toBe('2021-06-05');
   });
 
-  it("TC_Detalle_5", async() => {
+  it("TC_Detalle_4", async() => {
     const match = {
       params : { 
           id : 5 //any id you want to set
