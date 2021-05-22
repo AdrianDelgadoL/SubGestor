@@ -33,8 +33,7 @@ app.use('/hello', helloRoutes);
 app.use('/user', userRoutes);
 app.use('/subscription', subsRoutes);
 app.use('/change-pass', changePassword);
-app.use('/templates', templatesSub)
-
+app.use('/templates', templatesSub);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);

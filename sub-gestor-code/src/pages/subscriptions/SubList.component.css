@@ -29,6 +29,21 @@
     text-align: center;
 }
 
+.subList-buscador {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#subList-buscador {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
 .subList-createSubscription a:hover {
     background-color: #fff;
     border: 2px solid #519e8a;

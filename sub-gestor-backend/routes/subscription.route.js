@@ -43,6 +43,7 @@ router.get('/', auth, updates, async (req, res) => {
         sub.price = new_currency.toFixed(2)
         sub.currency = currency
     }
+
     return res.status(200).send(subscriptions);
 });
 
@@ -158,7 +159,7 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
     const {
         name, active, end, free_trial, free_trial_end, start_date, end_date,
         currency, frequency, url, price, description, charge_date, template,
-        image
+        image, tags
     } = req.body;
 
     // per saber si la imatge ve de la template
@@ -196,6 +197,9 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
                 });
             }
 
+            if(tags) {
+                var tagsSepared = tags.split(",");
+            }
             // Meterlo en la base de datos
             const newSubscription = new Subscription({
                 name: name,
@@ -213,6 +217,7 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
                 url: url,
                 price: price,
                 img_src: img_src,
+                tags: tagsSepared,
                 description: description,
                 charge_date:
                     (charge_date !== "null") ? new Date(charge_date) : undefined,
@@ -237,8 +242,5 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
             console.log(err);
         });
 });
-
-
-
 
 module.exports = router;

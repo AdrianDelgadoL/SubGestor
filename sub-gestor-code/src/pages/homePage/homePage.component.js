@@ -33,7 +33,6 @@ export default class HomePage extends Component {
                             <p className="homePage_subtit">Somos un grupo de estudiantes de ingeniería informática, cada uno con diferentes aptitudes,
                             que se han propuesto realizar una página web totalmente funcional desde cero, para así poder aplicar
                             las capacidades adquiridas a lo largo de la carrera de ingeniería informática. </p>
-
                         </div>
                     </div>
                     </div>
