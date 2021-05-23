@@ -18,7 +18,7 @@ router.get('/', auth, (req, res) => {
             return res.status(200).json(templates);
         }
     }).catch(err => {
-        return res.status(400).json({msg: "Error buscando plantillas"});
+        return res.status(500).json({msg: "Error buscando plantillas"});
     });
 });
 
@@ -32,7 +32,7 @@ router.get('/:id', auth, (req, res) => {
             return res.status(200).json(templates);
         }
     }).catch(err => {
-            return res.status(400).json({msg: "Error buscando plantillas"});
+            return res.status(500).json({msg: "Error recuperando la información de las plantillas"});
     });
 });
 
