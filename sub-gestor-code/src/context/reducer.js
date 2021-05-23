@@ -49,6 +49,7 @@ export const AuthReducer = (initialState, action) => {
       };
     case "AUTH_ERROR":
     case "LOGIN_ERROR":
+    case "BACKEND_ERROR":
       localStorage.setItem('currentUser', null)
       localStorage.setItem('token', null)
       localStorage.setItem('prefered_currency', null)

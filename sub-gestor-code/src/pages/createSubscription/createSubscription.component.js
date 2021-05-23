@@ -57,7 +57,18 @@ const CreateSubscription = (props) => {
                     //console.log("Url Template = " + url);
                     //console.log("Frequency Template = " + frequency);
                     //console.log("Img_src Template = " + img_src);
-                });
+                })
+                .catch(err => {
+                    if (err.response === undefined || err.response.status === 500) {
+                        dispatch({ type: 'BACKEND_ERROR', err: "backend error" });
+                        props.history.push('/error');
+                    } else if (err.response.status === 401) { // Sin autorización envialos al login
+                        dispatch({ type: 'AUTH_ERROR', error: err.response.data });
+                        props.history.push('/auth-error');
+                    } else {
+                        setBackendError(err.response.data.msg);
+                    }
+                })
         }
     }, []);
 
@@ -187,13 +198,13 @@ const CreateSubscription = (props) => {
                 props.history.push('/home');
             })
             .catch(err => {
-                if (err.response.status === 401) { // Sin autorización envialos al login
-                    dispatch({ type: 'AUTH_ERROR', error: err.response.data })
-                    props.history.push('/signIn');
-                    return;
-                }
-                // Sino muestra mensaje de error
-                if (err.response) {
+                if (err.response === undefined || err.response.status === 500) {
+                    dispatch({ type: 'BACKEND_ERROR', err: "backend error" });
+                    props.history.push('/error');
+                } else if (err.response.status === 401) { // Sin autorización envialos al login
+                    dispatch({ type: 'AUTH_ERROR', error: err.response.data });
+                    props.history.push('/auth-error');
+                } else {
                     setBackendError(err.response.data.msg);
                 }
             });

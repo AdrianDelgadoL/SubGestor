@@ -78,17 +78,16 @@ const SubDetail = (props) => {
             //console.log('data end original: ' + response.data.end_date);
         })
         .catch(function (err){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
-            //console.log(err);
-            if(err.response) {
-                if (err.response.status === 401) {
-                    dispatch({ type: 'AUTH_ERROR', error: err.response.data })
-                    props.history.push('/signIn');
-                    return;
-                }
-                if (err.response) {
-                    setBackendError(err.response.data.msg);
-                }
+            if (err.response === undefined || err.response.status === 500) {
+                dispatch({ type: 'BACKEND_ERROR', err: "backend error" });
+                props.history.push('/error');
+            } else if (err.response.status === 401) {
+                dispatch({ type: 'AUTH_ERROR', error: err.response.data })
+                props.history.push('/auth-error');
+            } else {
+                setBackendError(err.response.data.msg);
             }
+            
         })
     }, [])
 
@@ -136,6 +135,17 @@ const SubDetail = (props) => {
         .then(response => {
             props.history.push('/home');
         })
+        .catch( function (err) {
+            if (err.response === undefined || err.response.status === 500) {
+                dispatch({ type: 'BACKEND_ERROR', err: "backend error" });
+                props.history.push('/error');
+            } else if (err.response.status === 401) {
+                dispatch({ type: 'AUTH_ERROR', error: err.response.data })
+                props.history.push('/auth-error');
+            } else {
+                setBackendError(err.response.data.msg);
+            }
+        });
     }
 
     const formValid = () => {
@@ -204,12 +214,13 @@ const SubDetail = (props) => {
                 window.location.reload()
             )
             .catch( function (err) {
-                if (err.response.status === 401) {
+                if (err.response === undefined || err.response.status === 500) {
+                    dispatch({ type: 'BACKEND_ERROR', err: "backend error" });
+                    props.history.push('/error');
+                } else if (err.response.status === 401) {
                     dispatch({ type: 'AUTH_ERROR', error: err.response.data })
-                    props.history.push('/signIn');
-                    return;
-                }
-                if (err.response) {
+                    props.history.push('/auth-error');
+                } else {
                     setBackendError(err.response.data.msg);
                 }
             });

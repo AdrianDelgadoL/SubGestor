@@ -46,24 +46,27 @@ const ChangePw=(props)=>{
           },
           {
             headers:{"x-auth-token":userToken}
-          }
-          ).then(response => { 
+          })
+          .then(response => { 
                 console.log(response.data)
                 
                 setMensaje("Contraseña cambiada correctamente");
                 setFormError("")
                 props.history.push('/home');
-              })
-              .catch(function (error){
-              if (error.response.status === 401) { // Sin autorización envialos al login
-                   dispatch({ type: 'AUTH_ERROR', error: error.response.data })
-                   props.history.push('/signIn');
-                   return;
-              }
-                setBackendError(error.response.data.msg)
-                setFormError("");
-                setPasswordError("");
-              })
+          })
+          .catch(function (error){
+            if (error.response === undefined || error.response.status === 500) {
+              dispatch({ type: 'BACKEND_ERROR', error: "backend error" });
+              props.history.push('/error');
+            } else if (error.response.status === 401) { // Sin autorización envialos al login
+                  dispatch({ type: 'AUTH_ERROR', error: error.response.data })
+                  props.history.push('/signIn');
+            } else {
+              setBackendError(error.response.data.msg)
+              setFormError("");
+              setPasswordError("");
+            }
+          })
         } else {
           setFormError("El formulario contiene errores")
           setMensaje('');

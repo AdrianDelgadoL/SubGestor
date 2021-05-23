@@ -24,21 +24,19 @@ const Perfil = (props) => {
         
     
     // Función para borrar el usuario 
-    const eliminarPerfil = () => {
+    const eliminarPerfil = (props) => {
         axios.delete(process.env.REACT_APP_SERVER_URL+'/user', {headers: {"x-auth-token": userDetails.token}})
         .then(response => { // 2xx OK 
-            console.log(response.data)
             dispatch({ type: 'LOGOUT' })
             props.history.push('/');
         }) 
         .catch(err => { // El response devuelve otra cosa distinta a 2xx, hay error, 401 error de token
-            if (err.response.status === 401) {
+            if (err.response === undefined || err.response === 500) {
+                dispatch({ type: 'BACKEND_ERROR', error: "Backend error" });
+                props.history.push('/error');
+            } else if (err.response.status === 401) {
                 dispatch({type: 'AUTH_ERROR', error: err.response.data})
-                return;
-            }
-            // Sino muestra mensaje de error 
-            if (err.response) {
-                setBackendError(err.response.data.msg)
+                props.history.push('/auth-error');
             }
         });
     }
@@ -46,27 +44,18 @@ const Perfil = (props) => {
     // Función para modificar el perfil
     const modificarPerfil =  () => {
         let newData = {frequency: frequency, prefered_currency: currency,};
-        console.log(newData);
         // Actualizar los valores
         axios.put(process.env.REACT_APP_SERVER_URL+'/user/configuration', newData, {headers:{"x-auth-token": userDetails.token}})
         .then(response => {
-            console.log(response.data);
-            console.log(userDetails.prefered_currency);
-            console.log(userDetails.frequency);
             dispatch({type: "CHANGE_PROFILE", payload: {frequency: frequency, prefered_currency: currency}});
         })
         .catch(err => { // El response devuelve otra cosa distinta a 2xx, hay error, 401 error de token
-            if (err.response.status === 401) {
+            if (err.response === undefined || err.response === 500) {
+                dispatch({ type: 'BACKEND_ERROR', error: "Backend error" });
+                props.history.push('/error');
+            } else if (err.response.status === 401) {
                 dispatch({type: 'AUTH_ERROR', error: err.response.data})
-                console.log(userDetails.prefered_currency);
-                console.log(userDetails.frequency);
-                return;
-            }
-            // Sino muestra mensaje de error 
-            if (err.response) {
-                console.log(userDetails.prefered_currency);
-                console.log(userDetails.frequency);
-                setBackendError(err.response.data.msg)
+                props.history.push('/auth-error');
             }
         });
     }

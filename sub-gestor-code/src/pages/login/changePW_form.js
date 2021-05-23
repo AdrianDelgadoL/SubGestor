@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import axios from 'axios'
 import './changePW_form.css'
-
+import {useAuthDispatch } from '../../context/context';
 
 const passwordRegex = RegExp(
     "^(((?=.*[a-z])(?=.*[A-Z])))(?=.{8,})"
@@ -17,7 +17,7 @@ const ChangePw=(props)=>{
     const [formError, setFormError] = useState('');
     const [mensaje,setMensaje]=useState('');
     const [ backendError, setBackendError ] = useState('');
-
+    const dispatch = useAuthDispatch();
     
 
 
@@ -39,17 +39,22 @@ const ChangePw=(props)=>{
             new_password:password.password_1,
             new_password_repeat:password.pswrepeat
           })
-              .then(response => { 
-                console.log(response.data)
-                setMensaje("Contraseña cambiada correctamente");
-                setFormError("")
-                props.history.push('/');
-              })
-              .catch(function (error){
-                setBackendError(error.response.data.msg)
-                setFormError("");
-                setPasswordError("");
-              })
+          .then(response => { 
+            console.log(response.data)
+            setMensaje("Contraseña cambiada correctamente");
+            setFormError("")
+            props.history.push('/');
+          })
+          .catch(function (error){
+            if (error.response === undefined || error.response.status === 500) {
+              dispatch({ type: 'BACKEND_ERROR', error: "backend error" });
+              props.history.push('/error');
+            } else {
+              setBackendError(error.response.data.msg)
+              setFormError("");
+              setPasswordError("");
+            } 
+          })
         } else {
           setFormError("El formulario contiene errores")
           setMensaje('');
