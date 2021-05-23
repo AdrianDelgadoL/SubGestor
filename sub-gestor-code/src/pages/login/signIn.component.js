@@ -100,7 +100,7 @@ const SignIn = (props) => {
 
   const responseGoogle = async (response) => {
     dispatch({ type: 'REQUEST_LOGIN' });
-    axios.post(process.env.REACT_APP_SERVER_URL+'/user/google-sign-in', {google_id_token : response.getAuthResponse().id_token, email: response.profileObj.email})
+    axios.post(process.env.REACT_APP_SERVER_URL+'/user/google-sign-in', {google_id_token : response.getAuthResponse().id_token})
     .then(response => {
         dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
         props.history.push('/home');
@@ -160,7 +160,7 @@ const SignIn = (props) => {
                   </div>  
                   <GoogleLogin
                   className="signIn-ButtonGoogle"
-                  clientId="106101082248-1okqtrdaajb9d1m2p4g7k84fbgl8cmjm.apps.googleusercontent.com"
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENT}
                   buttonText="Sign In with Google"
                   onSuccess={responseGoogle}
                   onFailure={responseGoogle}
