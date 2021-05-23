@@ -121,8 +121,10 @@ router.post('/login', (req, res) => {
                         }
                     )
                 });
-            }
-        );
+            }).catch(err => {
+                console.log(err);
+                return res.status(500).json({ msg: "Error al inciar sesión"});
+            });
     }
 );
 
@@ -138,7 +140,10 @@ router.put('/configuration', auth, (req, res) => {
         user.save()
         .then(newUser => {
             return res.status(200).json({msg: "Configuración guardada correctamente"})
-        })
+        }).catch(err => {
+            console.log(err);
+            return res.status(500).json({ msg: "Error al cambiar la configuración del usuario"});
+        });
     })
 })
 
