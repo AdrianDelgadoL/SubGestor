@@ -7,7 +7,8 @@ const jwt = require('jsonwebtoken');
 const emailValidator = require('email-validator');
 const auth = require('../middleware/auth.middleware');
 const Subscription = require('../models/subscription.model');
-
+const {OAuth2Client} = require('google-auth-library');
+const google_client = new OAuth2Client(CLIENT_ID);
 
 // POST /user/create (registro) X
 // POST /user/login (login) X
@@ -159,6 +160,10 @@ router.delete('/', auth, (req,res) => {
         console.log(err)
         return res.status(500).json( {msg : "Algo ha ocurrido con el servidor"});
     })
+})
+
+router.post('/google-sign-in', (req, res) => {
+
 })
 
 

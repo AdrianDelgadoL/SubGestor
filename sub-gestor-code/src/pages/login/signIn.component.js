@@ -28,7 +28,7 @@ const SignIn = (props) => {
   const [formError, setFormError] = useState('');
   const [buttonPopUp,setButtonPopup]=useState(false);
 
-  const [emailGoogle, setEmailGoogle]=useState('');
+  //const [emailGoogle, setEmailGoogle]=useState('');
 
   
   
@@ -97,13 +97,18 @@ const SignIn = (props) => {
         break;
     }
   };
-  const responseGoogle=(response)=>{
-    console.log(response); //se muestra el token
-    console.log(response.profileObj); //se muestran los datos del usuario correspondientes a su cuenta de google
-    setEmailGoogle(response.profileObj.email);
-    console.log(response.tokenId);
-                                      
-    
+
+  const responseGoogle = async (response) => {
+    dispatch({ type: 'REQUEST_LOGIN' });
+    axios.post(process.env.REACT_APP_SERVER_URL+'/user/google-sign-in', {google_id_token : response.getAuthResponse().id_token, email: response.profileObj.email})
+    .then(response => {
+        dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
+        props.history.push('/home');
+    })
+    .catch(err => {
+        dispatch({ type: 'LOGIN_ERROR', error: err.response.data.msg });
+        setFormError(err.response.data.msg);
+    })
   }
   
   return (
