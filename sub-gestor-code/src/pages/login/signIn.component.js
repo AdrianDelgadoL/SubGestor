@@ -101,9 +101,9 @@ const SignIn = (props) => {
     }
   };
 
-  const responseGoogle = async (response) => {
+  const responseGoogle = async (google_response) => {
     dispatch({ type: 'REQUEST_LOGIN' });
-    axios.post(process.env.REACT_APP_SERVER_URL+'/user/google-sign-in', {google_id_token : response.getAuthResponse().id_token})
+    axios.post(process.env.REACT_APP_SERVER_URL+'/user/google-sign-in', {google_id_token : google_response.getAuthResponse().id_token})
     .then(response => {
         dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
         props.history.push('/home');
