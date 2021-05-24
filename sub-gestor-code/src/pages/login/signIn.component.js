@@ -4,6 +4,7 @@ import './signIn.css';
 import POPUP from './popup'
 import {useAuthDispatch} from '../../context/context';
 import axios from "axios";
+import GoogleLogin from 'react-google-login';
 
 
 // Form cogido de este código
@@ -26,6 +27,9 @@ const SignIn = (props) => {
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
   const [buttonPopUp,setButtonPopup]=useState(false);
+
+  //const [emailGoogle, setEmailGoogle]=useState('');
+
   
   
 
@@ -97,6 +101,18 @@ const SignIn = (props) => {
     }
   };
 
+  const responseGoogle = async (response) => {
+    dispatch({ type: 'REQUEST_LOGIN' });
+    axios.post(process.env.REACT_APP_SERVER_URL+'/user/google-sign-in', {google_id_token : response.getAuthResponse().id_token})
+    .then(response => {
+        dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
+        props.history.push('/home');
+    })
+    .catch(err => {
+        dispatch({ type: 'LOGIN_ERROR', error: err.response.data.msg });
+        setFormError(err.response.data.msg);
+    })
+  }
   
   return (
     
@@ -143,8 +159,19 @@ const SignIn = (props) => {
                       <button type="submit" onClick={handleSubmit}>Inicia sesión</button>
                       <small>Todavía no tienes cuenta?</small> 
                       <Link to ="/signUp" className="nav-link">Regístrate</Link>
-                  </div>   
+                      
+                  </div>  
+                  <GoogleLogin
+                  className="signIn-ButtonGoogle"
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENT}
+                  buttonText="Sign In with Google"
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                  cookiePolicy={'single_host_origin'}
+                /> 
               </form>
+              
+              
               <div className="signIn-forget-pw">
                       <small className="signIn-pregunta">Has olvidado tu contraseña?</small> 
                       <button onClick={()=>setButtonPopup(true)}className="signIn-recuperar">Recuperar Contraseña</button>
