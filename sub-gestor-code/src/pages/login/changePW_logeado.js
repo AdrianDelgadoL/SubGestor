@@ -26,7 +26,8 @@ const ChangePw=(props)=>{
 
 
     const formPassValid = () => {
-        if (passwordError.length > 0 || password.length === 0)  {
+        if (passwordError.length > 0 || password.password_vieja.length === 0 
+          || password.password_1.length === 0 || password.pswrepeat.length === 0)   {
             return false;
         } else {
             return true;
@@ -34,39 +35,49 @@ const ChangePw=(props)=>{
     };
     const handleSubmit=(event)=>{
       event.preventDefault();
-      if (formPassValid()) {
+      if(password.password_1==password.pswrepeat){
+        if (formPassValid()) {
        
-        axios.put('http://localhost:4000/change-pass',
-        {
-          old_password:password.password_vieja,
-          new_password:password.password_1,
-          new_password_repeat:password.pswrepeat
-        },
-        {
-          headers:{"x-auth-token":userToken}
-        }
-        ).then(response => { 
-              console.log(response.data)
-              
-              setMensaje("Contraseña cambiada correctamente");
-              setFormError("")
-              props.history.push('/home');
-            })
-            .catch(function (error){
-            if (error.response.status === 401) { // Sin autorización envialos al login
-                 dispatch({ type: 'AUTH_ERROR', error: error.response.data })
-                 props.history.push('/signIn');
-                 return;
-            }
+          axios.put(process.env.REACT_APP_SERVER_URL+'/change-pass',
+          {
+            old_password:password.password_vieja,
+            new_password:password.password_1,
+            new_password_repeat:password.pswrepeat
+          },
+          {
+            headers:{"x-auth-token":userToken}
+          })
+          .then(response => { 
+                console.log(response.data)
+                
+                setMensaje("Contraseña cambiada correctamente");
+                setFormError("")
+                props.history.push('/home');
+          })
+          .catch(function (error){
+            if (error.response === undefined || error.response.status === 500) {
+              dispatch({ type: 'BACKEND_ERROR', error: "backend error" });
+              props.history.push('/error');
+            } else if (error.response.status === 401) { // Sin autorización envialos al login
+                  dispatch({ type: 'AUTH_ERROR', error: error.response.data })
+                  props.history.push('/signIn');
+            } else {
               setBackendError(error.response.data.msg)
               setFormError("");
               setPasswordError("");
-            })
-      } else {
-        setFormError("El formulario contiene errores")
-        setMensaje('');
-        setPassword('');
+            }
+          })
+        } else {
+          setFormError("El formulario contiene errores")
+          setMensaje('');
+          setPassword('');
+        }
+        
+        
+      }else{
+        setFormError("LAS CONTRASEÑAS NO COINCIDEN");
       }
+     
       console.log(window.location.pathname)
   }
 
@@ -103,7 +114,6 @@ const ChangePw=(props)=>{
           default:
             break;
         }
-
         setPassword(auxiliar);
       };
 

@@ -4,6 +4,8 @@ import Subscription from './pages/subscriptions/Subscription.components.js'
 import { render } from "@testing-library/react";
 import { BrowserRouter as Router } from 'react-router-dom';
 import "@testing-library/jest-dom/extend-expect";
+require('dotenv').config()
+
 
 
 

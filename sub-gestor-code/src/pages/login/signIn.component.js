@@ -56,11 +56,14 @@ const SignIn = (props) => {
           props.history.push('/home');
         })
         .catch(function (error){ //El response devuelve algo distinto a 2xx, por lo tanto hay error
-          console.log(error);
-          dispatch({ type: 'LOGIN_ERROR', error: error.response.data.msg });
-          // Añadimos el error devuelto por back-end a nuestro formError para que se muestre en el formulario
-          setFormError(error.response.data.msg);
-          // Vaciamos el formulario
+          
+          if (error.response === undefined || error.response.status === 500) {
+            dispatch({ type: 'LOGIN_ERROR', error: "backend error" });
+            props.history.push('/error');
+          } else {
+            dispatch({ type: 'LOGIN_ERROR', error: error.response.data.msg });
+            setFormError(error.response.data.msg);
+          }
           setEmail("")
           setPassword("")
           setPasswordError("");

@@ -13,6 +13,7 @@ import AppRoute from "./components/AppRoutes";
 
 // Import de los componentes utilizados
 import Navbar from "./components/navbar.component";
+require('dotenv').config()
 
 class App extends Component {
   constructor(props) {

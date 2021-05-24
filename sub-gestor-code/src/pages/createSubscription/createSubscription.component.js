@@ -39,7 +39,7 @@ const CreateSubscription = (props) => {
     useEffect(() => {
         console.log(props.match.params.id);
         if(props.match.params.id) {
-            axios.get('http://localhost:4000/templates/' + props.match.params.id, {headers: {"x-auth-token": userToken}})
+            axios.get(process.env.REACT_APP_SERVER_URL+'/templates/' + props.match.params.id, {headers: {"x-auth-token": userToken}})
                 .then(response => {
                     // name, price, url, frequency, img_src
                     console.log(response);
@@ -51,13 +51,24 @@ const CreateSubscription = (props) => {
                     setTemplate(true);
                     setImgSrc(response.data.img_src);
 
-                    console.log("Dades recuperades del template: ")
-                    console.log("Nombre Template = " + nameSub);
-                    console.log("Precio Template = " + price);
-                    console.log("Url Template = " + url);
-                    console.log("Frequency Template = " + frequency);
-                    console.log("Img_src Template = " + img_src);
-                });
+                    //console.log("Dades recuperades del template: ")
+                    //console.log("Nombre Template = " + nameSub);
+                    //console.log("Precio Template = " + price);
+                    //console.log("Url Template = " + url);
+                    //console.log("Frequency Template = " + frequency);
+                    //console.log("Img_src Template = " + img_src);
+                })
+                .catch(err => {
+                    if (err.response === undefined || err.response.status === 500) {
+                        dispatch({ type: 'BACKEND_ERROR', err: "backend error" });
+                        props.history.push('/error');
+                    } else if (err.response.status === 401) { // Sin autorización envialos al login
+                        dispatch({ type: 'AUTH_ERROR', error: err.response.data });
+                        props.history.push('/auth-error');
+                    } else {
+                        setBackendError(err.response.data.msg);
+                    }
+                })
         }
     }, []);
 
@@ -83,23 +94,23 @@ const CreateSubscription = (props) => {
 
     const changeFreeTrialEnd = async (e) => {
         // elimina el valor de free_trial_end si se desactiva la opcion (disabled == true)
-        console.log(free_trial)
+        //console.log('free trial ' + free_trial)
         if (free_trial) {
-            console.log("aqui no")
+            //console.log("aqui no")
             setFreeTrialEnd(null);
             setFreeTrialEndError('');
-            console.log(free_trial_end);
+            //console.log(free_trial_end);
         } else {
             setFrequency("onetime");
             setPrice(0);
         }
         setFreeTrial(!free_trial);
-        console.log(free_trial)
+        //console.log(free_trial)
     };
 
     const changeEndDate = async (e) => {
         // elimina el valor de end_date si se desactiva la opcion (disabled == true)
-        console.log(end_date)
+        //console.log(end_date)
         if (!end) {
             setEndDate(null);
             setEndDateError('');
@@ -122,7 +133,7 @@ const CreateSubscription = (props) => {
             valid = false;
             setFormError("ERROR: faltan campos obligatiorios por completar");
         }
-        console.log(free_trial)
+        //console.log(free_trial)
         if(free_trial) {
             if(free_trial_end == null) {
                 valid = false;
@@ -136,13 +147,13 @@ const CreateSubscription = (props) => {
             setFormError("ERROR: faltan campos obligatiorios por completar");
             }
         }
-        console.log("DADES ENVIADES")
-        console.log("Name = " + nameSub);
-        console.log("Frequencia = " + frequency);
-        console.log("Divisa = " + currency);
-        console.log("Preu = " + price);
-        console.log("Charge date =" + charge_date);
-        console.log("Img_src = " + img_src);
+        //console.log("DADES ENVIADES")
+        //console.log("Name = " + nameSub);
+        //console.log("Frequencia = " + frequency);
+        //console.log("Divisa = " + currency);
+        //console.log("Preu = " + price);
+        //console.log("Charge date =" + charge_date);
+        //console.log("Img_src = " + img_src);
         return valid;
     };
 
@@ -150,7 +161,7 @@ const CreateSubscription = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (formValid()) {
-            console.log("FORM VALID");
+            //console.log("FORM VALID");
             let data = new FormData();
             let charge_date_aux = null
             if(free_trial) {
@@ -181,32 +192,24 @@ const CreateSubscription = (props) => {
             // Imatge
             data.append('image', img_src);
             
-            axios({
-                method: "post",
-                url: "http://localhost:4000/subscription",
-                data: data,
-                headers: {
-                    'x-auth-token': userToken,
-                    "Content-Type": "multipart/form-data"
-                }
-            })
+            axios.post(process.env.REACT_APP_SERVER_URL+'/subscription', data, {headers: {'x-auth-token': userToken, "Content-Type": "multipart/form-data"}})
             .then(res => {
                 // Vuelve al home una vez creada
                 props.history.push('/home');
             })
             .catch(err => {
-                if (err.response.status === 401) { // Sin autorización envialos al login
-                    dispatch({ type: 'AUTH_ERROR', error: err.response.data })
-                    props.history.push('/signIn');
-                    return;
-                }
-                // Sino muestra mensaje de error
-                if (err.response) {
+                if (err.response === undefined || err.response.status === 500) {
+                    dispatch({ type: 'BACKEND_ERROR', err: "backend error" });
+                    props.history.push('/error');
+                } else if (err.response.status === 401) { // Sin autorización envialos al login
+                    dispatch({ type: 'AUTH_ERROR', error: err.response.data });
+                    props.history.push('/auth-error');
+                } else {
                     setBackendError(err.response.data.msg);
                 }
             });
         } else {
-            console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+            //console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
     };
 
@@ -307,8 +310,8 @@ const CreateSubscription = (props) => {
                     <p id="price_information"> Información sobre el precio</p>
                     <div className="createSubscription-price_information">
                         <div className="createSubscription-charge_date">
-                            <label htmlFor="charge_date"> Fecha del pago: </label> <br />
-                            <input value={charge_date} disabled={free_trial} type="date" name="charge_date" required onChange={handleChange} />
+                            <label for="charge_date">Fecha del pago:</label> <br />
+                            <input id="charge_date" value={charge_date} disabled={free_trial} type="date" name="charge_date" required onChange={handleChange} />
                             {chargeDateError.length > 0 && (
                                 <span className="errorMessage">{chargeDateError}</span>
                             )}
@@ -350,8 +353,8 @@ const CreateSubscription = (props) => {
                             )}
                         </div>
                         <div className="createSubscription-start_date">
-                            <label htmlFor="start_date"> Fecha de inicio: </label> <br />
-                            <input type="date" name="start_date" onChange={handleChange} />
+                            <label for="start_date"> Fecha de inicio: </label> <br />
+                            <input id="start_date" type="date" name="start_date" onChange={handleChange} />
                         </div>
                         <div className="createSubscription-description">
                             <label htmlFor="description"> Descripción: </label> <br />
@@ -363,7 +366,7 @@ const CreateSubscription = (props) => {
                         </div>
                         <div className="createSubscription-img_src">
                             <label htmlFor="img_src"> Selecciona una imagen: </label> <br />
-                            <input id="select" type="file" name="img_src" onChange={changeImage} />
+                            <input id="select" type="file" name="img_src" onChange={changeImage} alt='Imagen'/>
                             {imgSrcError.length > 0 && (
                                 <span className="errorMessage">{imgSrcError}</span>
                             )}

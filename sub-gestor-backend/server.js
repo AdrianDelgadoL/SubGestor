@@ -1,3 +1,5 @@
+const fs = require('fs');
+const https = require('https');
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -33,9 +35,14 @@ app.use('/hello', helloRoutes);
 app.use('/user', userRoutes);
 app.use('/subscription', subsRoutes);
 app.use('/change-pass', changePassword);
-app.use('/templates', templatesSub)
+app.use('/templates', templatesSub);
 
 
-app.listen(PORT, function() {
-    console.log("Server is running on Port: " + PORT);
+https.createServer({
+    key: fs.readFileSync(config.get('certKey')),
+    cert: fs.readFileSync(config.get('certCert')),
+    origin: '*',
+    optionsSuccessStatus: 200
+}, app).listen(PORT, function(){
+    console.log("My HTTPS server listening on port " + PORT + "...");
 });

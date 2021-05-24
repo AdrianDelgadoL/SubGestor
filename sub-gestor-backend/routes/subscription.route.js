@@ -86,7 +86,7 @@ router.delete('/:id', auth, (req, res) => {
                 })
                 .catch(err => {
                     console.log(err);
-                    return res.status(400).json( {msg: "Ha habido un problema, intentalo mas tarde"});
+                    return res.status(500).json( {msg: "Ha habido un problema, intentalo mas tarde"});
                 });
         }).catch(err => {
         console.log(err);

@@ -4,3 +4,11 @@
 
 .vscode/
 geckodriver.log
+/sub-gestor-backend/my_cert.crt
+/sub-gestor-backend/my_cert.csr
+/sub-gestor-backend/my_cert.key
+/sub-gestor-backend/my_cert.pem
+/sub-gestor-code/my_cert.crt
+/sub-gestor-code/my_cert.csr
+/sub-gestor-code/my_cert.key
+/sub-gestor-code/my_cert.pem
