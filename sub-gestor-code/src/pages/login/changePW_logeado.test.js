@@ -115,12 +115,14 @@ describe("Modificación de contraseña", () => {
         params : { 
           }
        }
+
+    const history = [];
     axios.put.mockImplementation(() => Promise.resolve({ status: 200, data: { msg: "OK"} }));
 
     const utils = render(
         <AuthProvider>
           <Router>
-            <ChangePw match={match}/>
+            <ChangePw history={history} match={match}/>
           </Router>
         </AuthProvider>
       );
