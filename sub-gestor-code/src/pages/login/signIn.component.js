@@ -108,9 +108,13 @@ const SignIn = (props) => {
         dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
         props.history.push('/home');
     })
-    .catch(err => {
+    .catch(error => {
+      if (error.response === undefined || error.response.status === 500) {
+        dispatch({ type: 'LOGIN_ERROR', error: "backend error" });
+        props.history.push('/error');
+      } else {
         dispatch({ type: 'LOGIN_ERROR', error: err.response.data.msg });
-        setFormError(err.response.data.msg);
+        setFormError(error.response.data.msg);
     })
   }
   
