@@ -113,7 +113,7 @@ const SignIn = (props) => {
         dispatch({ type: 'LOGIN_ERROR', error: "backend error" });
         props.history.push('/error');
       } else {
-        dispatch({ type: 'LOGIN_ERROR', error: err.response.data.msg });
+        dispatch({ type: 'LOGIN_ERROR', error: error.response.data.msg });
         setFormError(error.response.data.msg);
       }
     })
