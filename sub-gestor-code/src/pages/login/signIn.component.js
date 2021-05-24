@@ -115,6 +115,7 @@ const SignIn = (props) => {
       } else {
         dispatch({ type: 'LOGIN_ERROR', error: err.response.data.msg });
         setFormError(error.response.data.msg);
+      }
     })
   }
   
