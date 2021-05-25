@@ -89,7 +89,7 @@ const SubCanceladas = (props) => {
                 mostrarTarjetas(searchedValues);
             } else {
                 // búsqueda sin resultados
-                setTarjetas(<h1> No existe ninguna suscripción activa asociada a: "{value}"</h1>);
+                setTarjetas(<h1> No existe ninguna suscripción cancelada asociada a: "{value}"</h1>);
             }
         } else {
             // buscador vacío --> volvemos estado original
