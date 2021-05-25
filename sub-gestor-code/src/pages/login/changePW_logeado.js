@@ -109,6 +109,12 @@ const ChangePw=(props)=>{
             auxiliar.password_1 = value;
             break;
           case "pswrepeat":
+            if(passwordRegex.test(value)) {
+              setPasswordError("");
+            } else {
+              setPasswordError("la contraseña tiene que contener una mayúscula y 8 o más carácteres");
+              setMensaje("");
+            }
             auxiliar.pswrepeat = value;
             break;
           default:
