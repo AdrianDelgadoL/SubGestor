@@ -29,13 +29,15 @@ const SubList = (props) => {
                 }
                 mostrarTarjetas(response.data);
             }).catch(error => {
-            console.log(error);
-            if(error.response.status == 404) {
-                setTarjetas(<h1>Parece que aún no existe ninguna suscripción</h1>)
-            } else {
-                dispatch({ type: 'AUTH_ERROR', error: error.response.data })
-                props.history.push('/');
-            }
+                if (error.response === undefined || error.response === 500) {
+                    dispatch({ type: 'BACKEND_ERROR', error: "Backend error" });
+                    props.history.push('/error');
+                } else if(error.response.status == 404) {
+                    setTarjetas(<h1>Parece que aún no existe ninguna suscripción</h1>)
+                } else {
+                    dispatch({ type: 'AUTH_ERROR', error: error.response.data })
+                    props.history.push('/auth-error');
+                }
         })
     }, [dispatch, props.history, userToken]);
 

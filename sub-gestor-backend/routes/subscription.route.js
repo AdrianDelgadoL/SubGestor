@@ -41,6 +41,65 @@ router.get('/', auth, updates, async (req, res) => {
         sub.price = new_currency.toFixed(2)
         sub.currency = currency
     }
+
+
+    let frequency = user.frequency;
+
+    if(frequency !== "none") {
+        let monthlyOp = null;
+        let annualOp = null;
+        let bimonthlyOp = null;
+        let quarterlyOp = null;
+        let weeklyOp = null;
+
+        if(frequency === "anual") {
+            // mostrar anualmente
+            monthlyOp = 12;
+            annualOp = 1;
+            bimonthlyOp = 24;
+            quarterlyOp = 4;
+            weeklyOp = 48;
+        } else {
+            // mostrar mensulamente
+            monthlyOp = 1;
+            annualOp = 1/12;
+            bimonthlyOp = 2;
+            quarterlyOp = 1/3;
+            weeklyOp = 4;
+        }
+        for (const sub of subscriptions) {
+            switch (sub.frequency) {
+                case "monthly":
+                    // mensulamente
+                    sub.price = sub.price * monthlyOp;
+                    break;
+                case "annual":
+                    // anualmente
+                    sub.price = sub.price * annualOp;
+                    break;
+                case "bimonthly":
+                    // dos veces por mes
+                    sub.price = sub.price * bimonthlyOp;
+                    break;
+                case "quarterly":
+                    // trimestralmente
+                    sub.price = sub.price * quarterlyOp;
+                    break;
+                case "weekly":
+                    // setmanalmente
+                    sub.price = sub.price * weeklyOp;
+                    break;
+                default:
+                    // one time
+                    break;
+            }
+            sub.price = sub.price.toFixed(2);
+            if(sub.frequency !== "onetime") {
+                sub.frequency = user.frequency;
+            }
+        }
+    }
+
     return res.status(200).send(subscriptions);
 });
 
@@ -88,7 +147,7 @@ router.delete('/:id', auth, (req, res) => {
                 })
                 .catch(err => {
                     console.log(err);
-                    return res.status(400).json( {msg: "Ha habido un problema, intentalo mas tarde"});
+                    return res.status(500).json( {msg: "Ha habido un problema, intentalo mas tarde"});
                 });
         }).catch(err => {
         console.log(err);

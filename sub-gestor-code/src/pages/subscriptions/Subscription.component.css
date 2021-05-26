@@ -1,5 +1,8 @@
 .Subscription-card-container{
-    display:flex;
+    flex-basis: auto;
+    display: grid;
+    grid-template-columns: 200px 250px;
+    grid-template-rows: 25% 75%;
     align-items: center;
     margin: 15px;
     margin-bottom: 10px;
@@ -9,19 +12,37 @@
     border-radius: 10px;
 }
 
+.Subscription-titulo {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.Subscription-info-col {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.Subscription-img-col {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
 
 .Subscription-card-container img{
-    height: 160px;
-    width: 256px;
+    height: 100%;
+    width: 100%;
     border: black 1px solid;
-    margin: 20px;
     border-radius: 10px;
+    margin: 3px;
 }
 
 .Subscription-text-col{
-    padding: 1px;
-    width: 60%;
-    
+    padding: 1%;
 }
 
 .Subscription-card-container:hover{
@@ -47,9 +68,37 @@
     }
 }
 
-@media only screen and (max-width: 280px) {
-    .Subscription-card-container img {
-        height: 70px;
-        width: 80px;
+
+@media screen and (max-width: 600px) {
+    .Subscription-card-container{
+        grid-template-columns: 250px;
+        grid-template-rows: 20% 40% 40%;
+    }
+
+    .Subscription-titulo {
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+    
+    .Subscription-info-col {
+        margin-top: 10px;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 3;
+        grid-row-end: 4;
+    }
+
+    .Subscription-info-col p {
+        margin-bottom: 5px;
+    }
+    
+    .Subscription-img-col {
+        padding: 10px;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 2;
+        grid-row-end: 3;
     }
 }

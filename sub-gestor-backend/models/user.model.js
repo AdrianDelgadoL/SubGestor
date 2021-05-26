@@ -13,7 +13,7 @@ const usersSchema = new Schema({
     } ,
     passwd_hash: {
         type: String,
-        required: true
+        required: false
     },
     prefered_currency: {
         type: String,

@@ -3,7 +3,7 @@ import './Subscription.component.css'
 import {Link} from 'react-router-dom';
 import moment from 'moment'
 
-function Subscription({title,imageSource,card_price,payment_type, charge_date, sub_id, url, free}){
+function Subscription({title,imageSource,card_price,payment_type, charge_date, sub_id, url, free, frequency}){
     const detailLink = "/subDetail/" + sub_id
     function selectCurrency() {
         switch(payment_type) {
@@ -17,6 +17,33 @@ function Subscription({title,imageSource,card_price,payment_type, charge_date, s
             return ""
         }
     }
+
+    // mostrar frequencia del precio (seleccionada por el usuario)
+    function selectFrequency() {
+        let show = null;
+        switch(frequency) {
+            case "monthly":
+                show = "/mes";
+                break;
+            case "onetime":
+                show = "";
+                break;
+            case "bimonthly":
+                show = "/bimensual";
+                break;
+            case "quarterly":
+                show = "/trimestre";
+                break;
+            case "weekly":
+                show = "/semana";
+                break;
+            default:
+                show = "/año";
+                break;
+        }
+        return show;
+    }
+
     function freeTrial() {
         if(free) {
             return (
@@ -30,7 +57,7 @@ function Subscription({title,imageSource,card_price,payment_type, charge_date, s
         } else {
             return (
             <div>
-                <p className="Subscription-precio" >{card_price}{selectCurrency()}</p>
+                <p className="Subscription-precio" >{card_price} {selectCurrency()}{selectFrequency()}</p>
                 <p className="Subscription-charge_date" >
                     Próximo cobro: {moment(charge_date).format("DD/MM/YYYY")}
                 </p>
@@ -39,14 +66,14 @@ function Subscription({title,imageSource,card_price,payment_type, charge_date, s
         }
     }
     return(
-    <div class="Subscription-card-container">
-        <div class="img-col">
-            <img src={imageSource} alt=""></img>
+    <div className="Subscription-card-container">
+        <div className="Subscription-img-col">
+            <img src={imageSource} className="Subscription-img" alt=""></img>
         </div>
-        <div class="Subscription-text-col text-col">
-            <h3 className="Subscription-titulo">{title}</h3>
+        <h3 className="Subscription-titulo">{title}</h3>
+        <div class="Subscription-info-col">
             {freeTrial()}
-            <Link to ={detailLink} className="btn btn-outline-secondary border-0" >Consultar suscripción</Link>
+            <div><Link to ={detailLink} className="btn btn-outline-secondary border-0" >Consultar suscripción</Link></div>
             {url.length !== 0 && (
                 <a href={url}>Cancelar suscripción</a>
             )}

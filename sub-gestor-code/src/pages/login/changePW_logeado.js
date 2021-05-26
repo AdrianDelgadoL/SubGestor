@@ -17,7 +17,6 @@ const ChangePw=(props)=>{
     });
     const [passwordError, setPasswordError] = useState('');
     const [formError, setFormError] = useState('');
-    const [mensaje,setMensaje]=useState('');
     const [ backendError, setBackendError ] = useState('');
     const userDetails = useAuthState()
     const dispatch = useAuthDispatch()
@@ -26,7 +25,8 @@ const ChangePw=(props)=>{
 
 
     const formPassValid = () => {
-        if (passwordError.length > 0 || password.length === 0)  {
+        if (passwordError.length > 0 || password.password_vieja.length === 0 
+          || password.password_1.length === 0 || password.pswrepeat.length === 0)   {
             return false;
         } else {
             return true;
@@ -34,38 +34,37 @@ const ChangePw=(props)=>{
     };
     const handleSubmit=(event)=>{
       event.preventDefault();
-      if (formPassValid()) {
+      if(password.password_1==password.pswrepeat){
+        setFormError("");
+        if (formPassValid()) {
        
-        axios.put('http://localhost:4000/change-pass',
-        {
-          old_password:password.password_vieja,
-          new_password:password.password_1,
-          new_password_repeat:password.pswrepeat
-        },
-        {
-          headers:{"x-auth-token":userToken}
-        }
-        ).then(response => { 
-              console.log(response.data)
-              
-              setMensaje("Contraseña cambiada correctamente");
-              setFormError("")
-              props.history.push('/home');
-            })
-            .catch(function (error){
-            if (error.response.status === 401) { // Sin autorización envialos al login
-                 dispatch({ type: 'AUTH_ERROR', error: error.response.data })
-                 props.history.push('/signIn');
-                 return;
-            }
+          axios.put(process.env.REACT_APP_SERVER_URL+'/change-pass',
+          {
+            old_password:password.password_vieja,
+            new_password:password.password_1,
+            new_password_repeat:password.pswrepeat
+          },
+          {
+            headers:{"x-auth-token":userToken}
+          })
+          .then(response => { 
+                console.log(response.data)
+                props.history.push('/home');
+          })
+          .catch(function (error){
+            if (error.response === undefined || error.response.status === 500) {
+              dispatch({ type: 'BACKEND_ERROR', error: "backend error" });
+              props.history.push('/error');
+            } else if (error.response.status === 401) { // Sin autorización envialos al login
+                  dispatch({ type: 'AUTH_ERROR', error: error.response.data })
+                  props.history.push('/signIn');
+            } else {
               setBackendError(error.response.data.msg)
-              setFormError("");
-              setPasswordError("");
-            })
-      } else {
-        setFormError("El formulario contiene errores")
-        setMensaje('');
-        setPassword('');
+            }
+          })
+        } else {
+          setFormError("El formulario contiene errores")
+        }  
       }
       console.log(window.location.pathname)
   }
@@ -76,34 +75,40 @@ const ChangePw=(props)=>{
         var auxiliar = {...password}
 
         switch (name) {
-        case "password_vieja":
-            
+        case "password_vieja":     
         if(passwordRegex.test(value)) {
                 setPasswordError("");
                 } else {
-                setPasswordError("la contraseña tiene que contener una mayúscula y 8 o más carácteres");
-                setMensaje("");
+                setPasswordError("las contraseñas tienen que contener una mayúscula y 8 o más carácteres");
                 }
-                auxiliar.password_vieja  = value;
+        auxiliar.password_vieja  = value;
         break;
 
           case "password":
-            
             if(passwordRegex.test(value)) {
-              setPasswordError("");
-            } else {
-              setPasswordError("la contraseña tiene que contener una mayúscula y 8 o más carácteres");
-              setMensaje("");
+                  setPasswordError("");
+                } else {
+                  setPasswordError("las contraseñas tienen que contener una mayúscula y 8 o más carácteres");
+                }
+            if(value!==password.pswrepeat){
+              setPasswordError("Las contraseñas no coinciden");
             }
             auxiliar.password_1 = value;
             break;
           case "pswrepeat":
+            if(passwordRegex.test(value)) {
+                  setPasswordError("");
+                } else {
+                  setPasswordError("las contraseñas tienen que contener una mayúscula y 8 o más carácteres");
+                }
+            if(value!==password.password_1){
+              setPasswordError("Las contraseñas no coinciden");
+            }
             auxiliar.pswrepeat = value;
             break;
           default:
             break;
         }
-
         setPassword(auxiliar);
       };
 
@@ -161,7 +166,6 @@ return(
                     )}
                     {backendError.length > 0 && (<span className="popup-errorMessage">{backendError}</span>)}
            </form>   
-           {mensaje.length > 0 && (<p className="popup-exitoso">{mensaje}</p>)}     
           </div>
       </div>
 )

@@ -11,6 +11,8 @@ import selectPlantilla from "../pages/selectPlantilla/selectPlantilla.component"
 import Perfil from "../pages/modPerfil/modPerfil.component";
 import SubCanceladas from "../pages/subscriptions/subcanceladas.component";
 import SubDetailCancelada from "../pages/subDetails/subDetailCancelada.component";
+import ErrorPage from "../pages/error_page/error.component";
+import AuthErrorPage from "../pages/error_page/authError.component";
 //import PageNotFound from "../pages/notFound" (Hacer redireccion o generar pageNotFound)
 
 const routes =[
@@ -92,6 +94,18 @@ const routes =[
       isPrivate: true,
       path:'/canceladas',
       component: SubCanceladas
+    },
+    {
+      forUnlogged: true,
+      isPrivate: false,
+      path:'/error',
+      component: ErrorPage
+    },
+    {
+      forUnlogged: true,
+      isPrivate: false,
+      path:'/auth-error',
+      component: AuthErrorPage
     },
     {
       forUnlogged: true,

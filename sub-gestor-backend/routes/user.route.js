@@ -7,7 +7,8 @@ const jwt = require('jsonwebtoken');
 const emailValidator = require('email-validator');
 const auth = require('../middleware/auth.middleware');
 const Subscription = require('../models/subscription.model');
-
+const {OAuth2Client} = require('google-auth-library');
+const google_client = new OAuth2Client(config.google_id);
 
 // POST /user/create (registro) X
 // POST /user/login (login) X
@@ -96,6 +97,9 @@ router.post('/login', (req, res) => {
                 if (!user) {
                     return res.status(400).json({msg: 'No existe un usuario con este correo'});
                 }
+                if (!user.passwd_hash) {
+                    return res.status(400).json({msg: 'El correo o la contraseña son inválidos'});
+                }
                 // comparem els hash de les contrasenyes
                 bcrypt.compare(userPassword, user.passwd_hash, function(err, result) {
                     if(err) throw err;
@@ -121,8 +125,10 @@ router.post('/login', (req, res) => {
                         }
                     )
                 });
-            }
-        );
+            }).catch(err => {
+                console.log(err);
+                return res.status(500).json({ msg: "Error al inciar sesión"});
+            });
     }
 );
 
@@ -138,7 +144,10 @@ router.put('/configuration', auth, (req, res) => {
         user.save()
         .then(newUser => {
             return res.status(200).json({msg: "Configuración guardada correctamente"})
-        })
+        }).catch(err => {
+            console.log(err);
+            return res.status(500).json({ msg: "Error al cambiar la configuración del usuario"});
+        });
     })
 })
 
@@ -160,6 +169,71 @@ router.delete('/', auth, (req,res) => {
         return res.status(500).json( {msg : "Algo ha ocurrido con el servidor"});
     })
 })
+
+router.post('/google-sign-in', (req, res) => {
+    verifyGoogle(req.body.google_id_token).then(email => {
+        User.findOne({'email': email}).then(user => {
+            if(user) {
+                jwt.sign(
+                    { id: user.id },
+                    config.get('jwtSecret'),
+                    { expiresIn: 3600 },
+                    (err, token) => {
+                        if (err) throw err;
+                        return res.status(200).json({
+                            token,
+                            user: {
+                                email: user.email,
+                                prefered_currency: user.prefered_currency,
+                                frequency: user.frequency
+                            }
+                        });
+                    }
+                )
+            } else {
+                const newUser = new User({
+                    email,
+                });
+                newUser.save().then(user => {  
+                    jwt.sign(
+                        { id: user.id },
+                        config.get('jwtSecret'),
+                        { expiresIn: 3600 },
+                        (err, token) => {
+                            if (err) throw err;
+                            res.status(200).json({
+                                token,
+                                user: {
+                                    email: user.email,
+                                    id: user.id,
+                                    prefered_currency: user.prefered_currency,
+                                    frequency: user.frequency
+                                }
+                            });
+                        }
+                    )
+                })
+                .catch(err => {
+                    console.log(err);
+                    return res.status(500).json({ msg: "Error al crear usuario"});
+                });
+            }
+        })
+    })
+    .catch(error => {
+        console.log(error)
+        return res.status(400).json({ msg: "Error al crear usuario"});
+    })
+})
+
+async function verifyGoogle(google_id_token) {
+    const ticket = await google_client.verifyIdToken({idToken: google_id_token, audience: config.google_id});
+    const payload = ticket.getPayload();
+    console.log(payload)
+    const userid = payload['sub'];
+    const email = payload['email']
+    return email
+}
 
 
 module.exports = router;

@@ -2,8 +2,8 @@ const Subscription = require('../models/subscription.model');
 
 function updates(req, res, next) {
     const { id } = req.userId;
-    
-    Subscription.find({user_id: id, active: true})
+    // , , , , , id, , ,
+    Subscription.find({user_id: id, active: true}, {"_id": 1, "charge_date": 1, "name":1, "price":1, "frequency":1, "free_trial":1, "img_src": 1, "currency":1, "tags":1, "url": 1})
         .then(subscriptions => {
 
             if(subscriptions.length === 0) return res.status(404).json({msg: "No se han encontrado suscripciones"});
