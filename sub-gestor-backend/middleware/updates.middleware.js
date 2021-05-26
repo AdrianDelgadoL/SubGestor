@@ -2,16 +2,16 @@ const Subscription = require('../models/subscription.model');
 
 function updates(req, res, next) {
     const { id } = req.userId;
-    // , , , , , id, , ,
-    Subscription.find({user_id: id, active: true}, {"_id": 1, "charge_date": 1, "name":1, "price":1, "frequency":1, "free_trial":1, "img_src": 1, "currency":1, "tags":1, "url": 1})
+    Subscription.find({user_id: id, active: true})
         .then(subscriptions => {
 
             if(subscriptions.length === 0) return res.status(404).json({msg: "No se han encontrado suscripciones"});
-
+            let indexs = [];
             subscriptions.forEach(sub => {
-                if(sub.active) {
+                if(sub.active === true) {
+                    console.log("active");
                     while (Date.now() > sub.charge_date) {
-                        console.log("Modifing date")
+                        console.log("Modifying date")
                         switch (sub.frequency) {
                             case "monthly":
                                 sub.charge_date.setMonth(sub.charge_date.getMonth()+1);
@@ -34,21 +34,31 @@ function updates(req, res, next) {
                                 sub.markModified("active");
                                 break;
                         }
-                        sub.markModified("charge_date");
-                        sub.save()
-                            .then(sub2 =>{
-                                console.log("ta bien " + sub2);
-                                }
-                            )
-
-                            .catch((err) => {
-                            if(err) console.log(err);
-                            return res.status(500).json({msg: "Error al modificar la suscripcion"});
-                        })
                     }
+
+                    if(sub.end === true) //comprueba que no haya terminado
+                    {
+                        if (Date.now() > Date.parse(sub.end_date)) {
+                            sub.active = false;
+                            sub.markModified("active");
+                            indexs.push(subscriptions.indexOf(sub));
+                        }
+                    }
+                    //guarda la suscripcion modificada
+                    sub.markModified("charge_date");
+                    sub.save()
+                        .catch((err) => {
+                            console.log(err);
+                            return res.status(500).json({msg: "Error al modificar la suscripcion"});
+                        });
                 }
             });
-            console.log("Antes del sort" + subscriptions);
+            indexs.forEach(index => {
+                subscriptions.splice(index, 1);
+            });
+            if(subscriptions.length < 1) return res.status(404).json({ msg: "Suscripciones no encontradas"})
+
+            //console.log("Antes del sort" + subscriptions);
             subscriptions.sort(function(sub1, sub2) {
                 if(sub1.charge_date > sub2.charge_date || sub1.charge_date === undefined) {
                     return 1;
@@ -62,7 +72,6 @@ function updates(req, res, next) {
                 console.log("sub_date " + sub.charge_date + " sub_name " + sub.name);
             });
             res.locals.subscriptions = subscriptions;
-            //res.status(200).send(subscriptions);
             next();
         })
         .catch(err => {
