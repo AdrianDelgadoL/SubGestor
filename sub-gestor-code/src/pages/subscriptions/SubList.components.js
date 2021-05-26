@@ -17,8 +17,8 @@ const SubList = (props) => {
     useEffect(() => {
         axios.get(process.env.REACT_APP_SERVER_URL+'/subscription/', {headers: {"x-auth-token": userToken}})
             .then(response => {
-                setTarjetas(response.data.map(tarjeta => (                   
-                    <Subscription title={tarjeta.name} imageSource={imageRoute + tarjeta.img_src} card_price={tarjeta.price} payment_type={tarjeta.currency} charge_date={tarjeta.charge_date} sub_id={tarjeta._id} url={tarjeta.url} free={tarjeta.free_trial}/>
+                setTarjetas(response.data.map(tarjeta => (
+                    <Subscription title={tarjeta.name} imageSource={imageRoute + tarjeta.img_src} card_price={tarjeta.price} payment_type={tarjeta.currency} charge_date={tarjeta.charge_date} sub_id={tarjeta._id} url={tarjeta.url} free={tarjeta.free_trial} frequency={tarjeta.frequency} />
                 )))
                 
             }).catch(error => {
