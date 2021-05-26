@@ -17,7 +17,6 @@ const ChangePw=(props)=>{
     });
     const [passwordError, setPasswordError] = useState('');
     const [formError, setFormError] = useState('');
-    const [mensaje,setMensaje]=useState('');
     const [ backendError, setBackendError ] = useState('');
     const userDetails = useAuthState()
     const dispatch = useAuthDispatch()
@@ -36,6 +35,7 @@ const ChangePw=(props)=>{
     const handleSubmit=(event)=>{
       event.preventDefault();
       if(password.password_1==password.pswrepeat){
+        setFormError("");
         if (formPassValid()) {
        
           axios.put(process.env.REACT_APP_SERVER_URL+'/change-pass',
@@ -49,9 +49,6 @@ const ChangePw=(props)=>{
           })
           .then(response => { 
                 console.log(response.data)
-                
-                setMensaje("Contraseña cambiada correctamente");
-                setFormError("")
                 props.history.push('/home');
           })
           .catch(function (error){
@@ -63,21 +60,12 @@ const ChangePw=(props)=>{
                   props.history.push('/signIn');
             } else {
               setBackendError(error.response.data.msg)
-              setFormError("");
-              setPasswordError("");
             }
           })
         } else {
           setFormError("El formulario contiene errores")
-          setMensaje('');
-          setPassword('');
-        }
-        
-        
-      }else{
-        setFormError("LAS CONTRASEÑAS NO COINCIDEN");
+        }  
       }
-     
       console.log(window.location.pathname)
   }
 
@@ -87,28 +75,35 @@ const ChangePw=(props)=>{
         var auxiliar = {...password}
 
         switch (name) {
-        case "password_vieja":
-            
+        case "password_vieja":     
         if(passwordRegex.test(value)) {
                 setPasswordError("");
                 } else {
-                setPasswordError("la contraseña tiene que contener una mayúscula y 8 o más carácteres");
-                setMensaje("");
+                setPasswordError("las contraseñas tienen que contener una mayúscula y 8 o más carácteres");
                 }
-                auxiliar.password_vieja  = value;
+        auxiliar.password_vieja  = value;
         break;
 
           case "password":
-            
             if(passwordRegex.test(value)) {
-              setPasswordError("");
-            } else {
-              setPasswordError("la contraseña tiene que contener una mayúscula y 8 o más carácteres");
-              setMensaje("");
+                  setPasswordError("");
+                } else {
+                  setPasswordError("las contraseñas tienen que contener una mayúscula y 8 o más carácteres");
+                }
+            if(value!==password.pswrepeat){
+              setPasswordError("Las contraseñas no coinciden");
             }
             auxiliar.password_1 = value;
             break;
           case "pswrepeat":
+            if(passwordRegex.test(value)) {
+                  setPasswordError("");
+                } else {
+                  setPasswordError("las contraseñas tienen que contener una mayúscula y 8 o más carácteres");
+                }
+            if(value!==password.password_1){
+              setPasswordError("Las contraseñas no coinciden");
+            }
             auxiliar.pswrepeat = value;
             break;
           default:
@@ -171,7 +166,6 @@ return(
                     )}
                     {backendError.length > 0 && (<span className="popup-errorMessage">{backendError}</span>)}
            </form>   
-           {mensaje.length > 0 && (<p className="popup-exitoso">{mensaje}</p>)}     
           </div>
       </div>
 )
