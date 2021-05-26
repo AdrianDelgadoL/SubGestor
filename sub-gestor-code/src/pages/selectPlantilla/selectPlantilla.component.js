@@ -15,8 +15,8 @@ const SelectPlantilla = (props) => {
     const imageRoute = "/images/"
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_SERVER_URL+'/templates/', {headers: {"x-auth-token": userToken}}).then(
-            response => {
+        axios.get(process.env.REACT_APP_SERVER_URL+'/templates/', {headers: {"x-auth-token": userToken}})
+        .then(response => {
                 console.log(response.data)
                 setTemplates(response.data.map(dt => (
                     <div className="selectPlantilla-area">
@@ -25,8 +25,19 @@ const SelectPlantilla = (props) => {
                         </Link>
                     </div>
                 )));
+        }).catch(err => {
+            if (err.response === undefined || err.response.status === 500) {
+                dispatch({ type: 'BACKEND_ERROR', err: "backend error" });
+                props.history.push('/error');
+            } else if (err.response.status === 401) {
+                dispatch({ type: 'AUTH_ERROR', error: err.response.data })
+                props.history.push('/auth-error');
+            } else {
+                setTemplates(
+                    <h1>Parece que no se han encontrado plantillas</h1>
+                )
             }
-        );
+        })
     }, [dispatch, props.history, userToken])
 
 

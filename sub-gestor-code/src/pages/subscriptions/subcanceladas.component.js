@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
-import Subscription from './Subscription.components.js'
-import './SubList.component.css'
-import { useAuthState, useAuthDispatch } from '../../context/context'
+import Subscription from './SubscriptionCanceladas.components.js';
+import './SubList.component.css';
+import { useAuthState, useAuthDispatch } from '../../context/context';
 import axios from "axios";
+import {Link} from 'react-router-dom';
 
+const SubCanceladas = (props) => {
 
-const SubList = (props) => {
-
-    const userDetails = useAuthState()
-    const dispatch = useAuthDispatch()
-    const userToken = userDetails.token
-    const [tarjetas, setTarjetas] = useState(null)
-    const imageRoute = "/images/"
+    const userDetails = useAuthState();
+    const dispatch = useAuthDispatch();
+    const userToken = userDetails.token;
+    const [tarjetas, setTarjetas] = useState(null);
+    const imageRoute = "/images/";
     // backup: contiene todas las suscripciones recuperadas del back-end
     const [backup, setBackup] = useState(null);
     // si no tienes subs no se muestra el buscador
     const [hasSubs, setHasSubs] = useState(false);
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_SERVER_URL+'/subscription/', {headers: {"x-auth-token": userToken}})
+        // 404 no se encuentra suscripciones canceladas
+        // 500 error al buscar suscripciones
+        // 200 todo ok
+        axios.get(process.env.REACT_APP_SERVER_URL+ '/canceled-sub/', {headers: {"x-auth-token": userToken}})
             .then(response => {
+                console.log("Entra en las suscripciones canceladas");
+                console.log(response.data);
                 console.log(response);
                 // guardamos las subs recuperadas y las mostramos
                 setBackup(response.data);
@@ -28,18 +32,17 @@ const SubList = (props) => {
                     setHasSubs(true);
                 }
                 mostrarTarjetas(response.data);
-            }).catch(error => {
-                if (error.response === undefined || error.response === 500) {
-                    dispatch({ type: 'BACKEND_ERROR', error: "Backend error" });
-                    props.history.push('/error');
-                } else if(error.response.status == 404) {
-                    setTarjetas(<h1>Parece que aún no existe ninguna suscripción</h1>)
-                } else {
-                    dispatch({ type: 'AUTH_ERROR', error: error.response.data })
-                    props.history.push('/auth-error');
-                }
+            }).catch(err => { // El response devuelve otra cosa distinta a 2xx
+            if(err.response.status == 404) {
+                console.log(err);
+                setTarjetas(<h1>Parece que aún no existe ninguna suscripción cancelada</h1>)
+            } else {
+                console.log("Error: no es 404")
+                dispatch({ type: 'AUTH_ERROR', error: err.response.data })
+                //props.history.push('/');
+            }
         })
-    }, [dispatch, props.history, userToken]);
+    }, [dispatch, props.history, userToken])
 
     /*
         La función mostrarTarjetas se encarga de mostrar las subs en función de:
@@ -64,6 +67,7 @@ const SubList = (props) => {
         if(value.length !== 0) {
             // se busca el valor en el backup de subs recuperado
             value.toLowerCase();
+            console.log("HOLA");
             backup.map(sub => {
                 let nameSub = sub.name.toLowerCase();
                 if(nameSub.includes(value.toLowerCase())) {
@@ -85,7 +89,7 @@ const SubList = (props) => {
                 mostrarTarjetas(searchedValues);
             } else {
                 // búsqueda sin resultados
-                setTarjetas(<h1> No existe ninguna suscripción activa asociada a: "{value}"</h1>);
+                setTarjetas(<h1> No existe ninguna suscripción cancelada asociada a: "{value}"</h1>);
             }
         } else {
             // buscador vacío --> volvemos estado original
@@ -94,25 +98,22 @@ const SubList = (props) => {
     };
 
     return(
-        <div className="subList-wrapper">
-            <h2>Tus suscripciones</h2>
+        <div>
+            <h2>Tus suscripciones canceladas</h2>
             {hasSubs && (
                 <div className="subList-buscador">
-                    <input id="subList-buscador" type="text" onChange={handleChange} placeholder="Buscar suscripciones activas por nombre o tag..."/>
+                    <input id="subList-buscador" type="text" onChange={handleChange} placeholder="Buscar suscripciones canceladas por nombre o tag..."/>
                 </div>
             )}
             <div className="subList-container container">
                 {tarjetas}
             </div>
-            <div className="subList-createSubscription">
-                <Link to="/selectPlantilla">Nueva suscripcion</Link>
-            </div>
-            <div className="subList-canceladas">
-                <Link to="/canceladas">Suscripciones canceladas</Link>
+            <div className="subList-canceladas-b">
+                <Link to="/home">Volver a inicio</Link>
             </div>
         </div>
     )
 }
 
 
-export default SubList;
+export default SubCanceladas;

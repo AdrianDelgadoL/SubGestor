@@ -9,6 +9,10 @@ import Recuperacion from "../pages/login/changePW_form";
 import RecuperacionLogeado from "../pages/login/changePW_logeado";
 import selectPlantilla from "../pages/selectPlantilla/selectPlantilla.component";
 import Perfil from "../pages/modPerfil/modPerfil.component";
+import SubCanceladas from "../pages/subscriptions/subcanceladas.component";
+import SubDetailCancelada from "../pages/subDetails/subDetailCancelada.component";
+import ErrorPage from "../pages/error_page/error.component";
+import AuthErrorPage from "../pages/error_page/authError.component";
 //import PageNotFound from "../pages/notFound" (Hacer redireccion o generar pageNotFound)
 
 const routes =[
@@ -70,6 +74,12 @@ const routes =[
     {
       forUnlogged: false,
       isPrivate: true,
+      path:'/subDetailCancelada/:id',
+      component: SubDetailCancelada
+    },
+    {
+      forUnlogged: false,
+      isPrivate: true,
       path:'/perfil',
       component: Perfil
     },
@@ -78,6 +88,24 @@ const routes =[
       isPrivate: true,
       path:'/home',
       component: SubList
+    },
+    {
+      forUnlogged: false,
+      isPrivate: true,
+      path:'/canceladas',
+      component: SubCanceladas
+    },
+    {
+      forUnlogged: true,
+      isPrivate: false,
+      path:'/error',
+      component: ErrorPage
+    },
+    {
+      forUnlogged: true,
+      isPrivate: false,
+      path:'/auth-error',
+      component: AuthErrorPage
     },
     {
       forUnlogged: true,

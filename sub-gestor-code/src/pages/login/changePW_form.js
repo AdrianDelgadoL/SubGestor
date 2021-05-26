@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import axios from 'axios'
 import './changePW_form.css'
-
+import {useAuthDispatch } from '../../context/context';
 
 const passwordRegex = RegExp(
     "^(((?=.*[a-z])(?=.*[A-Z])))(?=.{8,})"
@@ -17,12 +17,13 @@ const ChangePw=(props)=>{
     const [formError, setFormError] = useState('');
     const [mensaje,setMensaje]=useState('');
     const [ backendError, setBackendError ] = useState('');
-
+    const dispatch = useAuthDispatch();
     
 
 
     const formPassValid = () => {
-        if (passwordError.length > 0 || password.length === 0)  {
+        if (passwordError.length > 0 || password.length === 0 ||
+           password.password_1.length===0 || password.pswrepeat.length===0)  {
             return false;
         } else {
             return true;
@@ -30,30 +31,41 @@ const ChangePw=(props)=>{
     };
     const handleSubmit=(event)=>{
       event.preventDefault();
-      if (formPassValid()) {
+      if(password.password_1==password.pswrepeat){
+        if (formPassValid()) {
        
-        axios.post(process.env.REACT_APP_SERVER_URL+window.location.pathname,
-        {
-          new_password:password.password_1,
-          new_password_repeat:password.pswrepeat
-        })
-            .then(response => { 
-              console.log(response.data)
-              
-              setMensaje("Contraseña cambiada correctamente");
-              setFormError("")
-              props.history.push('/');
-            })
-            .catch(function (error){
+          axios.post(process.env.REACT_APP_SERVER_URL+window.location.pathname,
+          {
+            new_password:password.password_1,
+            new_password_repeat:password.pswrepeat
+          })
+          .then(response => { 
+            console.log(response.data)
+            setMensaje("Contraseña cambiada correctamente");
+            setFormError("")
+            props.history.push('/');
+          })
+          .catch(function (error){
+            if (error.response === undefined || error.response.status === 500) {
+              dispatch({ type: 'BACKEND_ERROR', error: "backend error" });
+              props.history.push('/error');
+            } else {
               setBackendError(error.response.data.msg)
               setFormError("");
               setPasswordError("");
-            })
-      } else {
-        setFormError("El formulario contiene errores")
-        setMensaje('');
-        setPassword('');
+            } 
+          })
+        } else {
+          setFormError("El formulario contiene errores")
+          setMensaje('');
+          setPassword('');
+        }
+
+      }else{
+        setFormError("LAS CONTRASEÑAS NO COINCIDEN");
+        
       }
+
       console.log(window.location.pathname)
   }
 

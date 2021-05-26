@@ -2,7 +2,6 @@ const Subscription = require('../models/subscription.model');
 
 function updates(req, res, next) {
     const { id } = req.userId;
-
     Subscription.find({user_id: id, active: true})
         .then(subscriptions => {
 

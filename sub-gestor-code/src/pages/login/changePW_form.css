@@ -1,7 +1,6 @@
 .changePW-wrapper {
     width: 100%;
     display: flex;
-    position:fixed;
     flex-direction: column;
     justify-content: center;
     align-items: center;

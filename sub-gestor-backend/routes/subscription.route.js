@@ -24,8 +24,6 @@ PUT /subscription/:id (Modificar una suscripción)
 DELETE /subscription/:id (Eliminar una suscripcion)
 GET /subscription/old (obtener todos las suscripciones eliminadas)
 GET /subscription/old/:id (obtener detalle de una suscripción eliminada)
-GET /subscription/templates (Obtener todas las plantillas disponibles)
-GET /subscription/templates/:id (Obtener la información de una plantilla)
  */
 /**
  * /: The path to access the endpoint to get user's subscriptions.
@@ -43,6 +41,65 @@ router.get('/', auth, updates, async (req, res) => {
         sub.price = new_currency.toFixed(2)
         sub.currency = currency
     }
+
+
+    let frequency = user.frequency;
+
+    if(frequency !== "none") {
+        let monthlyOp = null;
+        let annualOp = null;
+        let bimonthlyOp = null;
+        let quarterlyOp = null;
+        let weeklyOp = null;
+
+        if(frequency === "anual") {
+            // mostrar anualmente
+            monthlyOp = 12;
+            annualOp = 1;
+            bimonthlyOp = 24;
+            quarterlyOp = 4;
+            weeklyOp = 48;
+        } else {
+            // mostrar mensulamente
+            monthlyOp = 1;
+            annualOp = 1/12;
+            bimonthlyOp = 2;
+            quarterlyOp = 1/3;
+            weeklyOp = 4;
+        }
+        for (const sub of subscriptions) {
+            switch (sub.frequency) {
+                case "monthly":
+                    // mensulamente
+                    sub.price = sub.price * monthlyOp;
+                    break;
+                case "annual":
+                    // anualmente
+                    sub.price = sub.price * annualOp;
+                    break;
+                case "bimonthly":
+                    // dos veces por mes
+                    sub.price = sub.price * bimonthlyOp;
+                    break;
+                case "quarterly":
+                    // trimestralmente
+                    sub.price = sub.price * quarterlyOp;
+                    break;
+                case "weekly":
+                    // setmanalmente
+                    sub.price = sub.price * weeklyOp;
+                    break;
+                default:
+                    // one time
+                    break;
+            }
+            sub.price = sub.price.toFixed(2);
+            if(sub.frequency !== "onetime") {
+                sub.frequency = user.frequency;
+            }
+        }
+    }
+
     return res.status(200).send(subscriptions);
 });
 
@@ -80,13 +137,17 @@ router.delete('/:id', auth, (req, res) => {
             //Para contarla como eliminada se desactiva en la base de datos, se guarda para el historico
             subscription.active = false;
             subscription.markModified("active");
+            // Para saber la fecha de cancelación de una suscripcion: canceled_date
+            subscription.canceled_date = Date.now();
+            subscription.markModified("canceled_date");
+
             subscription.save()
                 .then(sub => {
                     if(sub) return res.status(200).json({msg: "Suscripción eliminada"});
                 })
                 .catch(err => {
                     console.log(err);
-                    return res.status(400).json( {msg: "Ha habido un problema, intentalo mas tarde"});
+                    return res.status(500).json( {msg: "Ha habido un problema, intentalo mas tarde"});
                 });
         }).catch(err => {
         console.log(err);
@@ -158,7 +219,7 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
     const {
         name, active, end, free_trial, free_trial_end, start_date, end_date,
         currency, frequency, url, price, description, charge_date, template,
-        image
+        image, tags
     } = req.body;
 
     // per saber si la imatge ve de la template
@@ -196,6 +257,9 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
                 });
             }
 
+            if(tags) {
+                var tagsSepared = tags.split(",");
+            }
             // Meterlo en la base de datos
             const newSubscription = new Subscription({
                 name: name,
@@ -213,21 +277,22 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
                 url: url,
                 price: price,
                 img_src: img_src,
+                tags: tagsSepared,
                 description: description,
                 charge_date:
                     (charge_date !== "null") ? new Date(charge_date) : undefined,
                 user_id: user._id // Cambio de ultima hora
             });
             newSubscription.save()
-            .then(new_sub => {
-                // console.log(new_sub);
-                // Devoler estado de salida
-                return res.status(200).json({
-                    msg: 'La suscripción se ha creado correctamente',
-                    subscription_id: new_sub._id
-                });
+                .then(new_sub => {
+                    // console.log(new_sub);
+                    // Devoler estado de salida
+                    return res.status(200).json({
+                        msg: 'La suscripción se ha creado correctamente',
+                        subscription_id: new_sub._id
+                    });
 
-            })
+                })
                 .catch(err => {
                     console.log(err);
                     return res.status(500).json({msg: "Error al guardar la suscripción"});
@@ -237,8 +302,5 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
             console.log(err);
         });
 });
-
-
-
 
 module.exports = router;

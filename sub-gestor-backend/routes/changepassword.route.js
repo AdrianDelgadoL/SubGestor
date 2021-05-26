@@ -39,13 +39,13 @@ router.post('/', (req, res) => {
 
     // Si esta mal formateado ni lo busques
     if (!emailValidator.validate(email))
-        return res.status(404).json({ msg: 'Email no encontrado.' });
+        return res.status(400).json({ msg: 'Email con formato incorrecto.' });
 
     User.findOne({ email }).then(user => {
 
         // Si no existe huye
         if (!user)
-            return res.status(404).json({ msg: 'Email no encontrado.' });
+            return res.status(400).json({ msg: 'Email no encontrado.' });
 
         // Comprueva si ya existe, en ese caso eliminala y cera una nueva
         // sino simplemente crea una nueva
@@ -93,6 +93,9 @@ router.post('/', (req, res) => {
             }
         });
         return res.status(200).json({ msg: 'OK' });
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({ msg: "Error al solicitar cambio"});
     });
 });
 
@@ -155,6 +158,9 @@ router.put('/', auth, (req, res) => {
                 });
             });
         });
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({ msg: "Error al cambiar contraseña"});
     });
 });
 
@@ -215,9 +221,15 @@ router.post('/:token', (req, res) => {
                             console.log('Borrado token: ', doc);
                     });
                     return res.status(200).json({ msg: 'OK' });
+                }).catch(err => {
+                    console.log(err);
+                    return res.status(500).json({ msg: "Error al cambiar contraseña"});
                 });
             });
         });
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({ msg: "Error al cambiar contraseña"});
     });
 });
 

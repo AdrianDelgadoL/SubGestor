@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import './popup.css'
+import {useAuthDispatch} from '../../context/context';
 
 const Popup = (props) => {
 
@@ -11,7 +12,7 @@ const Popup = (props) => {
     const [emailError, setEmailError] = useState('');
     const [formError, setFormError] = useState('');
     const [mensaje, setMensaje] = useState('');
-
+    const dispatch = useAuthDispatch()
 
     const formValid = () => {
         if (emailError.length > 0 || email.length === 0) {
@@ -67,12 +68,11 @@ const Popup = (props) => {
             }).catch(err => {
                 setMensaje("");
                 setEmail(null);
-                if (err.response.data.msg) {
-                    setFormError(
-                        err.response.data.msg
-                    );
+                if (err.response === undefined || err.response.status === 500) {
+                    dispatch({ type: 'BACKEND_ERROR', err: "backend error" });
+                    props.history.push('/error');
                 } else {
-                    setFormError("El formulario contiene errores")
+                    setFormError(err.response.data.msg);
                 }
             });
         } else {
