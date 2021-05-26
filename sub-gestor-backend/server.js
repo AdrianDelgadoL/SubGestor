@@ -10,6 +10,7 @@ const userRoutes = require('./routes/user.route');
 const subsRoutes = require('./routes/subscription.route');
 const changePassword = require('./routes/changepassword.route');
 const templatesSub = require('./routes/templates.route');
+const canceledSub = require('./routes/canceled-subscription.route');
 
 const config = require('config');
 app.use(cors());
@@ -35,8 +36,9 @@ app.use('/hello', helloRoutes);
 app.use('/user', userRoutes);
 app.use('/subscription', subsRoutes);
 app.use('/change-pass', changePassword);
-app.use('/templates', templatesSub);
 
+app.use('/templates', templatesSub)
+app.use('/canceled-sub', canceledSub);
 
 https.createServer({
     key: fs.readFileSync(config.get('certKey')),
