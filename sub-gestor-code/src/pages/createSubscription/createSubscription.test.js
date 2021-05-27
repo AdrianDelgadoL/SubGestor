@@ -128,7 +128,7 @@ describe("Creación de suscripción", () => {
     const submitButton = utils.getByRole('button', {name: "Crear suscripción"});
     fireEvent.click(submitButton);
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post.mock.calls[0][0]).toBe('http://localhost:4000/subscription');
+    expect(axios.post.mock.calls[0][0]).toBe('https://localhost:4000/subscription');
     expect(axios.post.mock.calls[0][1].get("name")).toBe(expectedPostBody.name);
     expect(axios.post.mock.calls[0][1].get("frequency")).toBe(expectedPostBody.frequency);
     expect(axios.post.mock.calls[0][1].get("currency")).toBe(expectedPostBody.divisa);
@@ -192,7 +192,7 @@ describe("Creación de suscripción", () => {
     const submitButton = utils.getByRole('button', {name: "Crear suscripción"});
     fireEvent.click(submitButton);
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post.mock.calls[0][0]).toBe('http://localhost:4000/subscription');
+    expect(axios.post.mock.calls[0][0]).toBe('https://localhost:4000/subscription');
     expect(axios.post.mock.calls[0][1].get("name")).toBe(expectedPostBody.name);
     expect(axios.post.mock.calls[0][1].get("frequency")).toBe(expectedPostBody.frequency);
     expect(axios.post.mock.calls[0][1].get("currency")).toBe(expectedPostBody.divisa);

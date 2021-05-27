@@ -79,7 +79,7 @@ describe("Modificación del perfil", () => {
         fireEvent.click(submitButton);
         await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
         console.log(axios.put.mock.calls[0][1])
-        expect(axios.put.mock.calls[0][0]).toBe('http://localhost:4000/user/configuration');
+        expect(axios.put.mock.calls[0][0]).toBe('https://localhost:4000/user/configuration');
         expect(axios.put.mock.calls[0][1].frequency).toBe('monthly');
         expect(axios.put.mock.calls[0][1].prefered_currency).toBe('USD');
     })

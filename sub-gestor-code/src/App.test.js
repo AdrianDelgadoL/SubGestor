@@ -12,7 +12,7 @@ require('dotenv').config()
 it.skip("renders without crashing", () => {
   render(<App />);
 });
-describe("Tarjetas de componentes", () => {
+describe.skip("Tarjetas de componentes", () => {
   // Con regex
   it("Tarjeta contiene link de cancelar", () => {
     const {getByText} = render(<Router><Subscription title="Net" imageSource="netflix.png" card_price="15.5" payment_type="EUR" charge_date="2021-11-26T23:00:00.000+00:00" sub_id="21387GHJUG9321" url="http://netflix.com" /></Router>);

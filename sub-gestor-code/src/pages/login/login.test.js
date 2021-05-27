@@ -161,7 +161,7 @@ describe("Funcionamiento lògico del componente de login", () => {
     fireEvent.click(submitButton);
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
     utils.getByText(errorEsperado);
-    expect(axios.post.mock.calls[0][0]).toBe('http://localhost:4000/user/login');
+    expect(axios.post.mock.calls[0][0]).toBe('https://localhost:4000/user/login');
     expect(axios.post.mock.calls[0][1].userEmail).toBe(expectedPostBody.userEmail);
     expect(axios.post.mock.calls[0][1].userPassword).toBe(expectedPostBody.userPassword);
   });
@@ -194,7 +194,7 @@ describe("Funcionamiento lògico del componente de login", () => {
     const submitButton = utils.getByRole('button', {name: "Inicia sesión"});
     fireEvent.click(submitButton);
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post.mock.calls[0][0]).toBe('http://localhost:4000/user/login');
+    expect(axios.post.mock.calls[0][0]).toBe('https://localhost:4000/user/login');
     expect(axios.post.mock.calls[0][1].userEmail).toBe(expectedPostBody.userEmail);
     expect(axios.post.mock.calls[0][1].userPassword).toBe(expectedPostBody.userPassword);
     expect(history[0]).toBe("/home");
