@@ -36,7 +36,7 @@ const ChangePw=(props)=>{
       event.preventDefault();
       if(password.password_1==password.pswrepeat){
         setFormError("");
-        if (formPassValid()) {
+        if (formPassValid()&&passwordRegex.test(password.password_vieja)) {
        
           axios.put(process.env.REACT_APP_SERVER_URL+'/change-pass',
           {
