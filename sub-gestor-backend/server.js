@@ -15,6 +15,10 @@ const canceledSub = require('./routes/canceled-subscription.route');
 const config = require('config');
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
 
 const db = config.get('mongoURI');
 
