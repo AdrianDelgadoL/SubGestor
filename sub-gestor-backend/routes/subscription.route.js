@@ -281,7 +281,8 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
                 description: description,
                 charge_date:
                     (charge_date !== "null") ? new Date(charge_date) : undefined,
-                user_id: user._id // Cambio de ultima hora
+                user_id: user._id, // Cambio de ultima hora
+                total_price: (start_date !== "null") ? calculateTotalPrice(start_date, Number(price), frequency) : 0
             });
             newSubscription.save()
                 .then(new_sub => {
@@ -302,5 +303,38 @@ router.post('/', auth, upload.single('image'), dateValidator, (req, res) => {
             console.log(err);
         });
 });
+
+
+function calculateTotalPrice(start_date, price, frequency) {
+    
+    let actualDate = new Date(start_date)
+    console.log(actualDate)
+    let new_total_price = 0
+    
+    while (Date.now() > actualDate){
+        new_total_price += price
+        console.log("enter")
+        switch (frequency) {
+            case "monthly":
+                actualDate.setMonth(actualDate.getMonth()+1);
+                break;
+            case "bimonthly":
+                actualDate.setMonth(actualDate.getMonth()+2);
+                break;
+            case "quarterly":
+                actualDate.setMonth(actualDate.getMonth()+3);
+                break;
+            case "weekly":
+                actualDate.setDate(actualDate.getDate() + 7);
+                break;
+            case "annual":
+                actualDate.setMonth(actualDate.getMonth()+12);
+                break;
+            default:
+                break;
+        }
+    }
+    return new_total_price;
+}
 
 module.exports = router;

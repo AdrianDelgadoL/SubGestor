@@ -13,10 +13,16 @@ import SubCanceladas from "../pages/subscriptions/subcanceladas.component";
 import SubDetailCancelada from "../pages/subDetails/subDetailCancelada.component";
 import ErrorPage from "../pages/error_page/error.component";
 import AuthErrorPage from "../pages/error_page/authError.component";
+import Estadistica from "../pages/estadisticas/estadistica.component";
 //import PageNotFound from "../pages/notFound" (Hacer redireccion o generar pageNotFound)
 
 const routes =[
-    
+    {
+      forUnlogged: false,
+      isPrivate: false,
+      path:'/estadistica',
+      component: Estadistica
+    },
     {
       forUnlogged: true,
       isPrivate: false,
@@ -107,6 +113,7 @@ const routes =[
       path:'/auth-error',
       component: AuthErrorPage
     },
+    
     {
       forUnlogged: true,
       isPrivate: false,

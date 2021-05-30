@@ -12,6 +12,7 @@ function updates(req, res, next) {
                     console.log("active");
                     while (Date.now() > sub.charge_date) {
                         console.log("Modifying date")
+                        sub.total_price += sub.price
                         switch (sub.frequency) {
                             case "monthly":
                                 sub.charge_date.setMonth(sub.charge_date.getMonth()+1);
@@ -46,6 +47,7 @@ function updates(req, res, next) {
                     }
                     //guarda la suscripcion modificada
                     sub.markModified("charge_date");
+                    sub.markModified("total_price")
                     sub.save()
                         .catch((err) => {
                             console.log(err);

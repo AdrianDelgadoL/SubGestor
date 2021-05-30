@@ -65,6 +65,7 @@ function Subscription({title,imageSource,card_price,payment_type, charge_date, s
             )
         }
     }
+    
     return(
     <div className="Subscription-card-container">
         <div className="Subscription-img-col">

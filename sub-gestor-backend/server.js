@@ -11,6 +11,7 @@ const subsRoutes = require('./routes/subscription.route');
 const changePassword = require('./routes/changepassword.route');
 const templatesSub = require('./routes/templates.route');
 const canceledSub = require('./routes/canceled-subscription.route');
+const statistics = require('./routes/estadisticas.route');
 
 const config = require('config');
 app.use(cors());
@@ -43,6 +44,7 @@ app.use('/change-pass', changePassword);
 
 app.use('/templates', templatesSub)
 app.use('/canceled-sub', canceledSub);
+app.use('/statistics', statistics);
 
 https.createServer({
     key: fs.readFileSync(config.get('certKey')),

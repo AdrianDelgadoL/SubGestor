@@ -44,7 +44,11 @@ const subscriptionsSchema = new Schema({
         type: String,
         required: true
     },
-    canceled_date: Date
+    canceled_date: Date,
+    total_price: {
+        type: Number,
+        default: 0
+    }
 });
 
 

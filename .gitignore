@@ -12,3 +12,6 @@ geckodriver.log
 /sub-gestor-code/my_cert.csr
 /sub-gestor-code/my_cert.key
 /sub-gestor-code/my_cert.pem
+/sub-gestor-code/.env
+sub-gestor-code/.env
+
