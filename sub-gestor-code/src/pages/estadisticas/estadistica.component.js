@@ -82,6 +82,15 @@ const Estadistica = (props) => {
       setDataset(auxDataset)
       console.log(data)
     })
+    .catch(error => {
+      if (error.response === undefined || error.response === 500) {
+          dispatch({ type: 'BACKEND_ERROR', error: "Backend error" });
+          props.history.push('/error');
+      } else {
+          dispatch({ type: 'AUTH_ERROR', error: error.response.data })
+          props.history.push('/auth-error');
+      }
+    })
   }, []);
 
   
