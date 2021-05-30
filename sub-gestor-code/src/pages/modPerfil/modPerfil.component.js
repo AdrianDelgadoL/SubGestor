@@ -24,7 +24,7 @@ const Perfil = (props) => {
         
     
     // Función para borrar el usuario 
-    const eliminarPerfil = (props) => {
+    const eliminarPerfil = () => {
         axios.delete(process.env.REACT_APP_SERVER_URL+'/user', {headers: {"x-auth-token": userDetails.token}})
         .then(response => { // 2xx OK 
             dispatch({ type: 'LOGOUT' })
@@ -33,6 +33,7 @@ const Perfil = (props) => {
         .catch(err => { // El response devuelve otra cosa distinta a 2xx, hay error, 401 error de token
             if (err.response === undefined || err.response === 500) {
                 dispatch({ type: 'BACKEND_ERROR', error: "Backend error" });
+                console.log(err);
                 props.history.push('/error');
             } else if (err.response.status === 401) {
                 dispatch({type: 'AUTH_ERROR', error: err.response.data})
