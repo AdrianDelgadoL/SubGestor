@@ -10,7 +10,7 @@ function canceledSub(req, res, next) {
             if(subscriptions.length === 0) return res.status(404).json({msg: "No se han encontrado suscripciones"});
 
             subscriptions.forEach(sub => {
-                while (Date.now() > sub.charge_date) {
+                while (Date.now() > sub.charge_date  && sub.active) {
                     console.log("Modifing date")
                     switch (sub.frequency) {
                         case "monthly":
