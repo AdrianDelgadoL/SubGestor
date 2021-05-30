@@ -170,7 +170,7 @@ describe("Funcionamiento lògico del componente de registro", () => {
     fireEvent.click(submitButton);
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
     utils.getByText(errorEsperado);
-    expect(axios.post.mock.calls[0][0]).toBe('http://localhost:4000/user/create');
+    expect(axios.post.mock.calls[0][0]).toBe('https://localhost:4000/user/create');
     expect(axios.post.mock.calls[0][1].email).toBe(expectedPostBody.email);
     expect(axios.post.mock.calls[0][1].password).toBe(expectedPostBody.password);
     expect(axios.post.mock.calls[0][1].conf_pwd).toBe(expectedPostBody.conf_pwd);
@@ -209,7 +209,7 @@ describe("Funcionamiento lògico del componente de registro", () => {
     const submitButton = utils.getByRole('button', {name: "Crear cuenta"});
     fireEvent.click(submitButton);
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
-    expect(axios.post.mock.calls[0][0]).toBe('http://localhost:4000/user/create');
+    expect(axios.post.mock.calls[0][0]).toBe('https://localhost:4000/user/create');
     expect(axios.post.mock.calls[0][1].email).toBe(expectedPostBody.email);
     expect(axios.post.mock.calls[0][1].password).toBe(expectedPostBody.password);
     expect(axios.post.mock.calls[0][1].conf_pwd).toBe(expectedPostBody.conf_pwd);

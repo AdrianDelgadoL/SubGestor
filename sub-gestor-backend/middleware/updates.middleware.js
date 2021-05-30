@@ -10,7 +10,7 @@ function updates(req, res, next) {
             subscriptions.forEach(sub => {
                 if(sub.active === true) {
                     console.log("active");
-                    while (Date.now() > sub.charge_date) {
+                    while (Date.now() > sub.charge_date && sub.active) {
                         console.log("Modifying date")
                         sub.total_price += sub.price
                         switch (sub.frequency) {
@@ -31,7 +31,6 @@ function updates(req, res, next) {
                                 break;
                             case "onetime":
                                 sub.active = false;
-                                sub.charge_date = null;
                                 sub.markModified("active");
                                 break;
                         }

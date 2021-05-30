@@ -152,7 +152,7 @@ describe("Detalle de componentes", () => {
     
     /* Por último validamos si se ha llamado el delete de axios y si la URL de envio es la correcta */
     expect(axios.delete).toHaveBeenCalledTimes(1);
-    expect(axios.delete.mock.calls[0][0]).toBe('http://localhost:4000/subscription/1');
+    expect(axios.delete.mock.calls[0][0]).toBe('https://localhost:4000/subscription/1');
 
   });
 
@@ -310,7 +310,7 @@ describe("Modificacion de suscripcion", () =>{
     const submitInput = utils.getByRole('button', {name: "Guardar cambios"});
     fireEvent.click(submitInput);
     await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
-    expect(axios.put.mock.calls[0][0]).toBe('http://localhost:4000/subscription/1');
+    expect(axios.put.mock.calls[0][0]).toBe('https://localhost:4000/subscription/1');
     console.log(axios.put.mock.calls[0][1].get("name"));
     expect(axios.put.mock.calls[0][1].get("name")).toBe(expectedPostBody.name);
     expect(axios.put.mock.calls[0][1].get("frequency")).toBe(expectedPostBody.frequency);
@@ -374,7 +374,7 @@ describe("Modificacion de suscripcion", () =>{
     const deleteInput = utils.getByRole('button', {name: "Eliminar suscripción"});
     fireEvent.click(deleteInput);
     await waitFor(() => expect(axios.delete).toHaveBeenCalledTimes(1));
-    expect(axios.delete.mock.calls[0][0]).toBe('http://localhost:4000/subscription/1');
+    expect(axios.delete.mock.calls[0][0]).toBe('https://localhost:4000/subscription/1');
   });
 
   it("TC_Modificacion_suscripcion_4", async() =>{
@@ -431,7 +431,7 @@ describe("Modificacion de suscripcion", () =>{
     const submitInput = utils.getByRole('button', {name: "Guardar cambios"});
     fireEvent.click(submitInput);
     await waitFor(() => expect(axios.put).toHaveBeenCalledTimes(1));
-    expect(axios.put.mock.calls[0][0]).toBe('http://localhost:4000/subscription/1');
+    expect(axios.put.mock.calls[0][0]).toBe('https://localhost:4000/subscription/1');
     console.log(axios.put.mock.calls[0][1].get("name"));
     expect(axios.put.mock.calls[0][1].get("name")).toBe(expectedPostBody.name);
     expect(axios.put.mock.calls[0][1].get("frequency")).toBe(expectedPostBody.frequency);
