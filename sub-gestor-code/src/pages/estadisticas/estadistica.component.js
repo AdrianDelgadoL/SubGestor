@@ -27,8 +27,9 @@ const Estadistica = (props) => {
   }
 
   function getStartDate(start_date) {
-    if(start_date !== undefined ) return moment(start_date).format("DD/MM/YYYY")
-    return "Sin definir"
+    if(start_date === undefined || start_date === null ) return "Sin definir"
+    return moment(start_date).format("DD/MM/YYYY")
+    
   }
 
   function getActive(active) {
