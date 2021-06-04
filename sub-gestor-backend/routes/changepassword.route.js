@@ -86,7 +86,7 @@ router.post('/', (req, res) => {
         transporter.sendMail(email_config, (err, info) => {
             if (err) {
                 console.log(err);
-                return res.status(200).json({ msg: 'OK' });
+                return res.status(500).json({ msg: 'Error de servidor' });
             } else {
                 console.log('[CHANGE PASS] Email sent to: ' + email + ' info: ' + info.response);
                 return res.status(200).json({ msg: 'OK' });
